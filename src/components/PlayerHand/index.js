@@ -5,7 +5,7 @@ import { modes } from 'react-transition-group/SwitchTransition';
 
 const defHandStyle = {
     height: 'auto',
-    width: '350ppx',
+    width: '350px',
     padding: 0,
 };
 
