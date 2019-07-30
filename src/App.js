@@ -13,8 +13,10 @@ function App() {
           <Container maxWidth="lg">
               <TopBar>
               </TopBar>
+              <Container>
               <PlayerHand/>
-          </Container>
+              </Container>
+              </Container>
     </div>
   );
 }

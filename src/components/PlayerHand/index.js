@@ -1,26 +1,37 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Hand, Card, CardBack } from 'react-deck-o-cards';
+import PlayCard from '../PlayCard';
 import { modes } from 'react-transition-group/SwitchTransition';
 
-const defHandStyle = {
-    maxHeight: '250px',
-    maxWidth: '100px',
-    padding: '20px',
-};
 
 class PlayerHand extends Component {
 
+    state = {}
     constructor(props) {
         super(props)
+           
     }
     
     render() {
 
         return (
-            <Hand cards={[
-                { rank: 1, suit: 0 }, { rank: 1, suit: 3 }
-            ]} hidden={false} style={defHandStyle} />
+            <div className="row">
+                <PlayCard
+                        rank={"A"}
+                        suit={"S"}
+                        hidden={false}
+                    />
+                <PlayCard
+                        rank={"6"}
+                        suit={"D"}
+                        hidden={true}
+                    />
+                <PlayCard
+                        rank={"10"}
+                        suit={"H"}
+                        hidden={false}
+                    />
+            </div>
         );
     }
 

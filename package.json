@@ -6,8 +6,10 @@
     "@material-ui/core": "^4.3.0",
     "@material-ui/icons": "^4.2.1",
     "react": "^16.8.6",
+    "react-card-flip": "^0.8.1",
     "react-deck-o-cards": "^1.1.0",
     "react-dom": "^16.8.6",
+    "react-inlinesvg": "^1.1.4",
     "react-playing-card": "^0.2.5",
     "react-scripts": "3.0.1"
   },
