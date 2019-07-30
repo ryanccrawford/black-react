@@ -2,16 +2,17 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import PlayerHand from './components/PlayerHand';
-import './App.css';
+import TopBar from './components/TopBar';
+
 
 
 function App() {
   return (
-      <div className="App">
+      <div>
           <CssBaseline />
           <Container maxWidth="lg">
-              <header className="App-header">
-              </header>
+              <TopBar>
+              </TopBar>
               <PlayerHand/>
           </Container>
     </div>
