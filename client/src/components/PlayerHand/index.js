@@ -11,16 +11,19 @@ const defHandStyle = {
 
 class PlayerHand extends Component {
 
-    constructor(props) {
-        super(props)
-    }
+    
     
     render() {
 
         return (
+            <div>
+                <CardBack ></CardBack>
+            <Card rank={2} suit={1}></Card>
+
             <Hand cards={[
                 { rank: 1, suit: 0 }, { rank: 1, suit: 3 }
-            ]} hidden={false} style={defHandStyle} />
+                ]} hidden={false} style={defHandStyle} />
+                </div>
         );
     }
 

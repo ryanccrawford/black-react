@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function TopBar() {
+export default function BankBar() {
     const classes = useStyles();
 
     return (
@@ -30,9 +30,9 @@ export default function TopBar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        Start Game
-          </Typography>
-                    <Button color="inherit">Login</Button>
+                        
+                    </Typography>
+                    <Button color="inherit">Start</Button>
                 </Toolbar>
             </AppBar>
         </div>
