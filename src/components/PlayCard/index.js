@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import SVG from 'react-inlinesvg';
-import ReactDOM from 'react-dom';
 import Card from '@material-ui/core/Card';
 import ReactCardFlip from 'react-card-flip';
-// import './style.css';
+import './style.css';
 
 
 class PlayCard extends Component {
@@ -31,45 +30,46 @@ class PlayCard extends Component {
             "C": "clubs",
             "S": "spades"
         }
+        this.state.owner = props.owner || "none"
         this.state.class = props.class || "col-2 white black-text"
         this.state.type = props.type || "";
         this.state.rank = props.rank || "black";
         this.state.suit = props.suit || "joker";
         this.state.frontImage = "./images/" + cardRank[this.state.rank] + cardSuit[this.state.suit] + this.state.type + ".svg"
-        console.log(this.state.frontImage)
-        
+
+
         this.state.backImage = "./images/card_back.svg"
         console.log(this.state.backImage)
         this.state.hidden = props.hidden || false;
 
     }
 
-    handleClick = () => {
+    handleClick = (event) => {
         this.setState(prevState => ({ hidden: !prevState.hidden }));
     }
 
     render() {
         return (
-            
-           <div className="col-2">
+
+            <div className="slide-in-blurred-tr playing-card display-card ">
             <ReactCardFlip isFlipped={this.state.hidden} flipDirection="horizontal">
                 <Card
                     key="front"
-                    className="col-2 playing-card"
+                    className="playing-card display-card"
                     data-rank={this.state.rank}
                     data-suit={this.state.suit}
                     data-hidden={this.state.hidden}
                     onClick={this.handleClick}
                 >
-                    <SVG
-                        className="playing-card"
-                        src={this.state.frontImage}
-                    />
+                        <SVG
+                            className="playing-card"
+                            src={this.state.frontImage}
+                          />
                 </Card>
 
                 <Card
                     key="back"
-                    className="col-2 playing-card"
+                    className="playing-card"
                     data-rank={this.state.rank}
                     data-suit={this.state.suit}
                     data-hidden={this.state.hidden}
@@ -82,7 +82,7 @@ class PlayCard extends Component {
                 </Card>
                 </ReactCardFlip>
                 </div>
-               
+
         );
     }
 }

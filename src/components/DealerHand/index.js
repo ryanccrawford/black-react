@@ -3,7 +3,7 @@ import PlayCard from '../PlayCard';
 import Delay from 'react-delay'
 
 
-class PlayerHand extends Component {
+class DealerHand extends Component {
 
     state = {
         cards: []
@@ -29,7 +29,7 @@ class PlayerHand extends Component {
     render() {
 
         return (
-            <div className="row player">
+            <div className="row dealer">
 
 
                 {this.state.cards.map((card, index) => {
@@ -57,4 +57,4 @@ class PlayerHand extends Component {
 
 }
 
-export default PlayerHand;
+export default DealerHand;
