@@ -1,10 +1,10 @@
-
+import React from 'react';
 
 class Deck {
 
-    constructor(props) {
+    constructor(options) {
         this.deck = [];
-        this.numberOfDecks = props.numberOfDecks
+        this.numberOfDecks = 6
         this.reset();
         this.shuffle();
 

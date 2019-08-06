@@ -10,27 +10,16 @@ class PlayerHand extends Component {
     }
     constructor(props) {
         super(props)
-
+        this.state.cards = props.cards
 
     }
 
-    componentDidMount() {
-
-        let card = {
-            owner: "player_1",
-            rank: "A",
-            suit: "D",
-            hidden: false
-        }
-        this.setState({ cards: [...this.state.cards, card] })
-    }
-
-
-    render() {
+   render() {
 
         return (
             <div className="row player">
-
+                {console.log("cards")}
+                {console.log(this.state.cards)}
 
                 {this.state.cards.map((card, index) => {
                     return (
@@ -43,7 +32,7 @@ class PlayerHand extends Component {
                             owner={card.owner}
                             rank={card.rank}
                             suit={card.suit}
-                            hidden={card.hidden}
+                            hidden={card.facedown}
                             ></PlayCard>
                         </Delay>
                     )

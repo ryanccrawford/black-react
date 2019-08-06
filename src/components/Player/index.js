@@ -1,3 +1,5 @@
+import React from 'react';
+
 class Player {
 
     constructor(name, type = "player", bankRoll = 10000 ) {
@@ -42,10 +44,19 @@ class Player {
                 }
 
             if (lowScore === 21 || highScore == 21) {
-                this.handScore.push(21)
+                this.handScore.push({ low: 21, high: 21 })
                 return this.handScore
             }
-            if ()
+            if (lowScore > 21 && highScore > 21) {
+                this.handScore.push({ low: "bust", high: "bust" })
+                return this.handScore
+            }
+            if ((lowScore === 17 || highScore === 17) && this.type === "dealer") {
+                this.handScore.push({ low: 17, high: 17 })
+                return this.handScore
+            }
+            this.handScore.push({ low: lowScore, high: highScore })
+            return this.handScore
         })
 
 

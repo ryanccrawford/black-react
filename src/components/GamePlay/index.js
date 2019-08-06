@@ -1,17 +1,17 @@
+import React from 'react';
 import Deck from '../Deck'
 import Player from '../Player'
+
 
 class GamePlay {
 
 
-    constructor(props) {
+    constructor(options) {
         this.Deck = new Deck();
         this.Players = []
         let Dealer = new Player("Dealer", "dealer", 0)
         this.Players.push(Dealer)
-        for (let player in props.Players) {
-            this.Players.push(player)
-        }
+        this.Players.push(...options.Players)
         this.round = 0
     }
 
@@ -20,7 +20,7 @@ class GamePlay {
         this.Deck.shuffle()
 
         this.Players.forEach((player) => {
-            player.reset()
+           player.reset()
         })
         this.round = 0
     }
@@ -42,10 +42,10 @@ class GamePlay {
                     ii = 0
                 }
                 if (ii === 0 && j === 1) {
-                    this.Players[ii].card.push(this.Deck.deal(true))
+                    this.Players[ii].cards.push(this.Deck.deal(true))
                     sendCard(this.Players[ii])
                 } else {
-                    this.Players[ii].card.push(this.Deck.deal(false))
+                    this.Players[ii].cards.push(this.Deck.deal(false))
                     sendCard(this.Players[ii])
                 }
 
