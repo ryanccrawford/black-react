@@ -1,0 +1,16 @@
+.box {
+    margin-top:25px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: darkgreen;
+    height: 75%;
+    padding: 25px;
+}
+
+
+.hand {
+
+    display:block;
+
+
+}

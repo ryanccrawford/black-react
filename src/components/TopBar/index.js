@@ -30,9 +30,9 @@ export default function TopBar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        Start Game
+                        React Black Jack
           </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color="inherit">Game Menu</Button>
                 </Toolbar>
             </AppBar>
         </div>

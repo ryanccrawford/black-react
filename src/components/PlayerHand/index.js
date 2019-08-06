@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PlayCard from '../PlayCard';
 import Delay from 'react-delay'
-
+import './style.css';
 
 class PlayerHand extends Component {
 
@@ -10,7 +10,9 @@ class PlayerHand extends Component {
     }
     constructor(props) {
         super(props)
+        console.log(props.cards)
         this.state.cards = props.cards
+
 
     }
 
@@ -18,6 +20,8 @@ class PlayerHand extends Component {
 
         return (
             <div className="row player">
+                <div className="col">
+
                 {console.log("cards")}
                 {console.log(this.state.cards)}
 
@@ -30,14 +34,14 @@ class PlayerHand extends Component {
                         <PlayCard
                             key={index}
                             owner={card.owner}
-                            rank={card.rank}
+                            rank={card.value}
                             suit={card.suit}
                             hidden={card.facedown}
                             ></PlayCard>
                         </Delay>
                     )
                 })}
-
+                    </div>
            </div>
         );
     }

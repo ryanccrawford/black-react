@@ -1,4 +1,3 @@
-import React from 'react';
 import Deck from '../Deck'
 import Player from '../Player'
 
