@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 import GamePlay from '../GamePlay';
 import Player from '../Player'
 import PlayerHand from '../PlayerHand';
 import DealerHand from '../DealerHand'
 import './style.css';
+
 
 class GameTable extends Component {
 
@@ -15,7 +18,7 @@ class GameTable extends Component {
         }
 
         const options = {}
-        let numOfPlayers = 1
+        let numOfPlayers = 2
         let player1 = new Player("Ryan", "player", 10000)
         let player2 = new Player("Other", "player", 10000)
         options.Players = []
@@ -36,38 +39,52 @@ class GameTable extends Component {
 
     render() {
         return (
+
             <div className={"game-table"}>
+
                 <div className={"box"}>
+                    <Grid container spacing={12}>
                     {this.state.cardsDelt ? this.GamePlay.Players.map((player, index) => {
                         if (index === 0) {
                             return (
+                            <Grid item xs={12}>
                                 <div className="hand">
-                                    <h2>Dealer</h2>
+                                 <h2 className="white">Dealer</h2>
                                 <DealerHand
                                     key={player.name}
+                                    playerPosition={(this.GamePlay.Players.length + 1)}
                                     isPlayerTurn={"test"}
                                     cards={player.cards}
                                     gamePlay={this.GamePlay} />
-                                </div>
+
+
+                                 </div>
+                               </Grid>
                             )
 
                                 }
                         return (
+                            <Grid item xs={12}>
                             <div className="hand">
-                                <h2>Player {player.name}</h2>
+                                <h2 className="white">Player {player.name}</h2>
                             <PlayerHand
-                                key={player.name}
-                                isPlayerTurn={"test"}
-                                cards={player.cards}
-                                gamePlay={this.GamePlay}
+                                    key={player.name}
+                                    playerPosition={index}
+                                    isPlayerTurn={"test"}
+                                    cards={player.cards}
+                                    gamePlay={this.GamePlay}
                                 />
-                            </div>
+                                </div>
+                             </Grid>
                         )
                     }) : null
 
-                    }
+                        }
+                    </Grid>
+                    </div>
+
                 </div>
-            </div>
+
         );
     }
 
