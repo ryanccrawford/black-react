@@ -11,13 +11,6 @@ import GameTable from './components/GameTable'
 class App extends Component {
 
 
-    state = {}
-    constructor(props) {
-        super(props)
-
-
-    }
-
 
 
     render() {

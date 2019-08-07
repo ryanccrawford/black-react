@@ -16,9 +16,11 @@ class GameTable extends Component {
 
         const options = {}
         let numOfPlayers = 1
-        let player = new Player("Ryan", "player", 10000)
+        let player1 = new Player("Ryan", "player", 10000)
+        let player2 = new Player("Other", "player", 10000)
         options.Players = []
-        options.Players.push(player)
+        options.Players.push(player1)
+        options.Players.push(player2)
         this.GamePlay = new GamePlay(options)
     }
 
