@@ -1,9 +1,9 @@
 .box {
-    margin-top:25px;
+    margin-top: 25px;
     border: 1px solid black;
     border-radius: 5px;
     background-color: darkgreen;
-    height: 75%;
+    min-height: 650px;
     padding: 25px;
 }
 
@@ -13,4 +13,8 @@
     display:block;
 
 
+}
+
+.game-table{
+    min-height: 400px;
 }

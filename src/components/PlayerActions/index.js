@@ -14,6 +14,7 @@ class PlayerActions extends Component {
         super(props)
         this.state = {
             player: props.player,
+            playerIndex: props.playerIndex,
             bet: props.bet,
             hit: props.hit,
             stay: props.stay,
@@ -48,7 +49,8 @@ class PlayerActions extends Component {
                 >
             {this.state.bet ? (
                         <Button
-                            name={"bet"}
+                            data-name={"bet"}
+                            data-player-index={this.state.playerIndex}
                             variant="contained"
                             color="dark"
                             className={classes.button}
@@ -59,6 +61,8 @@ class PlayerActions extends Component {
                     </Button>) : (null)}
        {this.state.hit ? (
                         <Button
+                            data-name={"hit"}
+                            data-player-index={this.state.playerIndex}
                             variant="contained"
                             color="dark"
                             className={classes.button}
@@ -67,17 +71,22 @@ class PlayerActions extends Component {
                     HIT
                     <FontAwesomeIcon className={classes.rightIcon} icon="hand-point-up" />
                 </Button>) : (null)}
-                    {this.state.stay ? (<Button
-                        variant="contained"
-                        color="dark"
-                        className={classes.button}
-                        onclick={this.state.actionClick}
+                    {this.state.stay ? (
+                        <Button
+                            data-name={"stay"}
+                            data-player-index={this.state.playerIndex}
+                            variant="contained"
+                            color="dark"
+                            className={classes.button}
+                            onclick={this.state.actionClick}
                     >
                 STAY
                     <FontAwesomeIcon className={classes.rightIcon} icon="hand-paper" />
             </Button>): (null)  }
         {this.state.double ? (
                         <Button
+                            data-name={"double"}
+                            data-player-index={this.state.playerIndex}
                             variant="contained"
                             color="dark"
                             className={classes.button}
@@ -88,6 +97,8 @@ class PlayerActions extends Component {
             </Button>) : (null)}
         {this.state.split ? (
                         <Button
+                            data-name={"split"}
+                            data-player-index={this.state.playerIndex}
                             variant="contained"
                             color="dark"
                             className={classes.button}
