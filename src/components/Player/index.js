@@ -6,6 +6,12 @@ class Player {
         this.type = type
         this.name = name
         this.bankRoll = bankRoll
+        this.isTurn = false
+        this.canBet = false
+        this.canStay = false
+        this.canHit = false
+        this.canDouble = false
+        this.canSplit = false
         this.avatar = null
         this.cards = []
         this.split = []
@@ -15,12 +21,23 @@ class Player {
 
     }
 
+    setIsTurn = () => {
+        this.isTurn = true
+
+    }
+
     reset = () => {
         this.cards = []
         this.split = []
         this.bets = []
         this.validPlays = []
         this.handScore = []
+        this.isTurn = false
+        this.canBet = false
+        this.canStay = false
+        this.canHit = false
+        this.canDouble = false
+        this.canSplit = false
     }
 
     scoreHand = () => {

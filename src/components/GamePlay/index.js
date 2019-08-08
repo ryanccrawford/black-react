@@ -24,10 +24,11 @@ class GamePlay {
         this.round = 0
     }
 
-    placeBet = (playerIndex, amount) => {
+    placeBet = (playerIndex, amount, PlayerBetCallback) => {
 
         this.Players[playerIndex].bankRoll -= amount
         this.Players[playerIndex].bets.push(amount)
+        PlayerBetCallback(playerIndex, amount)
 
     }
 
@@ -79,7 +80,33 @@ class GamePlay {
 
     }
 
+    bet = (playerIndex) => {
+        let card = this.Deck.deal(false)
+        this.Players[playerIndex].cards.push(card)
+        //TODO ADD VALID PLAYS AFTER HIT
+
+    }
+
     hit = (playerIndex) => {
+        let card = this.Deck.deal(false)
+        this.Players[playerIndex].cards.push(card)
+        //TODO ADD VALID PLAYS AFTER HIT
+
+    }
+
+    stay = (playerIndex) => {
+        let card = this.Deck.deal(false)
+        this.Players[playerIndex].cards.push(card)
+        //TODO ADD VALID PLAYS AFTER HIT
+
+    }
+    double = (playerIndex) => {
+        let card = this.Deck.deal(false)
+        this.Players[playerIndex].cards.push(card)
+        //TODO ADD VALID PLAYS AFTER HIT
+
+    }
+    split = (playerIndex) => {
         let card = this.Deck.deal(false)
         this.Players[playerIndex].cards.push(card)
         //TODO ADD VALID PLAYS AFTER HIT

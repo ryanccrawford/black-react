@@ -1,17 +1,22 @@
 .playing-card {
-    display:inline-block;
-    background-color: white;
-    width: 100px !important;
-    height: 144px !important;
-    border-radius: 8px !important;
+    display: inline-block;
+    background-color: transparent;
+    width: 167px !important;
+    height: 242px !important;
+    border-radius: 10px !important;
     box-shadow: 1px 2px 10px rgba(20,20,20,.5);
-    cursor:pointer;
+    cursor: pointer;
 }
 .display-card {
 
     margin-right: 5px;
 }
 
+svg{
+width: 100px;
+height: auto;
+
+}
 
 .slide-in-blurred-tr {
     -webkit-animation: slide-in-blurred-tr 0.55s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
