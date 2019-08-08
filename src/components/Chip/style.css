@@ -1,0 +1,12 @@
+.chip {
+    border-radius: 100%;
+    width: 25px;
+    height:25px;
+
+}
+
+.ammount {
+    position: relative;
+    top: 0;
+    left: 50%;
+}

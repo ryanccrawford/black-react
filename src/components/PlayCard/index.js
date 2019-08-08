@@ -11,32 +11,33 @@ class PlayCard extends Component {
     constructor(props) {
         super(props)
         const cardRank = {
-            "A": "ace_of_",
-            "J": "jack_of_",
-            "Q": "queen_of_",
-            "K": "king_of_",
-            "2": "2_of_",
-            "3": "3_of_",
-            "4": "4_of_",
-            "5": "5_of_",
-            "6": "6_of_",
-            "7": "7_of_",
-            "8": "8_of_",
-            "9": "9_of_",
-            "10": "10_of_"
+            "A": "A",
+            "J": "J",
+            "Q": "Q",
+            "K": "K",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "0"
         }
         const cardSuit = {
-            "D": "diamonds",
-            "H": "hearts",
-            "C": "clubs",
-            "S": "spades"
+            "D": "D",
+            "H": "H",
+            "C": "C",
+            "S": "S"
         }
         this.state.owner = props.owner || "none"
         this.state.class = props.class || "col-2 white black-text"
         this.state.type = props.type || "";
-        this.state.rank = props.rank || "black";
-        this.state.suit = props.suit || "joker";
-        this.state.frontImage = "./images/" + cardRank[this.state.rank] + cardSuit[this.state.suit] + this.state.type + ".svg"
+        this.state.rank = props.rank;
+        this.state.suit = props.suit;
+        console.log(cardRank[this.state.rank] + cardSuit[this.state.suit] + ".png")
+        this.state.frontImage = "./images/" + cardRank[this.state.rank] + cardSuit[this.state.suit] + ".png"
         this.state.backImage = "./images/card_back.svg"
         console.log(this.state.backImage)
         this.state.hidden = props.hidden || false;
@@ -59,13 +60,14 @@ class PlayCard extends Component {
                     className="playing-card display-card"
                         data-rank={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.rank}
                         data-suit={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.suit}
-                    data-hidden={this.state.hidden}
+                        data-hidden={this.state.hidden}
                         onClick={this.state.owner === "dealer" ? "" : this.handleClick}
                 >
-                        <SVG
+                        <img
                             className="playing-card"
                             src={this.state.frontImage}
-                          />
+                            alt="playing card"
+                         />
                 </Card>
 
                 <Card
@@ -73,7 +75,7 @@ class PlayCard extends Component {
                     className="playing-card"
                         data-rank={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.rank}
                         data-suit={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.suit}
-                    data-hidden={this.state.hidden}
+                        data-hidden={this.state.hidden}
                         onClick={this.state.owner === "dealer" ? "" : this.handleClick}
                 >
                     <SVG
