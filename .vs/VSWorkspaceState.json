@@ -1,12 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\src",
     "\\src\\components",
+    "\\src\\components\\DealerHand",
+    "\\src\\components\\GamePlay",
+    "\\src\\components\\GameTable",
     "\\src\\components\\PlayCard",
-    "\\src\\components\\PlayerChat",
+    "\\src\\components\\Player",
     "\\src\\components\\PlayerHand",
     "\\src\\components\\TopBar"
   ],
-  "SelectedNode": "\\src",
+  "SelectedNode": "\\src\\components\\GameTable\\style.css",
   "PreviewInSolutionExplorer": false
 }

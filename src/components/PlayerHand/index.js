@@ -12,9 +12,11 @@ class PlayerHand extends Component {
         super(props)
         console.log(props.cards)
         this.state.cards = props.cards
-
+        this.state.playerPosition = props.playerPosition
 
     }
+
+
 
    render() {
 
@@ -28,17 +30,16 @@ class PlayerHand extends Component {
                 {this.state.cards.map((card, index) => {
                     return (
 
-                        <Delay
-                            wait={2000}
-                        >
+
                         <PlayCard
                             key={index}
+                            counter={(((index + 1) * ((this.state.playerPosition * 500) * this.state.playerPosition)))}
                             owner={card.owner}
                             rank={card.value}
                             suit={card.suit}
                             hidden={card.facedown}
                             ></PlayCard>
-                        </Delay>
+
                     )
                 })}
                     </div>
