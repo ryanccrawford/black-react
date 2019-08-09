@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import clsx from 'clsx';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,111 +7,93 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 //<FontAwesomeIcon icon="check-square" />
 
-class PlayerActions extends Component {
+export default function PlayerActions(props) {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            player: props.player,
-            playerIndex: props.playerIndex,
-            bet: props.bet,
-            hit: props.hit,
-            stay: props.stay,
-            double: props.double,
-            split: props.split,
-            actionClick: props.actionClick
-        }
+    const classes = makeStyles(theme => ({
+        button: {
+            margin: theme.spacing(4),
+        },
+        leftIcon: {
+            marginRight: theme.spacing(4),
+        },
+        rightIcon: {
+            marginLeft: theme.spacing(4),
+        },
+        iconSmall: {
+            fontSize: 20,
+        },
+    }));
 
-    }
-
-    render() {
-        const classes = makeStyles(theme => ({
-            button: {
-                margin: theme.spacing(4),
-            },
-            leftIcon: {
-                marginRight: theme.spacing(4),
-            },
-            rightIcon: {
-                marginLeft: theme.spacing(4),
-            },
-            iconSmall: {
-                fontSize: 20,
-            },
-        }));
+    
         return (
             <div>
-                <ButtonGroup variant="contained"
-                    color="dark"
+                <div variant="contained"
+                    color="inherit"
                     size="large"
                     aria-label="large contained primary button group"
                 >
-            {this.state.bet ? (
-                        <Button
+                    <button
+                            disabled={!props.bet}
                             data-name={"bet"}
-                            data-player-index={this.state.playerIndex}
+                            data-player-index={props.playerIndex}
                             variant="contained"
                             color="dark"
                             className={classes.button}
-                            onclick={this.state.actionClick}
+                        onClick={!props.bet ? null : props.actionClick}
                         >
                         BET
                     <FontAwesomeIcon className={classes.rightIcon} icon="coins" />
-                    </Button>) : (null)}
-       {this.state.hit ? (
-                        <Button
+                    </button>
+       
+                    <button
+                        disabled={!props.hit }
                             data-name={"hit"}
-                            data-player-index={this.state.playerIndex}
+                            data-player-index={props.playerIndex}
                             variant="contained"
                             color="dark"
                             className={classes.button}
-                            onclick={this.state.actionClick}
+                        onClick={!props.hit ? null : props.actionClick}
                         >
                     HIT
                     <FontAwesomeIcon className={classes.rightIcon} icon="hand-point-up" />
-                </Button>) : (null)}
-                    {this.state.stay ? (
-                        <Button
-                            data-name={"stay"}
-                            data-player-index={this.state.playerIndex}
-                            variant="contained"
-                            color="dark"
-                            className={classes.button}
-                            onclick={this.state.actionClick}
+                </button>
+                    <button
+                        disabled={!props.stay}
+                        data-name={"stay"}
+                        data-player-index={props.playerIndex}
+                        variant="contained"
+                        color="dark"
+                        className={classes.button}
+                        onClick={!props.stay ? null : props.actionClick}
                     >
                 STAY
                     <FontAwesomeIcon className={classes.rightIcon} icon="hand-paper" />
-            </Button>): (null)  }
-        {this.state.double ? (
-                        <Button
+            </button>
+                    <button
+                        disabled={!props.double}
                             data-name={"double"}
-                            data-player-index={this.state.playerIndex}
+                            data-player-index={props.playerIndex}
                             variant="contained"
                             color="dark"
                             className={classes.button}
-                            onclick={this.state.actionClick}
+                        onClick={!props.double ? null : props.actionClick}
                         >
                 DOUBLE DOWN
                     <FontAwesomeIcon className={classes.rightIcon} icon="hand-point-up" />
-            </Button>) : (null)}
-        {this.state.split ? (
-                        <Button
+            </button>
+                    <button
+                        disabled={!props.split}
                             data-name={"split"}
-                            data-player-index={this.state.playerIndex}
+                            data-player-index={props.playerIndex}
                             variant="contained"
                             color="dark"
                             className={classes.button}
-                            onclick={this.state.actionClick}
+                        onClick={!props.split ? null : props.actionClick}
                         >
                     SPLIT
                     <FontAwesomeIcon className={classes.rightIcon} icon="hand-point-up" />
-                        </Button>) : (null)}
-                    </ButtonGroup>
+                        </button>
+                    </div>
             </div>
             )
     }
-
-
-}
-
-export default PlayerActions

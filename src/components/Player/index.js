@@ -21,8 +21,24 @@ class Player {
 
     }
 
-    setIsTurn = () => {
+    setIsTurn = (type) => {
         this.isTurn = true
+        if (type === "bet" && this.cards.length < 1) {
+            this.canBet = true;
+        }
+        
+
+    }
+
+    unsetIsTurn = () => {
+       
+        this.isTurn = false
+        this.canBet = false
+        this.canStay = false
+        this.canHit = false
+        this.canDouble = false
+        this.canSplit = false
+
 
     }
 
@@ -39,6 +55,8 @@ class Player {
         this.canDouble = false
         this.canSplit = false
     }
+
+
 
     scoreHand = () => {
         this.handScore = []
@@ -60,7 +78,7 @@ class Player {
                     highScore += intVal
                 }
 
-            if (lowScore === 21 || highScore == 21) {
+            if (lowScore === 21 || highScore === 21) {
                 this.handScore.push({ low: 21, high: 21 })
                 return this.handScore
             }

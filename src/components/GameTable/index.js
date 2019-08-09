@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import PlayerActions from '../PlayerActions'
 import PlayerBet from '../PlayerBet'
@@ -19,12 +18,12 @@ class GameTable extends Component {
         this.state = {
             cardsDelt: false,
             playersBets: [],
-            playerTurnIndex: 0
+            playerTurnIndex: 1,
+            round: 0
 
         }
 
         const options = {}
-        let numOfPlayers = 2
         let player1 = new Player("Ryan", "player", 10000)
         let player2 = new Player("Other", "player", 10000)
         options.Players = []
@@ -35,11 +34,13 @@ class GameTable extends Component {
     }
 
     componentDidMount() {
+        console.log("Component Mounted")
         this.GamePlay.startGame()
-        this.setFirstPlayersTurn()
+        this.setPlayersTurn(1)
+       
     }
 
-    placeBet = (playerIndex, amount, isBuyIn = false) => {
+    placeBet = (playerIndex, amount = 5, isBuyIn = false) => {
 
         if (isBuyIn) {
             this.GamePlay.dealOutCards(this.cardsDelt)
@@ -49,30 +50,40 @@ class GameTable extends Component {
     cardsDelt = () => {
 
         this.setState({ cardsDelt: true })
-        this.setFirstPlayersTurn()
+        
 
     }
 
-    setFirstPlayersTurn = () => {
-        console.log(
-            this.GamePlay.Players[1]
-        )
-        this.GamePlay.Players[1].setIsTurn()
-        this.GamePlay.Players[1].canBet = true
-        this.GamePlay.Players[1].canHit = false
-        this.GamePlay.Players[1].canStay = false
 
-        this.setState({ playerTurnIndex: 1})
+    setPlayersTurn = (playerindex) => {
+        console.log("Inside Set Player turn Player number " + playerindex)
+        this.GamePlay.Players.forEach(player => {
+            player.canBet = 0
+        })
+        if (playerindex === 0 && this.state.round === 0) {
+            this.setState({ round: this.state.round + 1 })
+            this.GamePlay.dealOutCards(this.cardsDelt)
+
+        } else {
+            this.GamePlay.Players[playerindex].setIsTurn("bet")
+            this.GamePlay.Players[this.state.playerTurnIndex - 1].unsetIsTurn()
+            this.setState({ playerTurnIndex: playerindex })
+        }
 
     }
 
     actionClick = (event) => {
+        console.log(event)
         console.log(event.target)
         const name = event.target.getAttribute("data-name");
+        console.log(name)
         const playerIndex = event.target.getAttribute("data-player-index");
+        console.log(playerIndex)
         if (name && playerIndex) {
             let newPlayerBets = { playerIndex: playerIndex, amount: 5 }
-            this.setState({playersBets: [...this.playersBets, newPlayerBets]})
+            this.setPlayersTurn(this.GamePlay.getNextPlayer());
+            this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] })
+            
         }
 
     }
@@ -83,109 +94,105 @@ class GameTable extends Component {
             <div className={"game-table"}>
 
                 <div className={"box"}>
-                    <Grid container spacing={10}>
-                        {this.state.cardsDelt ? this.GamePlay.Players.map((player, index) => {
+                    <Grid container spacing={2}>
+                        {this.GamePlay.Players.map((player, index) => {
                             if (index === 0) {
                                 return (
+                                   
                                     <Grid item xs={12}>
+                                      <h2 className="white">Dealer</h2>
                                         <div className="hand">
-                                            <h2 className="white">Dealer</h2>
-                                            <DealerHand
-                                                key={player.name}
-                                                playerPosition={(this.GamePlay.Players.length + 1)}
-                                                isPlayerTurn={"test"}
-                                                cards={player.cards}
-                                                gamePlay={this.GamePlay} />
+                                        {this.state.cardsDelt ? (
+                                            
+                                                
+                                                <DealerHand
+                                                    key={"dealer"}
+                                                    playerPosition={(this.GamePlay.Players.length + 1)}
+                                                    isPlayerTurn={"test"}
+                                                    cards={player.cards}
+                                                    gamePlay={this.GamePlay} />
 
 
-                                        </div>
-                                    </Grid>
+                                           
+                                                ) : (null)}
+                                            </div>
+                                        </Grid>
+                                    
+
                                 )
 
-                            }
-
-                            return (
-                                <Grid item xs={12}>
-                                    <div className="hand">
-                                        <h2 className="white">Player {player.name}</h2>
-                                        <PlayerHand
-                                            key={player.name}
-                                            playerPosition={index}
-                                            isPlayerTurn={player.isTurn}
-                                            cards={player.cards}
-                                            gamePlay={this.GamePlay}
-                                        />
-                                    </div>
-                                    {player.isTurn ? (
-                                        <PlayerActions
-                                            bet={player.canBet}
-                                            stay={player.canStay}
-                                            hit={player.canHit}
-                                            double={player.canDouble}
-                                            split={player.canSplit}
-                                            player={index}
-                                            playerIndex={index}
-                                            actionClick={this.actionClick}
-                                        />) : (null)}
-                                    {(this.state.playersBets.length > 0) ?
-                                        this.state.playersBets[index].map((bet, betindex) => {
-                                            if (bet.playerIndex === index) {
-                                                return (
-                                                    <PlayerBet
-                                                        playerIndex={bet.playerIndex}
-                                                        amount={bet.amount}
-
-                                                    />
-                                                )
-                                            } else { return null }
-                                        })
-                                        : (null)}
-                                </Grid>
-                            )
-                        }) : (this.GamePlay.Players.map((player, index) => {
-                            if (player.isTurn) {
+                            } else
+                            {
 
                                 return (
                                     <div>
-                                        <PlayerActions
-                                            bet={player.canBet}
-                                            stay={player.canStay}
-                                            hit={player.canHit}
-                                            double={player.canDouble}
-                                            split={player.canSplit}
-                                            player={index}
-                                            playerIndex={index}
-                                            actionClick={this.actionClick}
-                                        />
-                                        {(this.state.playersBets.length > 0) ?
-                                            this.state.playersBets[index].map((bet, betindex) => {
+                                    <Grid item xs={6}>
+                                     <h2 className="white">Player {player.name}</h2>
+                                            <div className="hand">
+                                            {this.state.cardsDelt ? (
+                                                <PlayerHand
+                                                    key={player.name}
+                                                    playerPosition={index}
+                                                    isPlayerTurn={player.isTurn}
+                                                    cards={player.cards}
+                                                    gamePlay={this.GamePlay}
+                                                />
+                                            
+                                        ) : (null)
+                                                }
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                       <h3>Bets</h3>
+                                         <div className="betbox">
+                                        {this.state.playersBets.map((bet, betindex) => {
                                                 if (bet.playerIndex === index) {
                                                     return (
+                                                        <div>
+                                                            
                                                         <PlayerBet
+                                                            key={betindex}
                                                             playerIndex={bet.playerIndex}
                                                             amount={bet.amount}
 
-                                                        />
+                                                            />
+                                                        </div>
+
                                                     )
                                                 } else { return null }
-                                            })
-                                            : (null)
-                                        }
+                                            })}
+                                         </div>
+                                      <h3>Actions</h3>
+                                         <div className="actionbox">
+                                           <PlayerActions
+                                                    bet={player.canBet}
+                                                    stay={player.canStay}
+                                                    hit={player.canHit}
+                                                    double={player.canDouble}
+                                                    split={player.canSplit}
+                                                    player={index}
+                                                    playerIndex={index}
+                                                    actionClick={this.actionClick}
+                                           />
+                                         </div>
+                                    </Grid>
                                     </div>
+                  
                                 )
-                            } else { return null }
-                        }))}
-                      </Grid>
-                    </div>
+                            }
+                        }
+
+                        )
+                        }
+                    </Grid>
 
                 </div>
 
+
+            </div>
         );
     }
 
 }
 
 export default GameTable
-
-
-
