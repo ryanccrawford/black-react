@@ -6,7 +6,6 @@ import GamePlay from '../GamePlay';
 import Player from '../Player'
 import PlayerHand from '../PlayerHand';
 import DealerHand from '../DealerHand'
-
 import './style.css';
 
 
@@ -37,7 +36,7 @@ class GameTable extends Component {
         console.log("Component Mounted")
         this.GamePlay.startGame()
         this.setPlayersTurn(1)
-       
+
     }
 
     placeBet = (playerIndex, amount = 5, isBuyIn = false) => {
@@ -49,8 +48,13 @@ class GameTable extends Component {
 
     cardsDelt = () => {
 
+
         this.setState({ cardsDelt: true })
-        
+        //steps to check game outcome
+        //1 check to see if anyone has 21
+        //if so check to see if dealer has 21 if so
+        //close game and return all bets. IF not payout players with
+        //21 2:1 and all players who don't house keeps there money
 
     }
 
@@ -83,7 +87,7 @@ class GameTable extends Component {
             let newPlayerBets = { playerIndex: playerIndex, amount: 5 }
             this.setPlayersTurn(this.GamePlay.getNextPlayer());
             this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] })
-            
+
         }
 
     }
@@ -98,13 +102,13 @@ class GameTable extends Component {
                         {this.GamePlay.Players.map((player, index) => {
                             if (index === 0) {
                                 return (
-                                   
+
                                     <Grid item xs={12}>
                                       <h2 className="white">Dealer</h2>
                                         <div className="hand">
                                         {this.state.cardsDelt ? (
-                                            
-                                                
+
+
                                                 <DealerHand
                                                     key={"dealer"}
                                                     playerPosition={(this.GamePlay.Players.length + 1)}
@@ -113,11 +117,11 @@ class GameTable extends Component {
                                                     gamePlay={this.GamePlay} />
 
 
-                                           
+
                                                 ) : (null)}
                                             </div>
                                         </Grid>
-                                    
+
 
                                 )
 
@@ -137,7 +141,7 @@ class GameTable extends Component {
                                                     cards={player.cards}
                                                     gamePlay={this.GamePlay}
                                                 />
-                                            
+
                                         ) : (null)
                                                 }
                                         </div>
@@ -149,7 +153,7 @@ class GameTable extends Component {
                                                 if (bet.playerIndex === index) {
                                                     return (
                                                         <div>
-                                                            
+
                                                         <PlayerBet
                                                             key={betindex}
                                                             playerIndex={bet.playerIndex}
@@ -177,7 +181,7 @@ class GameTable extends Component {
                                          </div>
                                     </Grid>
                                     </div>
-                  
+
                                 )
                             }
                         }

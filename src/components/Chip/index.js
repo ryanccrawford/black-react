@@ -3,7 +3,8 @@ import SVG from 'react-inlinesvg';
 import './style.css';
 
 export default function Chip(props) {
-    const chipImage = ".images/chip.svg"
+    console.log("inside Chip")
+    const chipImage = "./images/chip.svg"
     return (
 
         <SVG

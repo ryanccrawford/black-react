@@ -22,3 +22,7 @@
 .white {
     color:white;
 }
+
+.col {
+    display: flex;
+}

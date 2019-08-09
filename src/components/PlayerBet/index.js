@@ -3,7 +3,7 @@ import Chip from '../Chip';
 import './style.css';
 
 export default function PlayerBet(props) {
-
+    console.log("inside Player Bet")
     return (
 
             <div>

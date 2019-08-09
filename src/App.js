@@ -15,6 +15,7 @@ class App extends Component {
 
 
     render() {
+
         return (
             <div>
                 <CssBaseline />
@@ -22,7 +23,8 @@ class App extends Component {
                     <TopBar>
                     </TopBar>
                     <Container>
-                        <GameTable/>
+                        <GameTable />
+
                    </Container>
                 </Container>
             </div>
