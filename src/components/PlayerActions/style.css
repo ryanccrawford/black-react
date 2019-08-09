@@ -1,0 +1,23 @@
+.action-button {
+    border-radius: 28px;
+    background-color: #f20000;
+    color: white;
+    padding: 10px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border-color: white;
+    display: inline-block;
+}
+
+    .action-button:hover {
+
+        background-color: #810000;
+        color: white;
+        box-shadow: 3px 3px 4px rgba(12, 12, 12,.9);
+        border-color: #ECECEC;
+
+    }
+
+    .action-button svg {
+        margin-left: 8px;
+    }

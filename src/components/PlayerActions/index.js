@@ -3,7 +3,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import './style.css';
 
 //<FontAwesomeIcon icon="check-square" />
 
@@ -24,7 +24,7 @@ export default function PlayerActions(props) {
         },
     }));
 
-    
+
         return (
             <div>
                 <div variant="contained"
@@ -38,20 +38,20 @@ export default function PlayerActions(props) {
                             data-player-index={props.playerIndex}
                             variant="contained"
                             color="dark"
-                            className={classes.button}
+                            className={"action-button"}
                         onClick={!props.bet ? null : props.actionClick}
                         >
                         BET
                     <FontAwesomeIcon className={classes.rightIcon} icon="coins" />
                     </button>
-       
+
                     <button
                         disabled={!props.hit }
                             data-name={"hit"}
                             data-player-index={props.playerIndex}
                             variant="contained"
                             color="dark"
-                            className={classes.button}
+                        className={"action-button"}
                         onClick={!props.hit ? null : props.actionClick}
                         >
                     HIT
@@ -63,7 +63,7 @@ export default function PlayerActions(props) {
                         data-player-index={props.playerIndex}
                         variant="contained"
                         color="dark"
-                        className={classes.button}
+                        className={"action-button"}
                         onClick={!props.stay ? null : props.actionClick}
                     >
                 STAY
@@ -75,7 +75,7 @@ export default function PlayerActions(props) {
                             data-player-index={props.playerIndex}
                             variant="contained"
                             color="dark"
-                            className={classes.button}
+                        className={"action-button"}
                         onClick={!props.double ? null : props.actionClick}
                         >
                 DOUBLE DOWN
@@ -87,7 +87,7 @@ export default function PlayerActions(props) {
                             data-player-index={props.playerIndex}
                             variant="contained"
                             color="dark"
-                            className={classes.button}
+                        className={"action-button"}
                         onClick={!props.split ? null : props.actionClick}
                         >
                     SPLIT

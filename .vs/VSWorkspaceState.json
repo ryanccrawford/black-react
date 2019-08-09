@@ -4,13 +4,13 @@
     "\\src",
     "\\src\\components",
     "\\src\\components\\DealerHand",
+    "\\src\\components\\GameMessage",
     "\\src\\components\\GamePlay",
     "\\src\\components\\GameTable",
-    "\\src\\components\\PlayCard",
-    "\\src\\components\\Player",
-    "\\src\\components\\PlayerHand",
+    "\\src\\components\\PlayerActions",
+    "\\src\\components\\PlayerBet",
     "\\src\\components\\TopBar"
   ],
-  "SelectedNode": "\\src\\components\\GameTable\\index.js",
+  "SelectedNode": "\\src\\components\\GameTable\\style.css",
   "PreviewInSolutionExplorer": false
 }

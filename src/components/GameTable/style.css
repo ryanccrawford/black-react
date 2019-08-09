@@ -26,3 +26,7 @@
 .col {
     display: flex;
 }
+
+.action-box {
+    width: 300px;
+}
