@@ -42,6 +42,7 @@ class GamePlay {
 
     placeBet = (playerIndex, amount, PlayerBetCallback) => {
 
+        this.Players[playerIndex].lastBet = amount
         this.Players[playerIndex].bankRoll -= amount
         this.Players[playerIndex].bets.push(amount)
         PlayerBetCallback(playerIndex, amount)

@@ -6,7 +6,9 @@ import GamePlay from '../GamePlay';
 import Player from '../Player'
 import PlayerHand from '../PlayerHand';
 import DealerHand from '../DealerHand'
+import { ToastContainer, toast  } from 'react-toastify';
 import './style.css';
+
 
 
 class GameTable extends Component {
@@ -31,6 +33,10 @@ class GameTable extends Component {
         this.GamePlay = new GamePlay(options)
 
     }
+
+    notify = (message) => {
+        toast(message)
+    };
 
     componentDidMount() {
         console.log("Component Mounted")
@@ -82,15 +88,26 @@ class GameTable extends Component {
         const name = event.target.getAttribute("data-name");
         console.log(name)
         const playerIndex = event.target.getAttribute("data-player-index");
+        const amount = event.target.value;
         console.log(playerIndex)
         if (name && playerIndex) {
-            let newPlayerBets = { playerIndex: playerIndex, amount: 5 }
-            this.setPlayersTurn(this.GamePlay.getNextPlayer());
-            this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] })
-
+           
+           
+            this.GamePlay.placeBet(playerIndex, amount, this.betCallBack)
+           
         }
 
     }
+
+    betCallBack = (playerIndex, amount) => {
+        let bankLeft = this.GamePlay.Players[playerIndex].bankRoll
+        this.notify("You Bet $" + amount + ". You have $" + bankLeft)
+        let newPlayerBets = { playerIndex: playerIndex, amount: amount }
+        this.setPlayersTurn(this.GamePlay.getNextPlayer());
+        this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] })
+    }
+
+
 
     render() {
         return (
@@ -166,9 +183,11 @@ class GameTable extends Component {
                                                 } else { return null }
                                             })}
                                          </div>
-                                      <h3>Actions</h3>
+                                            <h3>Actions</h3>
+                                            <ToastContainer/>
                                          <div className="actionbox">
-                                           <PlayerActions
+                                                <PlayerActions
+                                                    amount={player.lastBet || 5}
                                                     bet={player.canBet}
                                                     stay={player.canStay}
                                                     hit={player.canHit}

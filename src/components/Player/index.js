@@ -12,6 +12,7 @@ class Player {
         this.canHit = false
         this.canDouble = false
         this.canSplit = false
+        this.lastBet = 0
         this.avatar = null
         this.cards = []
         this.split = []
