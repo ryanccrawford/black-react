@@ -1,16 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\src",
-    "\\src\\components",
-    "\\src\\components\\DealerHand",
-    "\\src\\components\\GameMessage",
-    "\\src\\components\\GamePlay",
-    "\\src\\components\\GameTable",
-    "\\src\\components\\PlayerActions",
-    "\\src\\components\\PlayerBet",
-    "\\src\\components\\TopBar"
+    ""
   ],
-  "SelectedNode": "\\src\\components\\GameTable\\style.css",
+  "SelectedNode": "\\Global settings (C:\\Users\\RyanC\\AppData\\Local\\Microsoft\\VisualStudio\\15.0_deb323c1\\OpenFolder)",
   "PreviewInSolutionExplorer": false
 }
