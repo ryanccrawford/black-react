@@ -74,8 +74,13 @@ class GameTable extends Component {
             this.setState({ round: this.state.round + 1 })
             this.GamePlay.dealOutCards(this.cardsDelt)
 
-        } else {
+        } else if (playerindex !== 0 && this.state.round === 0) {
+            
             this.GamePlay.Players[playerindex].setIsTurn("bet")
+            this.setState({ playerTurnIndex: playerindex})
+
+        } else if (playerindex !== 0 && this.state.round === 1) {
+            this.GamePlay.Players[playerindex].setIsTurn("play")
             this.GamePlay.Players[this.state.playerTurnIndex - 1].unsetIsTurn()
             this.setState({ playerTurnIndex: playerindex })
         }
@@ -172,7 +177,7 @@ class GameTable extends Component {
                                                         <div>
 
                                                         <PlayerBet
-                                                            key={betindex}
+                                                            key={betindex + bet.playerIndex}
                                                             playerIndex={bet.playerIndex}
                                                             amount={bet.amount}
 
@@ -187,6 +192,7 @@ class GameTable extends Component {
                                             <ToastContainer/>
                                          <div className="actionbox">
                                                 <PlayerActions
+                                                    key={index}
                                                     amount={player.lastBet || 5}
                                                     bet={player.canBet}
                                                     stay={player.canStay}

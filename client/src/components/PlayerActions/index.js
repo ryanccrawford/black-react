@@ -9,12 +9,6 @@ import './style.css';
 
  class PlayerActions extends Component {
 
-     ranges = [
-         {
-             value: '5-100',
-             label: '5 to 100'
-         }
-         ]
     classes = makeStyles(theme => ({
         button: {
             margin: theme.spacing(4),
@@ -67,7 +61,8 @@ import './style.css';
      }
 
      render() {
-         
+         console.log("Inside Render Of Player Actions")
+         console.log(this.state)
          return (
              <div>
                 
@@ -77,7 +72,7 @@ import './style.css';
                      aria-label="large contained primary button group"
                  >
                      <TextField
-                         id="betAmount"
+                         id={"betAmount_" + this.state.playerIndex}
                          label="Amount"
                          value={this.state.amount}
                          onChange={this.onChange}
@@ -92,7 +87,7 @@ import './style.css';
                          variant="outlined"
                      />  
                      <button
-                         id={"betButton"}
+                         id={"betButton_" + this.state.playerIndex}
                          disabled={!this.state.bet}
                          data-name={"bet"}
                          data-player-index={this.state.playerIndex}
