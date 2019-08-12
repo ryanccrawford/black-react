@@ -30,6 +30,7 @@ import './style.css';
 
      constructor(props) {
          super(props)
+         console.log(props)
          this.state = {
              bet: props.bet,
              stay: props.stay,

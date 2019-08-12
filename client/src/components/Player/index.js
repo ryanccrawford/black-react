@@ -26,14 +26,16 @@ class Player {
         console.log("inside player.setIsTurn Type:" + type)
         this.isTurn = true
         if (type === "bet" && this.cards.length < 1) {
+
             this.canBet = true;
+            console.log(this.canBet)
         }
-        
+
 
     }
 
     unsetIsTurn = () => {
-       
+
         this.isTurn = false
         //this.canBet = false
         //this.canStay = false

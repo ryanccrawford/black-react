@@ -122,6 +122,8 @@ class GameTable extends Component {
                 <div className={"box"}>
                     <Grid container spacing={2}>
                         {this.GamePlay.Players.map((player, index) => {
+                            console.log("Rendering game Table")
+                            console.log(player)
                             if (index === 0) {
                                 return (
 
