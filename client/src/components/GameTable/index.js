@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import PlayerActions from '../PlayerActions'
-import PlayerBet from '../PlayerBet'
+import PlayerActions from '../PlayerActions';
+import PlayerBet from '../PlayerBet';
 import GamePlay from '../GamePlay';
-import Player from '../Player'
+import Player from '../Player';
 import PlayerHand from '../PlayerHand';
-import DealerHand from '../DealerHand'
+import DealerHand from '../DealerHand';
 import { ToastContainer, toast  } from 'react-toastify';
 import './style.css';
 
@@ -75,7 +75,7 @@ class GameTable extends Component {
             this.GamePlay.dealOutCards(this.cardsDelt)
 
         } else if (playerindex !== 0 && this.state.round === 0) {
-            
+
             this.GamePlay.Players[playerindex].setIsTurn("bet")
             this.setState({ playerTurnIndex: playerindex})
 
@@ -96,10 +96,10 @@ class GameTable extends Component {
         const amount = event.target.value;
         console.log(playerIndex)
         if (name && playerIndex) {
-           
-           
+
+
             this.GamePlay.placeBet(playerIndex, amount, this.betCallBack)
-           
+
         }
 
     }
@@ -127,10 +127,10 @@ class GameTable extends Component {
 
                                     <Grid item xs={12}>
                                       <h2 className="white">Dealer</h2>
-                                        <div className="hand">
+
                                         {this.state.cardsDelt ? (
 
-
+                                            <div className="hand">
                                                 <DealerHand
                                                     key={"dealer"}
                                                     playerPosition={(this.GamePlay.Players.length + 1)}
@@ -138,10 +138,10 @@ class GameTable extends Component {
                                                     cards={player.cards}
                                                     gamePlay={this.GamePlay} />
 
-
-
-                                                ) : (null)}
                                             </div>
+
+                                        ) : (<div className="hand"></div>)}
+
                                         </Grid>
 
 
@@ -152,10 +152,10 @@ class GameTable extends Component {
 
                                 return (
                                     <div>
-                                    <Grid item xs={6}>
+                                        <Grid key={"grid" + player.name} item xs={6}>
                                      <h2 className="white">Player {player.name}</h2>
-                                            <div className="hand">
                                             {this.state.cardsDelt ? (
+                                                <div className="hand">
                                                 <PlayerHand
                                                     key={player.name}
                                                     playerPosition={index}
@@ -163,10 +163,10 @@ class GameTable extends Component {
                                                     cards={player.cards}
                                                     gamePlay={this.GamePlay}
                                                 />
-
-                                        ) : (null)
+                                                </div>
+                                            ) : (<div className="hand"></div>)
                                                 }
-                                        </div>
+
                                     </Grid>
                                     <Grid item xs={6}>
                                        <h3>Bets</h3>
@@ -185,7 +185,7 @@ class GameTable extends Component {
                                                         </div>
 
                                                     )
-                                                } else { return null }
+                                                } else {return <div></div>}
                                             })}
                                          </div>
                                             <h3>Actions</h3>

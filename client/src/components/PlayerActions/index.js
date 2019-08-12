@@ -55,7 +55,7 @@ import './style.css';
          if (newValue > max) {
              newValue = max
          }
-         
+
          this.setState({ amount: newValue})
 
      }
@@ -65,7 +65,7 @@ import './style.css';
          console.log(this.state)
          return (
              <div>
-                
+
                  <div variant="contained"
                      color="inherit"
                      size="large"
@@ -76,7 +76,7 @@ import './style.css';
                          label="Amount"
                          value={this.state.amount}
                          onChange={this.onChange}
-                         disabled={!this.state.bet}
+
                          type="number"
                          className={this.classes.textField}
                          InputLabelProps={{
@@ -85,7 +85,7 @@ import './style.css';
                          inputProps={{"step":"5","data-max":"200","data-min":"5","data-player-index": this.state.playerIndex}}
                          margin="normal"
                          variant="outlined"
-                     />  
+                     />
                      <button
                          id={"betButton_" + this.state.playerIndex}
                          disabled={!this.state.bet}
