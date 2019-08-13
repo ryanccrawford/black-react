@@ -1,4 +1,6 @@
+require('dotenv').config();
 const express = require("express");
+const session = require('express-session')
 const logger = require("morgan");
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -16,7 +18,12 @@ app.use(function (req, res, next) {
 });
 // Passport middleware
 app.use(passport.initialize());
-
+//sessions
+app.use(
+    session({
+        secret: process.env.SECERET_TO_SESSIONS //pick a random string to make the hash that is generated secure
+    })
+);
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {

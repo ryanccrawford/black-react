@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 const axios = require('axios');
-//const apiserver = "http://localhost:3001";
+const apiserver = "http://localhost:3001";
 
 class Signin extends Component {
     constructor() {
@@ -23,7 +23,8 @@ class Signin extends Component {
         };
         axios({
             method: "POST",
-            url: "/api/login", //apiserver + "/api/login",
+            url: "/api/login",
+            //url: apiserver + "/api/login",
             data: userData
         }).then(this.doSuccess).catch(this.doError)
 

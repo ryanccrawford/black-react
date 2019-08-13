@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 const axios = require('axios');
-//const apiserver = "http://localhost:3001"
+const apiserver = "http://localhost:3001"
 
 class Signup extends Component {
     constructor() {
@@ -29,7 +29,8 @@ class Signup extends Component {
         console.log(newUser);
         axios({
             method: "POST",
-            url: "/api/register",  //apiserver + "/api/register",
+            url: "/api/register",
+          //url: apiserver + "/api/register",
             data: newUser
         }).then(this.doSuccess).catch(this.doError)
 
@@ -40,6 +41,7 @@ class Signup extends Component {
         console.log(response)
         if (response.status === 200) {
             console.log(response.data)
+
             window.location.replace('/gamescreen');
         }
         else if (response.status > 200 && response.status < 500) {
