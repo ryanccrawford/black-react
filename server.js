@@ -16,15 +16,19 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-// Passport middleware
-app.use(passport.initialize());
+
 //sessions
 app.use(
     session({
-        secret: process.env.SECERET_TO_SESSIONS //pick a random string to make the hash that is generated secure
+        secret: process.env.SECERET_TO_SESSIONS,
+        resave: false,
+        saveUninitialized: false
     })
-);
 
+);
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

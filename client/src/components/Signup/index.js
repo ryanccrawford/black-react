@@ -29,8 +29,8 @@ class Signup extends Component {
         console.log(newUser);
         axios({
             method: "POST",
-            url: "/api/register",
-          //url: apiserver + "/api/register",
+            //url: "/api/register",
+          url: apiserver + "/api/register",
             data: newUser
         }).then(this.doSuccess).catch(this.doError)
 
