@@ -32,11 +32,10 @@ import './style.css';
          super(props)
          console.log(props)
          this.state = {
-             bet: props.bet,
-             stay: props.stay,
-             hit: props.hit,
-             double: props.double,
-             split: props.split,
+             bet: props.gamePlay.Players[props.playerIndex].canBet,
+             stay: props.gamePlay.Players[props.playerIndex].canStay,
+             hit: props.gamePlay.Players[props.playerIndex].canHit,
+             split: props.gamePlay.Players[props.playerIndex].canSplit,
              actionClick: props.actionClick,
              playerIndex: props.playerIndex,
              amount: props.amount

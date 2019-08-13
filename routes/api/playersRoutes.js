@@ -1,8 +1,8 @@
-require('dotenv').config()
-const mongoose = require("mongoose")
-const dbURL = process.env.MONGODB_URI || "mongodb://localhost/reactjack"
-mongoose.connect(dbURL, { useNewUrlParser: true })
-const db = require("../../models")
+require('dotenv').config();
+const mongoose = require("mongoose");
+const dbURL = process.env.MONGODB_URI || "mongodb://localhost/reactjack";
+mongoose.connect(dbURL, { useNewUrlParser: true });
+const db = require("../../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const validateRegisterInput = require("../../controllers/registerController");
@@ -10,6 +10,12 @@ const validateLoginInput = require("../../controllers/loginController");
 
 
 module.exports = function (app) {
+
+    app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
 
     app.post("/api/register", (req, res) => {
         // Form validation

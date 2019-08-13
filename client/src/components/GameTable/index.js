@@ -67,16 +67,15 @@ class GameTable extends Component {
 
     setPlayersTurn = (playerindex) => {
         console.log("Inside Set Player turn Player number " + playerindex)
-        this.GamePlay.Players.forEach(player => {
-            player.canBet = 0
-        })
+
         if (playerindex === 0 && this.state.round === 0) {
             this.setState({ round: this.state.round + 1 })
             this.GamePlay.dealOutCards(this.cardsDelt)
 
-        } else if (playerindex !== 0 && this.state.round === 0) {
-
-            this.GamePlay.Players[playerindex].setIsTurn("bet")
+        } else if (playerindex !== 0 && this.state.round === 0 && this.GamePlay.Players[playerindex].bets.length < 1) {
+            console.log("Player is not the dealer and its first betting round and no bets have been made. ")
+            this.GamePlay.Players[playerindex].canBet = true;
+            console.log("we just set the player canBet to True")
             this.setState({ playerTurnIndex: playerindex})
 
         } else if (playerindex !== 0 && this.state.round === 1) {
@@ -86,7 +85,7 @@ class GameTable extends Component {
         }
 
     }
-
+    //Handles the button click events for game play
     actionClick = (event) => {
         console.log(event)
         console.log(event.target)
@@ -195,13 +194,9 @@ class GameTable extends Component {
                                          <div className="actionbox">
                                                 <PlayerActions
                                                     key={index}
-                                                    amount={player.lastBet || 5}
-                                                    bet={player.canBet}
-                                                    stay={player.canStay}
-                                                    hit={player.canHit}
-                                                    double={player.canDouble}
-                                                    split={player.canSplit}
-                                                    player={index}
+                                                    amount={this.GamePlay.Players[index].lastBet || 5}
+                                                    player={player}
+                                                    gamePlay={this.GamePlay}
                                                     playerIndex={index}
                                                     actionClick={this.actionClick}
                                            />

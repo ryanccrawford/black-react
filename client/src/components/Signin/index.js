@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+const axios = require('axios');
+//const apiserver = "http://localhost:3001";
 
 class Signin extends Component {
     constructor() {
@@ -20,12 +21,37 @@ class Signin extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        console.log(userData);
+        axios({
+            method: "POST",
+            url: "/api/login", //apiserver + "/api/login",
+            data: userData
+        }).then(this.doSuccess).catch(this.doError)
+
     };
+
+    doSuccess = (response) => {
+        console.log("Inside Success")
+        console.log(response)
+        if (response.status === 200) {
+            console.log(response.data)
+            window.location.replace('/gamescreen');
+        }
+        else if (response.status > 200 && response.status < 500) {
+            this.setState({ errors: { bad: response.data }, password: ""})
+        }
+    }
+
+    doError = (err) => {
+
+        this.setState({ errors: { bad: "Wrong Email or Password Combination"} })
+
+    }
+
     render() {
         const { errors } = this.state;
         return (
             <div className="container">
+                {errors.bad ? (<div>{errors.bad}</div>) : (null)}
                 <div style={{ marginTop: "4rem" }} className="row">
                     <div className="col s8 offset-s2">
                         <Link to="/" className="btn-flat waves-effect">

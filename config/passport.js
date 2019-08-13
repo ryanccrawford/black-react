@@ -1,14 +1,14 @@
-require('dotenv').config()
+require('dotenv').config();
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
-const mongoose = require("mongoose")
-const dbURL = process.env.MONGODB_URI || "mongodb://localhost/reactjack"
-mongoose.connect(dbURL, { useNewUrlParser: true })
-const db = require("../models")
+const mongoose = require("mongoose");
+const dbURL = process.env.MONGODB_URI || "mongodb://localhost/reactjack";
+mongoose.connect(dbURL, { useNewUrlParser: true });
+const db = require("../models");
 const opts = {};
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = process.env.SECERET_OR_KEY
+opts.secretOrKey = process.env.SECERET_OR_KEY;
 
 module.exports = passport => {
     passport.use(

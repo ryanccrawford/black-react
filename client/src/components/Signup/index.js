@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+const axios = require('axios');
+//const apiserver = "http://localhost:3001"
 
 class Signup extends Component {
     constructor() {
@@ -17,6 +19,7 @@ class Signup extends Component {
     };
     onSubmit = e => {
         e.preventDefault();
+
         const newUser = {
             name: this.state.name,
             email: this.state.email,
@@ -24,11 +27,40 @@ class Signup extends Component {
             password2: this.state.password2
         };
         console.log(newUser);
+        axios({
+            method: "POST",
+            url: "/api/register",  //apiserver + "/api/register",
+            data: newUser
+        }).then(this.doSuccess).catch(this.doError)
+
     };
+
+    doSuccess = (response) => {
+        console.log("Inside Success")
+        console.log(response)
+        if (response.status === 200) {
+            console.log(response.data)
+            window.location.replace('/gamescreen');
+        }
+        else if (response.status > 200 && response.status < 500) {
+            this.setState({ errors: { bad: response.data }, password: "" })
+        }
+    }
+
+    doError = (err) => {
+
+        this.setState({ errors: { bad: "Something isn't right try again" } })
+
+    }
+
+
+
+
     render() {
         const { errors } = this.state;
         return (
             <div className="container">
+                {errors.bad ? (<div>{errors.bad}</div>) :(null) }
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <Link to="/" className="btn-flat waves-effect">

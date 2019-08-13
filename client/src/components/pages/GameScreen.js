@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import GameTable from '../components/GameTable'
+import GameTable from '../GameTable'
 import { ToastContainer, toast } from 'react-toastify';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -21,7 +21,7 @@ class GameScreen extends Component {
                         <GameTable />
                         <ToastContainer />
             </Container>
-           
+
         );
     }
 }
