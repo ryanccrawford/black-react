@@ -6,7 +6,7 @@ const db = require("../../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const validateRegisterInput = require("../../validation/registerValidation");
-const validateLoginInput = require("../../validation/loginValidattion");
+const validateLoginInput = require("../../validation/loginValidation");
 const path = require("path");
 
 module.exports = function (app) {
