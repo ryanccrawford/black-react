@@ -43,24 +43,31 @@ class GameTable extends Component {
 
     }
 
-    placeBet = (playerIndex, amount = 5, isBuyIn = false) => {
-
-        if (isBuyIn) {
-            this.GamePlay.dealOutCards(this.cardsDelt)
-        }
-    }
 
     cardsDelt = () => {
 
 
         this.setState({ cardsDelt: true })
         //steps to check game outcome
-        //1 check to see if anyone has 21
+        this.GamePlay.checkNaturals(this.wasNaturalGame, this.continueGame, this.renderCardsCB)
         //if so check to see if dealer has 21 if so
         //close game and return all bets. IF not payout players with
         //21 2:1 and all players who don't house keeps there money
 
     }
+
+    continueGame = () => {
+
+
+    }
+
+    wasNaturalGame = () => {
+
+        this.renderCardsCB()
+        
+
+    }
+
 
 
     setPlayersTurn = (playerindex) => {
@@ -125,6 +132,12 @@ class GameTable extends Component {
         if (this.state.playersBets.length === this.GamePlay.Players.length - 1 && !this.state.cardsDelt) {
             this.GamePlay.dealOutCards(this.cardsDelt)
         }
+
+    }
+
+    renderCardsCB = () => {
+        this.setState({ cardsDelt: false }, this.setState({ cardsDelt: true }))
+
 
     }
 

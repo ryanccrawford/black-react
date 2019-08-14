@@ -1,7 +1,20 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\components",
+    "\\client\\src\\components\\Chip",
+    "\\client\\src\\components\\DealerHand",
+    "\\client\\src\\components\\GameArea",
+    "\\client\\src\\components\\GameMessage",
+    "\\client\\src\\components\\GamePlay",
+    "\\client\\src\\components\\pages",
+    "\\client\\src\\components\\PlayCard",
+    "\\client\\src\\components\\PlayerActions",
+    "\\client\\src\\components\\PlayerBet",
+    "\\client\\src\\components\\TopBar"
   ],
-  "SelectedNode": "\\Global settings (C:\\Users\\RyanC\\AppData\\Local\\Microsoft\\VisualStudio\\15.0_deb323c1\\OpenFolder)",
+  "SelectedNode": "\\client\\src\\components\\PlayerActions\\style.css",
   "PreviewInSolutionExplorer": false
 }

@@ -13,7 +13,8 @@ class GamePlay {
         this.Players.push(Dealer)
         this.Players.push(...options.Players)
         this.round = 0
-        this.PlayerTurn = 0
+        this.PlayerTurn = 1
+        this.renderCard = null;
     }
 
     startGame = (callBack) => {
@@ -75,16 +76,79 @@ class GamePlay {
 
     }
 
-    checkDealerisNatural = () => {
-        if (this.Players[0].scoreHand().filter(score => (score === 21) ? true : false).length > 0) {
-            return true
+    //Check if anyone that is not a dealer has 21 and if so
+    //Check to seee if the dealers first card (face up) is an ace or a 10 J Q K if it s check to see if the dealer
+    //has 21 but don't reveal the facedown card if 
+    checkNaturals = (cbTrue, cbFalse, renderCardcb) => {
+        this.renderCard = renderCardcb
+        let playersWithNaturals = []
+        let numberOfPlayers = this.Players.length
+        for (let i = 1; i < numberOfPlayers; i++) {
+            if (this.checkPlayerNatural(i)) {
+                playersWithNaturals.push(i)
+            }
         }
-        return false
+        if (playersWithNaturals.length > 0) {
+            let dealerMightHaveNatural = this.Players[0].isFirstCardTenCard()
+            //check if dealer has first card face 10 if not pay out all players with 21 1.5 x each players bet
+            if (!dealerMightHaveNatural) {
+                this.payOutNaturals(playersWithNaturals)
+
+
+            } else {
+                //check if dealerHas 21 if not then 
+                if (!this.checkDealerisNatural) {
+                    this.payOutNaturals(playersWithNaturals)
+
+                } else {
+                    this.payOutNaturals(playersWithNaturals, 1)
+
+                }
+
+            }
+
+            cbTrue();
+
+        } else {
+            cbFalse();
+        }
+           
+    }
+
+    payOutNaturals = (naturalsArray, amountMul = 1.5) => {
+        while (naturalsArray.length > 0) {
+            let indx = naturalsArray.pop()
+            this.payOut(indx, amountMul)
+        }
+        this.Players[0].cards = []
+        this.renderCard(0)
+        
+    }
+
+    payOut = (playerIndex, multiPlier) => {
+        let sumOfBets = this.Players[playerIndex].sumBets()
+        let potWon = sumOfBets * multiPlier
+        let amountOfWin = potWon - sumOfBets
+        this.Players[playerIndex].bankRoll += potWon
+        this.Players[playerIndex].moneyWon += amountOfWin
+       // this.Players[playerIndex].cards = []
+        this.renderCard(playerIndex)
+    }
+
+
+    checkDealerisNatural = () => {
+     return  this.checkPlayerNatural(0);
     }
 
     checkPlayerNatural = (index) => {
-        if (this.Players[index].scoreHand().filter(score => (score === 21) ? true : false).length > 0) {
-            return true
+        if (this.Players[index].cards.length) {
+            let scoreH = this.Players[index].scoreHand()
+            console.log(scoreH)
+
+            if (scoreH.filter(score => (score.high === 21 || score.low === 21) ? true : false).length > 0) {
+                console.log("Player " + index + " Has 21")
+                return true
+            }
         }
         return false
 

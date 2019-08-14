@@ -19,6 +19,7 @@ class Player {
         this.bets = []
         this.validPlays = []
         this.handScore = []
+        this.moneyWon = 0
 
     }
 
@@ -37,11 +38,11 @@ class Player {
     unsetIsTurn = () => {
 
         this.isTurn = false
-        //this.canBet = false
-        //this.canStay = false
-        //this.canHit = false
-        //this.canDouble = false
-        //this.canSplit = false
+        this.canBet = false
+        this.canStay = false
+        this.canHit = false
+        this.canDouble = false
+        this.canSplit = false
 
 
     }
@@ -60,7 +61,17 @@ class Player {
         this.canSplit = false
     }
 
+    isFirstCardTenCard = () => {
+        return (this.cards[0].value === "A" || this.cards[0].value === "10" || this.cards[0].value === "Q" || this.cards[0].value === "J" || this.cards[0].value === "K")
+    }
 
+    sumBets = () => {
+        let amount = 0
+        while (this.bets.length > 0) {
+            amount += parseInt(this.bets.pop())
+        }
+        return amount
+    }
 
     scoreHand = () => {
         this.handScore = []
@@ -84,21 +95,21 @@ class Player {
 
             if (lowScore === 21 || highScore === 21) {
                 this.handScore.push({ low: 21, high: 21 })
-                return this.handScore
-            }
+                
+            }else
             if (lowScore > 21 && highScore > 21) {
-                this.handScore.push({ low: "bust", high: "bust" })
-                return this.handScore
-            }
+                this.handScore.push({ low: 0, high: 0 })
+               
+            }else
             if ((lowScore === 17 || highScore === 17) && this.type === "dealer") {
                 this.handScore.push({ low: 17, high: 17 })
-                return this.handScore
+
+            } else {
+                this.handScore.push({ low: lowScore, high: highScore })
             }
-            this.handScore.push({ low: lowScore, high: highScore })
-            return this.handScore
         })
 
-
+        return this.handScore
 
     }
 
