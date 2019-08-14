@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+
 const axios = require('axios');
 const apiserver = "http://localhost:3001"
 
@@ -61,7 +65,7 @@ class Signup extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div className="container">
+            <Container>
                 {errors.bad ? (<div>{errors.bad}</div>) :(null) }
                 <div className="row">
                     <div className="col s8 offset-s2">
@@ -135,7 +139,7 @@ class Signup extends Component {
                         </form>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

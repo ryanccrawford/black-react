@@ -19,7 +19,7 @@ class GameTable extends Component {
         this.state = {
             cardsDelt: false,
             playersBets: [],
-            playerTurnIndex: 1,
+            playerTurnIndex: 0,
             round: 0
 
         }
@@ -34,9 +34,7 @@ class GameTable extends Component {
 
     }
 
-    notify = (message) => {
-        toast(message)
-    };
+ 
 
     componentDidMount() {
         console.log("Component Mounted")
@@ -96,7 +94,7 @@ class GameTable extends Component {
         console.log(playerIndex)
         if (name && playerIndex) {
 
-
+            console.log("Placing Bet")
             this.GamePlay.placeBet(playerIndex, amount, this.betCallBack)
 
         }
@@ -104,14 +102,31 @@ class GameTable extends Component {
     }
 
     betCallBack = (playerIndex, amount) => {
+        console.log("inside betCallBack")
         let bankLeft = this.GamePlay.Players[playerIndex].bankRoll
-        this.notify("You Bet $" + amount + ". You have $" + bankLeft)
         let newPlayerBets = { playerIndex: playerIndex, amount: amount }
-        this.setPlayersTurn(this.GamePlay.getNextPlayer());
-        this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] })
+        let nextPlayer = this.GamePlay.getNextPlayer()
+        console.log("Next Player")
+        console.log(nextPlayer)
+        if (nextPlayer > this.GamePlay.Players.length) {
+            nextPlayer = 0;
+        }
+        this.setPlayersTurn(nextPlayer);
+        if (nextPlayer === 0)
+        console.log(newPlayerBets);
+        this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] },this.checkBets)
+        
     }
 
+    checkBets = () => {
+        console.log("Inside checkBets")
+        console.log("Bets Length" + this.state.playersBets.length)
+        console.log("Number of Betting Players" + (this.GamePlay.Players.length - 1))
+        if (this.state.playersBets.length === this.GamePlay.Players.length - 1 && !this.state.cardsDelt) {
+            this.GamePlay.dealOutCards(this.cardsDelt)
+        }
 
+    }
 
     render() {
         return (
