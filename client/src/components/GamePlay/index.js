@@ -170,9 +170,8 @@ class GamePlay {
     }
 
     hit = (playerIndex, callback) => {
-        let card = this.Deck.deal(false)
-        this.Players[playerIndex].cards.push(card)
-        callback()
+        this.Players[playerIndex].cards.push(this.Deck.deal(false))
+        callback(playerIndex)
 
     }
 

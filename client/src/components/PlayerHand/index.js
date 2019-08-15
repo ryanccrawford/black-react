@@ -12,7 +12,7 @@ class PlayerHand extends Component {
         console.log(props.cards)
         this.state.cards = props.cards
         this.state.playerPosition = props.playerPosition
-
+        this.state.round = props.round
     }
 
 
@@ -32,7 +32,8 @@ class PlayerHand extends Component {
 
                         <PlayCard
                             key={index}
-                            counter={(((index + 1) * ((this.state.playerPosition * 500) * this.state.playerPosition)))}
+                           
+                            counter={(this.state.round < 2) ?  (((index + 1) * ((parseInt(this.state.playerPosition) * 500) * parseInt(this.state.playerPosition)))) : (500)}
                             owner={card.owner}
                             rank={card.value}
                             suit={card.suit}

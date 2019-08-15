@@ -115,15 +115,17 @@ class GameTable extends Component {
 
         }
         if (name === "hit" && playerIndex) {
-
-            console.log("Taking Hit")
-            event.target.disabled = true;
-            this.GamePlay.hit(playerIndex)
+            
+            this.GamePlay.hit(playerIndex, this.hitCallBack)
 
         }
 
     }
+    hitCallBack = (playerIndex) => {
+        
+        this.forceUpdate()
 
+    }
     betCallBack = (playerIndex, amount) => {
         console.log("inside betCallBack")
         let bankLeft = this.GamePlay.Players[playerIndex].bankRoll
@@ -203,7 +205,8 @@ class GameTable extends Component {
                                             {this.state.cardsDelt ? (
                                                 <div className="hand">
                                                 <PlayerHand
-                                                    key={player.name}
+                                                        key={player.name}
+                                                        round={this.state.round}
                                                     playerPosition={index}
                                                     isPlayerTurn={player.isTurn}
                                                     cards={player.cards}
