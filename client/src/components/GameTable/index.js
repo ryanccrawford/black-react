@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import PlayerActions from '../PlayerActions';
-import PlayerBet from '../PlayerBet';
 import GamePlay from '../GamePlay';
 import Player from '../Player';
 import PlayerHand from '../PlayerHand';
 import DealerHand from '../DealerHand';
+import PlayerBet from '../PlayerBet';
+import Chip from '../Chip';
 import { ToastContainer, toast  } from 'react-toastify';
 import './style.css';
 
@@ -26,10 +27,10 @@ class GameTable extends Component {
 
         const options = {}
         let player1 = new Player("Ryan", "player", 10000)
-        let player2 = new Player("Other", "player", 10000)
+       // let player2 = new Player("Other", "player", 10000)
         options.Players = []
         options.Players.push(player1)
-        options.Players.push(player2)
+        //options.Players.push(player2)
         this.GamePlay = new GamePlay(options)
 
     }
@@ -68,6 +69,10 @@ class GameTable extends Component {
 
     }
 
+    componentDidUpdate() {
+        console.log("Component Did Updatde")
+    }
+
 
 
     setPlayersTurn = (playerindex) => {
@@ -87,6 +92,7 @@ class GameTable extends Component {
             this.GamePlay.Players[playerindex].setIsTurn("play")
             this.GamePlay.Players[this.state.playerTurnIndex - 1].unsetIsTurn()
             this.setState({ playerTurnIndex: playerindex })
+            
         }
 
     }
@@ -99,10 +105,20 @@ class GameTable extends Component {
         const playerIndex = event.target.getAttribute("data-player-index");
         const amount = event.target.value;
         console.log(playerIndex)
-        if (name && playerIndex) {
+        if (name === "bet" && playerIndex) {
 
             console.log("Placing Bet")
+                event.target.disabled = true;
             this.GamePlay.placeBet(playerIndex, amount, this.betCallBack)
+            this.setState({ playersBets: [...this.state.playersBets, { playerIndex: playerIndex, amount: amount }] })
+
+
+        }
+        if (name === "hit" && playerIndex) {
+
+            console.log("Taking Hit")
+            event.target.disabled = true;
+            this.GamePlay.hit(playerIndex)
 
         }
 
@@ -120,7 +136,8 @@ class GameTable extends Component {
         }
         this.setPlayersTurn(nextPlayer);
         if (nextPlayer === 0)
-        console.log(newPlayerBets);
+            console.log(newPlayerBets);
+
         this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] },this.checkBets)
         
     }
@@ -200,14 +217,15 @@ class GameTable extends Component {
                                     <Grid item xs={6}>
                                        <h3>Bets</h3>
                                          <div className="betbox">
-                                        {this.state.playersBets.map((bet, betindex) => {
+                                                {this.GamePlay.Players[index].bets.map((bet, betindex) => {
+                                                    console.log("players bets " + bet)
                                                 if (bet.playerIndex === index) {
                                                     return (
                                                         <div>
 
                                                         <PlayerBet
                                                             key={betindex + bet.playerIndex}
-                                                            playerIndex={bet.playerIndex}
+                                                            playerIndex={index}
                                                             amount={bet.amount}
 
                                                             />

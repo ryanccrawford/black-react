@@ -4,15 +4,15 @@ import './style.css';
 
 export default function Chip(props) {
     console.log("inside Chip")
-    const chipImage = "./images/chip.svg"
+   
     return (
-
+        <div>
         <SVG
             className="chip"
             backgroundColor="red"
-            src={chipImage}
+                src={"./images/chip.svg"}
         >{props.amount}</SVG>
-
+</div>
 
 
         )

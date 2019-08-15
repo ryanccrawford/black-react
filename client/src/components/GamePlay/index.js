@@ -169,10 +169,10 @@ class GamePlay {
 
     }
 
-    hit = (playerIndex) => {
+    hit = (playerIndex, callback) => {
         let card = this.Deck.deal(false)
         this.Players[playerIndex].cards.push(card)
-        //TODO ADD VALID PLAYS AFTER HIT
+        callback()
 
     }
 

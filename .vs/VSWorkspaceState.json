@@ -6,15 +6,11 @@
     "\\client\\src\\components",
     "\\client\\src\\components\\Chip",
     "\\client\\src\\components\\DealerHand",
-    "\\client\\src\\components\\GameArea",
-    "\\client\\src\\components\\GameMessage",
-    "\\client\\src\\components\\GamePlay",
-    "\\client\\src\\components\\pages",
+    "\\client\\src\\components\\GameTable",
     "\\client\\src\\components\\PlayCard",
-    "\\client\\src\\components\\PlayerActions",
-    "\\client\\src\\components\\PlayerBet",
-    "\\client\\src\\components\\TopBar"
+    "\\client\\src\\components\\Player",
+    "\\client\\src\\components\\PlayerActions"
   ],
-  "SelectedNode": "\\client\\src\\components\\PlayerActions\\style.css",
+  "SelectedNode": "\\client\\src\\components\\GamePlay\\index.js",
   "PreviewInSolutionExplorer": false
 }

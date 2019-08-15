@@ -84,7 +84,7 @@ import './style.css';
                          }}
                          inputProps={{"step":"5","data-max":"200","data-min":"5","data-player-index": this.state.playerIndex}}
                          margin="normal"
-                         variant="outlined"
+                         
                      />
                      <button
                          id={"betButton_" + this.state.playerIndex}
