@@ -84,66 +84,65 @@ import './style.css';
                          }}
                          inputProps={{"step":"5","data-max":"200","data-min":"5","data-player-index": this.state.playerIndex}}
                          margin="normal"
-                         variant="outlined"
+                         
                      />
                      <button
                          id={"betButton_" + this.state.playerIndex}
-                         disabled={!this.state.bet}
                          data-name={"bet"}
                          data-player-index={this.state.playerIndex}
                          variant="contained"
                          color="dark"
                          className={"action-button"}
-                         onClick={!this.state.bet ? null : this.state.actionClick}
+                         onClick={this.state.actionClick}
                      >
                          BET
                     <FontAwesomeIcon className={this.classes.rightIcon} icon="coins" />
                     </button>
 
                      <button
-                         disabled={!this.state.hit}
+                         
                          data-name={"hit"}
                          data-player-index={this.state.playerIndex}
                          variant="contained"
                          color="dark"
                          className={"action-button"}
-                         onClick={!this.state.hit ? null : this.state.actionClick}
+                         onClick={this.state.actionClick}
                      >
                          HIT
                     <FontAwesomeIcon className={this.classes.rightIcon} icon="hand-point-up" />
                      </button>
                      <button
-                         disabled={!this.state.stay}
+                         
                          data-name={"stay"}
                          data-player-index={this.state.playerIndex}
                          variant="contained"
                          color="dark"
                          className={"action-button"}
-                         onClick={!this.state.stay ? null : this.state.actionClick}
+                         onClick={this.state.actionClick}
                      >
                          STAY
                     <FontAwesomeIcon className={this.classes.rightIcon} icon="hand-paper" />
                      </button>
                      <button
-                         disabled={!this.state.double}
+                         
                          data-name={"double"}
                          data-player-index={this.state.playerIndex}
                          variant="contained"
                          color="dark"
                          className={"action-button"}
-                         onClick={!this.state.double ? null : this.state.actionClick}
+                         onClick={this.state.actionClick}
                      >
                          DOUBLE DOWN
                     <FontAwesomeIcon className={this.classes.rightIcon} icon="hand-point-up" />
                      </button>
                      <button
-                         disabled={!this.state.split}
+                        
                          data-name={"split"}
                          data-player-index={this.state.playerIndex}
                          variant="contained"
                          color="dark"
                          className={"action-button"}
-                         onClick={!this.state.split ? null : this.state.actionClick}
+                         onClick={this.state.actionClick}
                      >
                          SPLIT
                     <FontAwesomeIcon className={this.classes.rightIcon} icon="hand-point-up" />

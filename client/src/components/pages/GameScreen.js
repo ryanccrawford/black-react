@@ -11,7 +11,7 @@ library.add(fab, faCheckSquare, faHandPointUp, faHandPaper, faCoins)
 
 class GameScreen extends Component {
 
-    notify = () => toast("Wow so easy !");
+
 
 
     render() {
@@ -19,7 +19,7 @@ class GameScreen extends Component {
         return (
             <Container>
                         <GameTable />
-                        <ToastContainer />
+                        
             </Container>
 
         );

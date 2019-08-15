@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\components",
+    "\\client\\src\\components\\Chip",
+    "\\client\\src\\components\\DealerHand",
+    "\\client\\src\\components\\GameTable",
+    "\\client\\src\\components\\PlayCard",
+    "\\client\\src\\components\\Player",
+    "\\client\\src\\components\\PlayerActions"
   ],
-  "SelectedNode": "\\Global settings (C:\\Users\\RyanC\\AppData\\Local\\Microsoft\\VisualStudio\\15.0_deb323c1\\OpenFolder)",
+  "SelectedNode": "\\client\\src\\components\\GamePlay\\index.js",
   "PreviewInSolutionExplorer": false
 }

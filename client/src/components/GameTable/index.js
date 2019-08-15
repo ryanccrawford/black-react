@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import PlayerActions from '../PlayerActions';
-import PlayerBet from '../PlayerBet';
 import GamePlay from '../GamePlay';
 import Player from '../Player';
 import PlayerHand from '../PlayerHand';
 import DealerHand from '../DealerHand';
+import PlayerBet from '../PlayerBet';
+import Chip from '../Chip';
 import { ToastContainer, toast  } from 'react-toastify';
 import './style.css';
 
@@ -19,24 +20,22 @@ class GameTable extends Component {
         this.state = {
             cardsDelt: false,
             playersBets: [],
-            playerTurnIndex: 1,
+            playerTurnIndex: 0,
             round: 0
 
         }
 
         const options = {}
         let player1 = new Player("Ryan", "player", 10000)
-        let player2 = new Player("Other", "player", 10000)
+       // let player2 = new Player("Other", "player", 10000)
         options.Players = []
         options.Players.push(player1)
-        options.Players.push(player2)
+        //options.Players.push(player2)
         this.GamePlay = new GamePlay(options)
 
     }
 
-    notify = (message) => {
-        toast(message)
-    };
+ 
 
     componentDidMount() {
         console.log("Component Mounted")
@@ -45,24 +44,35 @@ class GameTable extends Component {
 
     }
 
-    placeBet = (playerIndex, amount = 5, isBuyIn = false) => {
-
-        if (isBuyIn) {
-            this.GamePlay.dealOutCards(this.cardsDelt)
-        }
-    }
 
     cardsDelt = () => {
 
 
         this.setState({ cardsDelt: true })
         //steps to check game outcome
-        //1 check to see if anyone has 21
+        this.GamePlay.checkNaturals(this.wasNaturalGame, this.continueGame, this.renderCardsCB)
         //if so check to see if dealer has 21 if so
         //close game and return all bets. IF not payout players with
         //21 2:1 and all players who don't house keeps there money
 
     }
+
+    continueGame = () => {
+
+
+    }
+
+    wasNaturalGame = () => {
+
+        this.renderCardsCB()
+        
+
+    }
+
+    componentDidUpdate() {
+        console.log("Component Did Updatde")
+    }
+
 
 
     setPlayersTurn = (playerindex) => {
@@ -82,6 +92,7 @@ class GameTable extends Component {
             this.GamePlay.Players[playerindex].setIsTurn("play")
             this.GamePlay.Players[this.state.playerTurnIndex - 1].unsetIsTurn()
             this.setState({ playerTurnIndex: playerindex })
+            
         }
 
     }
@@ -94,24 +105,58 @@ class GameTable extends Component {
         const playerIndex = event.target.getAttribute("data-player-index");
         const amount = event.target.value;
         console.log(playerIndex)
-        if (name && playerIndex) {
+        if (name === "bet" && playerIndex) {
 
-
+            console.log("Placing Bet")
+                event.target.disabled = true;
             this.GamePlay.placeBet(playerIndex, amount, this.betCallBack)
+            this.setState({ playersBets: [...this.state.playersBets, { playerIndex: playerIndex, amount: amount }] })
+
+
+        }
+        if (name === "hit" && playerIndex) {
+
+            console.log("Taking Hit")
+            event.target.disabled = true;
+            this.GamePlay.hit(playerIndex)
 
         }
 
     }
 
     betCallBack = (playerIndex, amount) => {
+        console.log("inside betCallBack")
         let bankLeft = this.GamePlay.Players[playerIndex].bankRoll
-        this.notify("You Bet $" + amount + ". You have $" + bankLeft)
         let newPlayerBets = { playerIndex: playerIndex, amount: amount }
-        this.setPlayersTurn(this.GamePlay.getNextPlayer());
-        this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] })
+        let nextPlayer = this.GamePlay.getNextPlayer()
+        console.log("Next Player")
+        console.log(nextPlayer)
+        if (nextPlayer > this.GamePlay.Players.length) {
+            nextPlayer = 0;
+        }
+        this.setPlayersTurn(nextPlayer);
+        if (nextPlayer === 0)
+            console.log(newPlayerBets);
+
+        this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] },this.checkBets)
+        
     }
 
+    checkBets = () => {
+        console.log("Inside checkBets")
+        console.log("Bets Length" + this.state.playersBets.length)
+        console.log("Number of Betting Players" + (this.GamePlay.Players.length - 1))
+        if (this.state.playersBets.length === this.GamePlay.Players.length - 1 && !this.state.cardsDelt) {
+            this.GamePlay.dealOutCards(this.cardsDelt)
+        }
 
+    }
+
+    renderCardsCB = () => {
+        this.setState({ cardsDelt: false }, this.setState({ cardsDelt: true }))
+
+
+    }
 
     render() {
         return (
@@ -172,14 +217,15 @@ class GameTable extends Component {
                                     <Grid item xs={6}>
                                        <h3>Bets</h3>
                                          <div className="betbox">
-                                        {this.state.playersBets.map((bet, betindex) => {
+                                                {this.GamePlay.Players[index].bets.map((bet, betindex) => {
+                                                    console.log("players bets " + bet)
                                                 if (bet.playerIndex === index) {
                                                     return (
                                                         <div>
 
                                                         <PlayerBet
                                                             key={betindex + bet.playerIndex}
-                                                            playerIndex={bet.playerIndex}
+                                                            playerIndex={index}
                                                             amount={bet.amount}
 
                                                             />

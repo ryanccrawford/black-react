@@ -4,9 +4,11 @@ import './style.css';
 
 export default function PlayerBet(props) {
     console.log("inside Player Bet")
+    console.log("Amount " + props.amount) 
     return (
-
-            <div>
+       
+        <div>
+            <h4>Bets</h4>
             <Chip
                 data-playerIndex={props.playerIndex}
                 data-amount={props.amount}

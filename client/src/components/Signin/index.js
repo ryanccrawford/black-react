@@ -1,5 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
 const axios = require('axios');
 const apiserver = "http://localhost:3001";
 
@@ -51,61 +57,62 @@ class Signin extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div className="container">
+            <Container maxWidth="sm">
                 {errors.bad ? (<div>{errors.bad}</div>) : (null)}
-                <div style={{ marginTop: "4rem" }} className="row">
-                    <div className="col s8 offset-s2">
+                    <Paper>
                         <Link to="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i> Back to
                             home
-            </Link>
-                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                            <h4>
-                                <b>Login</b> below
-              </h4>
-                            <p className="grey-text text-darken-1">
+                        </Link>
+                            <Typography variant="h4" >
+                             Login
+                            </Typography>
+                            <Typography>
                                 Don't have an account? <Link to="/register">Register</Link>
-                            </p>
-                        </div>
+                            </Typography>
                         <form noValidate onSubmit={this.onSubmit}>
-                            <div className="input-field col s12">
-                                <input
+                        <FormControl>
+                            <TextField
                                     onChange={this.onChange}
                                     value={this.state.email}
                                     error={errors.email}
                                     id="email"
                                     type="email"
+                                    label={"Email"}
+                                    variant={"outlined"}
+                                    required={true}
                                 />
-                                <label htmlFor="email">Email</label>
-                            </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password}
-                                    error={errors.password}
-                                    id="password"
-                                    type="password"
-                                />
-                                <label htmlFor="password">Password</label>
-                            </div>
-                            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                                <button
-                                    style={{
+                        </FormControl>
+                        <FormControl>
+                            <TextField
+                                onChange={this.onChange}
+                                value={this.state.password}
+                                error={errors.password}
+                                id="password"
+                                type="password"
+                                label={"Password"}
+                                variant={"outlined"}
+                                required={true}
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <Button
+                                variant="contained"
+                                style={{
                                         width: "150px",
                                         borderRadius: "3px",
                                         letterSpacing: "1.5px",
                                         marginTop: "1rem"
                                     }}
-                                    type="submit"
-                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                                >
-                                    Login
-                </button>
-                            </div>
+                                type="submit"
+                                color="primary"
+                                >Login
+                                </Button>
+                        </FormControl>
                         </form>
-                    </div>
-                </div>
-            </div>
+                    </Paper>
+                
+            </Container>
         );
     }
 }
