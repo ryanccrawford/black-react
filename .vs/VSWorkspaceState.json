@@ -2,15 +2,16 @@
   "ExpandedNodes": [
     "",
     "\\client",
+    "\\client\\public",
     "\\client\\src",
     "\\client\\src\\components",
-    "\\client\\src\\components\\Chip",
     "\\client\\src\\components\\DealerHand",
+    "\\client\\src\\components\\GamePlay",
     "\\client\\src\\components\\GameTable",
-    "\\client\\src\\components\\PlayCard",
+    "\\client\\src\\components\\pages",
     "\\client\\src\\components\\Player",
     "\\client\\src\\components\\PlayerActions"
   ],
-  "SelectedNode": "\\client\\src\\components\\GamePlay\\index.js",
+  "SelectedNode": "\\client\\src\\components\\GameTable\\index.js",
   "PreviewInSolutionExplorer": false
 }
