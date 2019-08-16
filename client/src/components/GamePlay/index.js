@@ -7,7 +7,7 @@ class GamePlay {
 
     constructor(options) {
         this.Deck = new Deck();
-
+        this.notify = options.notify
         this.Players = []
         let Dealer = new Player("Dealer", "dealer", 0)
         this.Players.push(Dealer)

@@ -1,32 +1,12 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { ToastContainer , toast } from 'react-toastify';
-import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './style.css';
 
 //<FontAwesomeIcon icon="check-square" />
 
  class PlayerActions extends Component {
-
-    classes = makeStyles(theme => ({
-        button: {
-            margin: theme.spacing(4),
-        },
-        leftIcon: {
-            marginRight: theme.spacing(4),
-        },
-        rightIcon: {
-            marginLeft: theme.spacing(4),
-        },
-        iconSmall: {
-            fontSize: 20,
-        },
-        textField: {
-            marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1),
-        },
-    }));
 
      constructor(props) {
          super(props)
@@ -37,6 +17,7 @@ import './style.css';
              hit: props.gamePlay.Players[props.playerIndex].canHit,
              split: props.gamePlay.Players[props.playerIndex].canSplit,
              actionClick: props.actionClick,
+             betboxEnabled: props.betbox,
              playerIndex: props.playerIndex,
              amount: props.amount
          }
@@ -61,8 +42,7 @@ import './style.css';
      }
 
      render() {
-         console.log("Inside Render Of Player Actions")
-         console.log(this.state)
+   
          return (
              <div>
 
@@ -71,81 +51,66 @@ import './style.css';
                      size="large"
                      aria-label="large contained primary button group"
                  >
-                     <TextField
+                     {this.state.betboxEnabled ? (<TextField
                          id={"betAmount_" + this.state.playerIndex}
                          label="Amount"
                          value={this.state.amount}
                          onChange={this.onChange}
 
                          type="number"
-                         className={this.classes.textField}
+                        
                          InputLabelProps={{
                              shrink: true,
                          }}
                          inputProps={{"step":"5","data-max":"200","data-min":"5","data-player-index": this.state.playerIndex}}
                          margin="normal"
                          
-                     />
+                     />) : (null)}
                      <button
                          id={"betButton_" + this.state.playerIndex}
                          data-name={"bet"}
                          data-player-index={this.state.playerIndex}
-                         variant="contained"
-                         color="dark"
-                         className={"action-button"}
                          onClick={this.state.actionClick}
                      >
                          BET
-                    <FontAwesomeIcon className={this.classes.rightIcon} icon="coins" />
-                    </button>
+                    <FontAwesomeIcon icon="coins" />
+                     </button>
 
                      <button
                          
                          data-name={"hit"}
                          data-player-index={this.state.playerIndex}
-                         variant="contained"
-                         color="dark"
-                         className={"action-button"}
                          onClick={this.state.actionClick}
                      >
                          HIT
-                    <FontAwesomeIcon className={this.classes.rightIcon} icon="hand-point-up" />
+                    <FontAwesomeIcon icon="hand-point-up" />
                      </button>
                      <button
                          
                          data-name={"stay"}
                          data-player-index={this.state.playerIndex}
-                         variant="contained"
-                         color="dark"
-                         className={"action-button"}
                          onClick={this.state.actionClick}
                      >
                          STAY
-                    <FontAwesomeIcon className={this.classes.rightIcon} icon="hand-paper" />
+                    <FontAwesomeIcon icon="hand-paper" />
                      </button>
                      <button
                          
                          data-name={"double"}
                          data-player-index={this.state.playerIndex}
-                         variant="contained"
-                         color="dark"
-                         className={"action-button"}
                          onClick={this.state.actionClick}
                      >
                          DOUBLE DOWN
-                    <FontAwesomeIcon className={this.classes.rightIcon} icon="hand-point-up" />
+                    <FontAwesomeIcon icon="hand-point-up" />
                      </button>
                      <button
                         
                          data-name={"split"}
                          data-player-index={this.state.playerIndex}
-                         variant="contained"
-                         color="dark"
-                         className={"action-button"}
                          onClick={this.state.actionClick}
                      >
                          SPLIT
-                    <FontAwesomeIcon className={this.classes.rightIcon} icon="hand-point-up" />
+                    <FontAwesomeIcon icon="hand-point-up" />
                      </button>
                  </div>
              </div>

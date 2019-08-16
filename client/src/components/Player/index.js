@@ -20,6 +20,7 @@ class Player {
         this.validPlays = []
         this.handScore = []
         this.moneyWon = 0
+        this.betbox = true
 
     }
 
@@ -72,7 +73,10 @@ class Player {
         }
         return amount
     }
+    setBetBox = (enabled) => {
+        this.betbox = enabled
 
+    }
     scoreHand = () => {
         this.handScore = []
         let lowScore = 0;

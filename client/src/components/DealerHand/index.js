@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PlayCard from '../PlayCard';
-import Delay from 'react-delay'
 import './style.css';
 let dealerCounter = 0
 class DealerHand extends Component {

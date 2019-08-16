@@ -6,8 +6,7 @@ import Player from '../Player';
 import PlayerHand from '../PlayerHand';
 import DealerHand from '../DealerHand';
 import PlayerBet from '../PlayerBet';
-import Chip from '../Chip';
-import { ToastContainer, toast  } from 'react-toastify';
+
 import './style.css';
 
 
@@ -35,8 +34,7 @@ class GameTable extends Component {
 
     }
 
- 
-
+  
     componentDidMount() {
         console.log("Component Mounted")
         this.GamePlay.startGame()
@@ -98,6 +96,7 @@ class GameTable extends Component {
     }
     //Handles the button click events for game play
     actionClick = (event) => {
+        
         console.log(event)
         console.log(event.target)
         const name = event.target.getAttribute("data-name");
@@ -110,6 +109,10 @@ class GameTable extends Component {
             console.log("Placing Bet")
                 event.target.disabled = true;
             this.GamePlay.placeBet(playerIndex, amount, this.betCallBack)
+
+            this.GamePlay.Players[playerIndex].setBetBox(false)
+            this.forceUpdate()
+
             this.setState({ playersBets: [...this.state.playersBets, { playerIndex: playerIndex, amount: amount }] })
 
 
@@ -164,7 +167,7 @@ class GameTable extends Component {
         return (
 
             <div className={"game-table"}>
-
+              
                 <div className={"box"}>
                     <Grid container spacing={2}>
                         {this.GamePlay.Players.map((player, index) => {
@@ -239,10 +242,11 @@ class GameTable extends Component {
                                             })}
                                          </div>
                                             <h3>Actions</h3>
-                                            <ToastContainer/>
+                                           
                                          <div className="actionbox">
                                                 <PlayerActions
                                                     key={index}
+                                                    betbox={this.GamePlay.Players[index].betbox}
                                                     amount={this.GamePlay.Players[index].lastBet || 5}
                                                     player={player}
                                                     gamePlay={this.GamePlay}
