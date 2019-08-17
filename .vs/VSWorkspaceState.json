@@ -9,8 +9,7 @@
     "\\client\\src\\components\\GamePlay",
     "\\client\\src\\components\\GameTable",
     "\\client\\src\\components\\pages",
-    "\\client\\src\\components\\Player",
-    "\\client\\src\\components\\PlayerActions"
+    "\\client\\src\\components\\Player"
   ],
   "SelectedNode": "\\client\\src\\components\\GameTable\\index.js",
   "PreviewInSolutionExplorer": false

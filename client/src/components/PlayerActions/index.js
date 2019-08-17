@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { ToastContainer , toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import BetSlider from "../BetSlider";
 import './style.css';
 
 //<FontAwesomeIcon icon="check-square" />
@@ -10,6 +11,14 @@ import './style.css';
 
      constructor(props) {
          super(props)
+
+         this.hitButton = "./images/actionbuttons/HIT.png"
+         this.betButton = "./images/actionbuttons/BET.png"
+         this.stayButton = "./images/actionbuttons/STAY.png"
+         this.doubleButton = "./images/actionbuttons/DOUBLE.png"
+         this.splitButton = "./images/actionbuttons/SPLIT.png"
+      
+
          console.log(props)
          this.state = {
              bet: props.gamePlay.Players[props.playerIndex].canBet,
@@ -45,75 +54,62 @@ import './style.css';
    
          return (
              <div>
+                     {this.state.betboxEnabled ? (
+                         <BetSlider
+                             data-player-index={this.state.playerIndex}
+                             min={5}
+                             max={500}
+                             amount={this.state.amount}
+                     />) : (null)
+                 }
+                    
+                         <img
+                             id={"betButton_" + this.state.playerIndex}
+                             data-amount={this.state.amount}
+                             data-name={"bet"}
+                             data-player-index={this.state.playerIndex}
+                             onClick={this.state.actionClick}
+                             src={this.betButton}
+                             className="btnImage"
+                             alt="..." />
+                  
 
-                 <div variant="contained"
-                     color="inherit"
-                     size="large"
-                     aria-label="large contained primary button group"
-                 >
-                     {this.state.betboxEnabled ? (<TextField
-                         id={"betAmount_" + this.state.playerIndex}
-                         label="Amount"
-                         value={this.state.amount}
-                         onChange={this.onChange}
-
-                         type="number"
-                        
-                         InputLabelProps={{
-                             shrink: true,
-                         }}
-                         inputProps={{"step":"5","data-max":"200","data-min":"5","data-player-index": this.state.playerIndex}}
-                         margin="normal"
-                         
-                     />) : (null)}
-                     <button
-                         id={"betButton_" + this.state.playerIndex}
-                         data-name={"bet"}
-                         data-player-index={this.state.playerIndex}
-                         onClick={this.state.actionClick}
-                     >
-                         BET
-                    <FontAwesomeIcon icon="coins" />
-                     </button>
-
-                     <button
+                     <img
                          
                          data-name={"hit"}
                          data-player-index={this.state.playerIndex}
                          onClick={this.state.actionClick}
-                     >
-                         HIT
-                    <FontAwesomeIcon icon="hand-point-up" />
-                     </button>
-                     <button
+                         src={this.hitButton}
+                         className="btnImage"
+                         alt="..." />
+                     
+                     <img
                          
                          data-name={"stay"}
                          data-player-index={this.state.playerIndex}
                          onClick={this.state.actionClick}
-                     >
-                         STAY
-                    <FontAwesomeIcon icon="hand-paper" />
-                     </button>
-                     <button
+                         src={this.stayButton}
+                         className="btnImage"
+                         alt="..." />
+                     <img
                          
                          data-name={"double"}
                          data-player-index={this.state.playerIndex}
                          onClick={this.state.actionClick}
-                     >
-                         DOUBLE DOWN
-                    <FontAwesomeIcon icon="hand-point-up" />
-                     </button>
-                     <button
+                         src={this.doubleButton}
+                         className="btnImage"
+                         alt="..." />
+
+                     <img
                         
                          data-name={"split"}
                          data-player-index={this.state.playerIndex}
                          onClick={this.state.actionClick}
-                     >
-                         SPLIT
-                    <FontAwesomeIcon icon="hand-point-up" />
-                     </button>
+                         src={this.splitButton}
+                         className="btnImage"
+                         alt="..." />
                  </div>
-             </div>
+          
          )
      }
 

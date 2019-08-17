@@ -102,18 +102,18 @@ class GameTable extends Component {
         const name = event.target.getAttribute("data-name");
         console.log(name)
         const playerIndex = event.target.getAttribute("data-player-index");
-        const amount = event.target.value;
+       
         console.log(playerIndex)
         if (name === "bet" && playerIndex) {
-
+            const amount = event.target.getAttribute("data-amount");;
             console.log("Placing Bet")
                 event.target.disabled = true;
-            this.GamePlay.placeBet(playerIndex, amount, this.betCallBack)
+            this.GamePlay.placeBet(parseInt(playerIndex), parseInt(amount), this.betCallBack)
 
             this.GamePlay.Players[playerIndex].setBetBox(false)
-            this.forceUpdate()
-
-            this.setState({ playersBets: [...this.state.playersBets, { playerIndex: playerIndex, amount: amount }] })
+           // this.forceUpdate()
+            console.log({ playerIndex: parseInt(playerIndex), amount: parseInt(amount) })
+            this.setState({ playersBets: [...this.state.playersBets, { playerIndex: parseInt(playerIndex), amount: parseInt(amount) }] })
 
 
         }
@@ -224,7 +224,7 @@ class GameTable extends Component {
                                        <h3>Bets</h3>
                                          <div className="betbox">
                                                 {this.GamePlay.Players[index].bets.map((bet, betindex) => {
-                                                    console.log("players bets " + bet)
+                                                    console.log(bet)
                                                 if (bet.playerIndex === index) {
                                                     return (
                                                         <div>

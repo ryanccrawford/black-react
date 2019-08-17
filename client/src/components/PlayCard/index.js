@@ -25,6 +25,21 @@ class PlayCard extends Component {
             "9": "9",
             "10": "0"
         }
+        const cardNumber = {
+            "A": "01",
+            "J": "11",
+            "Q": "12",
+            "K": "13",
+            "2": "02",
+            "3": "03",
+            "4": "04",
+            "5": "05",
+            "6": "06",
+            "7": "07",
+            "8": "08",
+            "9": "09",
+            "10": "10"
+        }
         const cardSuit = {
             "D": "D",
             "H": "H",
@@ -37,8 +52,8 @@ class PlayCard extends Component {
         this.state.rank = props.rank;
         this.state.suit = props.suit;
         console.log(cardRank[this.state.rank] + cardSuit[this.state.suit] + ".png")
-        this.state.frontImage = "./images/" + cardRank[this.state.rank] + cardSuit[this.state.suit] + ".png"
-        this.state.backImage = "./images/card_back.svg"
+        this.state.frontImage = "./images/bigcards/" + cardNumber[this.state.rank] + "_" + cardRank[this.state.rank] + "_" + cardSuit[this.state.suit] + ".png"
+        this.state.backImage = "./images/bigcards/BACK_2.png"
         console.log(this.state.backImage)
         this.state.hidden = props.hidden || false;
         this.state.counter = props.counter
