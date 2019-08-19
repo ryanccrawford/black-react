@@ -1,12 +1,20 @@
 .chip {
-    border-radius: 100%;
-    width: 25px;
-    height:25px;
+    
 
 }
+.chip-image{
+    width:64px;
+}
 
-.ammount {
-    position: relative;
-    top: 0;
-    left: 50%;
+.player-1 {
+    position: absolute;
+}
+
+.player-2 {
+    position: absolute;
+}
+
+
+.player-3 {
+    position: absolute;
 }

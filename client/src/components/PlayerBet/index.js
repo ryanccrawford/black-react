@@ -8,7 +8,6 @@ export default function PlayerBet(props) {
     return (
        
         <div>
-            <h4>Bets</h4>
             <Chip
                 data-playerIndex={props.playerIndex}
                 data-amount={props.amount}

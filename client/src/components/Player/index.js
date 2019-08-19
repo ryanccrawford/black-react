@@ -1,36 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class Player {
+class Player extends Component {
 
-    constructor(name, type = "player", bankRoll = 10000 ) {
-        this.type = type
-        this.name = name
-        this.bankRoll = bankRoll
-        this.isTurn = false
-        this.canBet = false
-        this.canStay = false
-        this.canHit = false
-        this.canDouble = false
-        this.canSplit = false
-        this.lastBet = 0
-        this.avatar = null
-        this.cards = []
-        this.split = []
-        this.bets = []
-        this.validPlays = []
-        this.handScore = []
-        this.moneyWon = 0
-        this.betbox = true
+    //name, type = "player", bankRoll = 10000 
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: props.name,
+            type: props.type || "player",
+            bankRoll: props.bankRoll || 10000,
+            isTurn: false,
+            canBet: false,
+            canStay: false,
+            canHit: false,
+            canDouble: false,
+            canSplit: false,
+            lastBet: 0,
+            avatar: null,
+            cards: [],
+            split: [],
+            bets: [],
+            validPlays: [],
+            handScore: [],
+            moneyWon: 0,
+            betbox: true
+
+        }
 
     }
 
     setIsTurn = (type) => {
         console.log("inside player.setIsTurn Type:" + type)
-        this.isTurn = true
-        if (type === "bet" && this.cards.length < 1) {
+        this.setState({ isTurn = true })
+        if (type === "bet" && this.state.cards.length < 1) {
 
-            this.canBet = true;
-            console.log(this.canBet)
+            this.setState({ canBet: true })
+
+        } else {
+            this.setState({ canBet: false })
         }
 
 
@@ -38,51 +45,55 @@ class Player {
 
     unsetIsTurn = () => {
 
-        this.isTurn = false
-        this.canBet = false
-        this.canStay = false
-        this.canHit = false
-        this.canDouble = false
-        this.canSplit = false
+        this.setState({
+            isTurn: false,
+            canBet: false,
+            canStay: false,
+            canHit: false,
+            canDouble: false,
+            canSplit: false
+        })
 
 
     }
 
     reset = () => {
-        this.cards = []
-        this.split = []
-        this.bets = []
-        this.validPlays = []
-        this.handScore = []
-        this.isTurn = false
-        this.canBet = false
-        this.canStay = false
-        this.canHit = false
-        this.canDouble = false
-        this.canSplit = false
+        this.setState({
+            cards: [],
+            split: [],
+            bets: [],
+            validPlays: [],
+            handScore: [],
+            isTurn: false,
+            canBet: false,
+            canStay: false,
+            canHit: false,
+            canDouble: false,
+            canSplit: false
+        })
     }
 
     isFirstCardTenCard = () => {
-        return (this.cards[0].value === "A" || this.cards[0].value === "10" || this.cards[0].value === "Q" || this.cards[0].value === "J" || this.cards[0].value === "K")
+        return (this.state.cards[0].value === "A" || this.state.cards[0].value === "10" || this.state.cards[0].value === "Q" || this.state.cards[0].value === "J" || this.state.cards[0].value === "K")
     }
 
     sumBets = () => {
         let amount = 0
-        while (this.bets.length > 0) {
-            amount += parseInt(this.bets.pop())
-        }
+        this.state.bets.forEach((bet) => {
+            amount += parseInt(this.state.bets.pop())
+        })
         return amount
     }
     setBetBox = (enabled) => {
-        this.betbox = enabled
+        this.setState({ betbox: enabled })
 
     }
-    scoreHand = () => {
-        this.handScore = []
+    scoreHand = (callBack) => {
+       const handScore = []
         let lowScore = 0;
         let highScore = 0;
 
-        this.cards.forEach((card) => {
+        this.state.cards.forEach((card) => {
             if (card.value === 'A') {
                 lowScore += 1
                 highScore += 11
@@ -98,22 +109,32 @@ class Player {
                 }
 
             if (lowScore === 21 || highScore === 21) {
-                this.handScore.push({ low: 21, high: 21 })
-                
-            }else
-            if (lowScore > 21 && highScore > 21) {
-                this.handScore.push({ low: 0, high: 0 })
-               
-            }else
-            if ((lowScore === 17 || highScore === 17) && this.type === "dealer") {
-                this.handScore.push({ low: 17, high: 17 })
+                this.setState({ handScore: [...this.state.handScore, { low: 21, high: 21 }] })
 
-            } else {
-                this.handScore.push({ low: lowScore, high: highScore })
-            }
+            } else
+                if (lowScore > 21 && highScore > 21) {
+                    this.setState({ handScore: [...this.state.handScore, { low: 0, high: 0 }] })
+ 
+
+                } else
+                    if ((lowScore === 17 || highScore === 17) && this.state.type === "dealer") {
+                        
+                        this.setState({ handScore: [...this.state.handScore, { low: 17, high: 17 }] })
+
+                        
+
+
+                    } else {
+                        this.setState({ handScore: [...this.state.handScore, { low: lowScore, high: highScore }] })
+                       
+                    }
         })
 
-        return this.handScore
+        callBack({low:lowScore, high:highScore})
+
+    }
+
+    render() {
 
     }
 

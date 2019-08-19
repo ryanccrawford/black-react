@@ -171,7 +171,10 @@ class GamePlay {
 
     hit = (playerIndex, callback) => {
         this.Players[playerIndex].cards.push(this.Deck.deal(false))
-        callback(playerIndex)
+        console.log("just did hit")
+        let s = this.Players[playerIndex].scoreHand()[this.Players[playerIndex].handScore.length - 1]
+        console.log(s)
+        callback(playerIndex, s)
 
     }
 

@@ -1,17 +1,48 @@
 
-.action-button svg {
+.action-button {
         margin-left: 8px;
   }
-.actionbox{
-    width:800px
+.actionbox {
+    position: absolute;
+    bottom: 0;
+    left: 83px;
 }
 .btnImage {
     margin-right: 10px;
-    display:inline-block;
-    text-shadow: 3px 3px 5px rgb(128, 128, 128);
+    display: inline-block;
     width: 150px;
+    filter: grayscale(100%);
 }
-.btnImage:hover {
-    text-shadow: 1px 1px 10px rgb(128, 128, 128);
-    cursor: pointer;
+    .btnImage:hover {
+        cursor: pointer;
+        filter: dropshadow(2px 2px 10px white);
+    }
+span.amount {
+    position: relative;
+    left: 10px;
+    top: 5px;
+    font-weight: 800;
+    font-size: 2em;
+}
+.enabled{
+    filter: none !important;
+}
+.betSlider {
+    position: relative;
+    right: 61px;
+    bottom: 93px;
+    z-index: 1;
+}
+.player-control {
+    display: inline-block;
+}
+.button-back {
+    width: 154px;
+    height: 346px;
+    position: relative;
+    bottom: 81px;
+    left: 0;
+    background-color: rgba(0,0,0,0.8);
+    border-radius: 20px;
+    border: 2px solid white;
 }

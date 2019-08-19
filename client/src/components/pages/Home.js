@@ -16,7 +16,7 @@ class Home extends Component {
             <Router>
                 <div>
                     <CssBaseline />
-                    <Container maxWidth="lg">
+                    <Container fixed>
                         <TopBar>
                         </TopBar>
                         <Route exact path="/" component={FrontPage} />
@@ -24,7 +24,11 @@ class Home extends Component {
                         <Route exact path="/signin" component={Signin} />
                         <Route exact path="/gamescreen" component={GameScreen} />
                     </Container>
+                    
+                      
                 </div>
+                <div className="footer" style={{ backgroundColor: "black", height: "75px" }}></div>
+
             </Router>
         );
     }

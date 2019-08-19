@@ -1,11 +1,12 @@
 .box {
-    margin-top: 25px;
-    border: 1px solid black;
-    border-radius: 5px;
-    background-image: url("/images/tables/TABLE_R1.png");
-    background-size: cover;
-    min-height: 650px;
-    padding: 25px;
+    
+}
+.table {
+    max-width: 100%;
+    left: 0;
+    position: absolute;
+    top: 62px;
+    z-index: -4;
 }
 
 
@@ -28,7 +29,32 @@
 .col {
     display: flex;
 }
-
-.action-box {
+.footer {
+    position: relative;
+    bottom: -118px;
+    z-index: -5;
+    height: 282px !important;
+}
+.show{
+    display:block !important;
+}
+.hide {
+    display: none !important;
+}
+.message{
+    position: absolute;
     width: 300px;
+    height: 200px;
+    background-color: black;
+    color: white;
+    border:1px solid white;
+    border-radius: 20px;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+}
+.betbox {
+    position: relative;
+    left: 600px;
+    top: 209px;
 }

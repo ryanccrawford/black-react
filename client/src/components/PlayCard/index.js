@@ -11,7 +11,7 @@ class PlayCard extends Component {
     constructor(props) {
         super(props)
         const cardRank = {
-            "A": "A",
+            "A": "1",
             "J": "J",
             "Q": "Q",
             "K": "K",
@@ -93,7 +93,7 @@ class PlayCard extends Component {
                         data-hidden={this.state.hidden}
                         onClick={this.state.owner === "dealer" ? "" : this.handleClick}
                 >
-                    <SVG
+                    <img
                         className="playing-card"
                         src={this.state.backImage}
                     />

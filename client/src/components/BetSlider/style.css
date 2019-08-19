@@ -1,4 +1,4 @@
-.base img {
+.base {
     position: relative;
     width: 359px;
 }
@@ -7,14 +7,13 @@
 
 }
 .display {
-    
     z-index: 4;
     left: 92px;
     top: -13px;
+    background-image: url("images/betslider/display.png");
+    background-size:contain;
 }
-    .display img {
-        width: 162px;
-    }
+  
 .amount {
     font-family: "arial","Helvetica", sans-serif;
     position: relative;

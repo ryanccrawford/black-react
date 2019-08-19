@@ -1,12 +1,11 @@
-import React from 'react';
 
 class Deck {
 
     constructor(options) {
         this.deck = [];
-        this.numberOfDecks = 6
+        this.numberOfDecks = options.numberOfDecks || 1
         this.reset();
-        this.shuffle();
+        this.isShuffled = false
 
     }
 
@@ -38,14 +37,13 @@ class Deck {
 
             [deck[m], deck[i]] = [deck[i], deck[m]];
         }
-
-        return this;
+        this.isShuffled = true
+       
     }
 
     deal = (facedown = false) => {
-        if (this.remaining === 1) {
-            this.reset()
-            this.shuffle()
+        if (this.remaining === 12) {
+           return false
         }
         let card = this.deck.pop()
         card.facedown = facedown

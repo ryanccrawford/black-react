@@ -3,14 +3,20 @@
     "",
     "\\client",
     "\\client\\public",
+    "\\client\\public\\images",
+    "\\client\\public\\images\\chips",
     "\\client\\src",
     "\\client\\src\\components",
-    "\\client\\src\\components\\DealerHand",
+    "\\client\\src\\components\\BankDispaly",
+    "\\client\\src\\components\\Chip",
+    "\\client\\src\\components\\Deck",
     "\\client\\src\\components\\GamePlay",
     "\\client\\src\\components\\GameTable",
-    "\\client\\src\\components\\pages",
-    "\\client\\src\\components\\Player"
+    "\\client\\src\\components\\PlayCard",
+    "\\client\\src\\components\\Player",
+    "\\client\\src\\components\\PlayerActions",
+    "\\client\\src\\components\\PlayerHand"
   ],
-  "SelectedNode": "\\client\\src\\components\\GameTable\\index.js",
+  "SelectedNode": "\\client\\src\\components\\PlayerHand\\index.js",
   "PreviewInSolutionExplorer": false
 }

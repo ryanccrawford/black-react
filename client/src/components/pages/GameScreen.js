@@ -17,10 +17,11 @@ class GameScreen extends Component {
     render() {
 
         return (
-            <Container>
+            <Container fixed>
                         <GameTable />
                         
             </Container>
+           
 
         );
     }

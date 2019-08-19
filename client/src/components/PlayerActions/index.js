@@ -1,118 +1,101 @@
-import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
-import { ToastContainer , toast } from 'react-toastify';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react';
 import BetSlider from "../BetSlider";
+import Sound from 'react-sound';
 import './style.css';
 
-//<FontAwesomeIcon icon="check-square" />
 
- class PlayerActions extends Component {
 
-     constructor(props) {
-         super(props)
+ export default function PlayerActions(props) {
 
-         this.hitButton = "./images/actionbuttons/HIT.png"
-         this.betButton = "./images/actionbuttons/BET.png"
-         this.stayButton = "./images/actionbuttons/STAY.png"
-         this.doubleButton = "./images/actionbuttons/DOUBLE.png"
-         this.splitButton = "./images/actionbuttons/SPLIT.png"
-      
-
-         console.log(props)
-         this.state = {
-             bet: props.gamePlay.Players[props.playerIndex].canBet,
-             stay: props.gamePlay.Players[props.playerIndex].canStay,
-             hit: props.gamePlay.Players[props.playerIndex].canHit,
-             split: props.gamePlay.Players[props.playerIndex].canSplit,
-             actionClick: props.actionClick,
-             betboxEnabled: props.betbox,
-             playerIndex: props.playerIndex,
-             amount: props.amount
-         }
-     }
-
-     onChange = (event) => {
-         console.log("inside on change")
-         const min = parseInt(event.target.getAttribute("data-min"));
-         const max = parseInt(event.target.getAttribute("data-max"));
-         const playerIndex = parseInt(event.target.getAttribute("data-player-index"));
-         console.log(event.target)
-         let newValue = parseInt(event.target.value)
-         if (newValue < min) {
-             newValue = min
-         }
-         if (newValue > max) {
-             newValue = max
-         }
-
-         this.setState({ amount: newValue})
-
-     }
-
-     render() {
    
-         return (
-             <div>
-                     {this.state.betboxEnabled ? (
-                         <BetSlider
-                             data-player-index={this.state.playerIndex}
+     const hitButton = "./images/actionbuttons/HIT.png"
+     const betButton = "./images/actionbuttons/BET.png"
+     const stayButton = "./images/actionbuttons/STAY.png"
+     const doubleButton = "./images/actionbuttons/DOUBLE.png"
+     const splitButton = "./images/actionbuttons/SPLIT.png"
+    
+     const bet = props.actions.bet || false
+     const stay = props.actions.stay || false
+     const hit = props.actions.hit || false
+     const split = props.actions.split || false
+     const double = props.actions.double || false
+     const actionClick = props.actionClick
+     const disabledbuttonClick = props.actionDummyClick
+     const betboxEnabled = props.actions.bet || false
+     const playerIndex = props.playerIndex
+     const amount = props.amount
+     const maxBet = props.maxBet
+
+         console.log("doing actions, Bet is ")
+         console.log(props)
+
+     return (
+     <div>
+             {betboxEnabled ? (
+                 <div className=""><h3 className="white">Bet Slider</h3>
+                     <BetSlider
+                         id={"slider_" + playerIndex}
+                         data-amount={amount}
+                             data-player-index={playerIndex}
                              min={5}
-                             max={500}
-                             amount={this.state.amount}
-                     />) : (null)
+                             max={maxBet}
+                             amount={amount}
+                 /></div>) : (null)
                  }
-                    
+         <div className="button-back">
+                 
+
                          <img
-                             id={"betButton_" + this.state.playerIndex}
-                             data-amount={this.state.amount}
+                             id={"betButton_" + playerIndex}
+                             data-amount={amount}
                              data-name={"bet"}
-                             data-player-index={this.state.playerIndex}
-                             onClick={this.state.actionClick}
-                             src={this.betButton}
-                             className="btnImage"
+                             data-player-index={playerIndex}
+                             onClick={bet ? actionClick : disabledbuttonClick}
+                             src={betButton}
+                            className={(bet ? "enabled btnImage" : "btnImage")}
                              alt="..." />
-                  
+             
 
                      <img
                          
                          data-name={"hit"}
-                         data-player-index={this.state.playerIndex}
-                         onClick={this.state.actionClick}
-                         src={this.hitButton}
-                         className="btnImage"
+                         data-player-index={playerIndex}
+                         onClick={hit ? actionClick : disabledbuttonClick}
+                         src={hitButton}
+                     className={(hit ? "enabled btnImage" : "btnImage")}
                          alt="..." />
-                     
+             
                      <img
                          
                          data-name={"stay"}
-                         data-player-index={this.state.playerIndex}
-                         onClick={this.state.actionClick}
-                         src={this.stayButton}
-                         className="btnImage"
-                         alt="..." />
+                         data-player-index={playerIndex}
+                         onClick={stay ? actionClick : disabledbuttonClick}
+                         src={stayButton}
+                     className={(stay ? "enabled btnImage" : "btnImage")}
+                     alt="..." />
+            
                      <img
                          
                          data-name={"double"}
-                         data-player-index={this.state.playerIndex}
-                         onClick={this.state.actionClick}
-                         src={this.doubleButton}
-                         className="btnImage"
+                         data-player-index={playerIndex}
+                         onClick={double ? actionClick : disabledbuttonClick}
+                         src={doubleButton}
+                     className={(double ? "enabled btnImage" : "btnImage")}
                          alt="..." />
-
+             
                      <img
                         
                          data-name={"split"}
-                         data-player-index={this.state.playerIndex}
-                         onClick={this.state.actionClick}
-                         src={this.splitButton}
-                         className="btnImage"
+                         data-player-index={playerIndex}
+                         onClick={split ? actionClick : disabledbuttonClick}
+                         src={splitButton}
+                     className={(split ? "enabled btnImage" : "btnImage")}
                          alt="..." />
-                 </div>
+           
+         </div>
+       </div>
           
          )
-     }
+     
 
 }
-
-export default PlayerActions

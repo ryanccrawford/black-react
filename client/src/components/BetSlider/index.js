@@ -1,168 +1,115 @@
-import React, { Component} from 'react';
-import './style.css';
+import React, { Component } from 'react';
+import { Slider, Handles, Tracks, Rail } from 'react-compound-slider'
+import { Handle, Track, Tick } from './Parts'
+
 
 class BetSlider extends Component {
 
     constructor(props) {
         super(props)
-        this.base = "./images/betslider/base.png"
-        this.button = "./images/betslider/button.png"
-        this.display = "./images/betslider/display.png"
-        const slots = parseInt((parseInt(props.max) / 100) / 5)
-        console.log(slots)
-        let min = parseInt(props.min) || 5
-        let max = parseInt(props.max) || 500
-        let val = parseInt(props.amount)
         this.state = {
-            value: val,
-            min: min,
-            max: max,
-            slots: slots
+            value: parseInt(props.amount),
+            min: parseInt(props.min) || 5,
+            max: parseInt(props.max) || 500
         }
 
     }
 
     midVal = (min, max) => {
 
-      return  (max - min) / 2
+        return (max - min) / 2
     }
 
-    MinSlider = () => {
-        return (
-            <div
-                data-slider="min"
-                onDragStart={this.onDragStart}
-                onTouchStart={this.onDragStart}
-                draggable
-                className="slider-thumb slider-thumb-min">  
-                <img src={this.button} alt="..." />
-            </div>
-            
-        );
-    }
-    MaxSlider = () => {
-        return (
-            <div
-                data-slider="max"
-                onDragStart={this.onDragStart}
-                onTouchStart={this.onDragStart}
-                draggable className="slider-thumb slider-thumb-max">
-                <img src={this.button} alt="..." />
-            </div>);
-    }
-    onDragOver = (e) => {
-        e.preventDefault();
-    }
-    onDragStart = (e) => {
-        let slider = e.target.dataset.slider;
-        this.sliderType = slider;
-    }
-    onDrop = (e, target) => {
-        let source = this.sliderType;
-        let slot = Number(e.target.dataset.slot);
-        if (isNaN(slot)) return;
-        if (source === "min") {
-            if (slot >= this.state.max) return;
-            this.setState({ min: slot }, () => { console.log(this.state); })
-        } else if (
-            source === "max") {
-            if (slot <= this.state.min) return;
-            this.setState({ max: slot }, () => { console.log(this.state); })
-        }
-        this.sliderType = null;
-    }
-        
+    onChange = ([value]) => {
+        this.setState({
+            value: parseInt(value)
+        });
+    };
 
 
     render() {
-
-        let scale = [];
-        let slider = [];
-        let currentScale = [];
-        let minThumb = null;
-        let maxThumb = null;
-        for (let i = 0; i <= this.state.slots; i++) {
-            let label = "";
-            if (i === this.state.min || i === this.midVal(this.state.min, this.state.max) || i === this.state.max) {
-                label = i;
-            }
-            scale.push(
-                <div key={i} className="slot-scale">{label}</div>
-            );
-
-            let currentLabel = "";
-
-            if (i === this.state.min || i === this.state.max) {
-                currentLabel = i;
-            }
-            currentScale.push(<div key={i} className="slot-scale-selected">{currentLabel}</div>);
-
-            if (i === this.state.min) {
-                minThumb = <this.MinBetSlider />
-            } else if (i === this.state.max) {
-                maxThumb = <this.MaxBetSlider />
-            } else {
-                minThumb = null;
-                maxThumb = null;
-            }
-            let lineClass = "line";
-            if (i >= this.state.min && i < this.state.max) {
-                lineClass += " line-selected";
-            }
-            slider.push(
-                <div
-                    data-slot={i}
-                    onDragOver={this.onDragOver}
-                    onTouchMove={this.onDragOver}
-                    onTouchEnd={this.onDrop}
-                    onDrop={this.onDrop}
-                    key={i}
-                    className="slot">
-                    <div
-                        data-slot={i}
-                        className={lineClass}
-                    />
-                    <span
-                        className="scale-mark">
-                    </span>
-                    {minThumb}
-                    {maxThumb}
-                </div>
-            );
-
-
+        const sliderStyle = { 
+            position: 'relative',
+            width: '162px',
+            height: '90px',
+            
+            
         }
-        return (
-            <div>
-                <div className="display">
-                    <img src={this.display} alt="..." />
-                    <span className="amount">{formatCash(this.state.value)}</span>
-                </div>
-                <div className="example-1">
-                    <div className="slider-container">
-                        <div className="base"><img src={this.base} alt="..." /></div>
-                        <div className="slider-scale">
-                            {scale}
-                        </div>
-
-                        <div className="slider">
-                            {slider}
-                        </div>
-
-                        <div className="slider-selected-scale">
-                            {currentScale}
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        )
+        const displayStyle = {
+            position: 'relative',
+            backgroundImage: 'url("images/betslider/display.png")',
+            backgroundSize: 'cover',
+            width: '150px',
+            height: '50px',
+            top: '68px',
+            left: '33px',
+            zIndex: '2'
+        }
    
+        
+        const railStyle = {
+            position: 'absolute',
+            width: '250px',
+            height: '100%',
+            right: '-65px',
+            marginTop: 35,
+            backgroundSize: "cover",
+            backgroundImage: 'url("images/betslider/base.png")'
+        }
+       
+
+        return (
+            <div className="betSlider">
+                <div style={displayStyle}>{formatCash(this.state.value)}</div>
+            <Slider
+                rootStyle={sliderStyle} 
+                domain={[this.state.min, this.state.max]}
+                step={5}
+                    mode={2}
+                    onChange={this.onChange}
+                values={[this.state.value]}
+            >
+                    <Rail>
+                        {({ getRailProps }) => (  
+                            <div style={railStyle} {...getRailProps()} />
+                        )}
+                    </Rail>
+                    <Handles>
+                        {({ handles, getHandleProps }) => (
+                            <div className="slider-handles">
+                                {handles.map(handle => (
+                                    <Handle
+                                        key={handle.id}
+                                        handle={handle}
+                                        getHandleProps={getHandleProps}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </Handles>
+                    <Tracks right={false}>
+                        {({ tracks, getTrackProps }) => (
+                            <div className="slider-tracks">
+                                {tracks.map(({ id, source, target }) => (
+                                    <Track
+                                        key={id}
+                                        source={source}
+                                        target={target}
+                                        getTrackProps={getTrackProps}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </Tracks>
+            </Slider>
+           </div>
+        )
     }
 }
 
 function formatCash(amount) {
-    return "$ " + parseFloat(amount).toFixed(2)
+    return (<span className="amount">{"$ " + parseFloat(amount).toFixed(0)}</span>)
 }
+
 
 export default BetSlider;

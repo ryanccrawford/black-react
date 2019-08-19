@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PlayCard from '../PlayCard';
+import Badge from '@material-ui/core/Badge';
 import './style.css';
 
 class PlayerHand extends Component {
@@ -13,13 +14,43 @@ class PlayerHand extends Component {
         this.state.cards = props.cards
         this.state.playerPosition = props.playerPosition
         this.state.round = props.round
+        this.state.game = props.gamePlay
     }
 
+    scoreCards = () => {
+        let cards = this.state.cards
+        let lowScore = 0;
+        let highScore = 0;
 
+        cards.forEach((card) => {
+            if (card.value === 'A') {
+                lowScore += 1
+                highScore += 11
+            } else
+                if (card.value === 'J' || card.value === 'K' || card.value === 'Q' || card.value === '10') {
+                    lowScore += 10
+                    highScore += 10
+                }
+                else {
+                    let intVal = parseInt(card.value)
+                    lowScore += intVal
+                    highScore += intVal
+                }
+
+            
+        })
+        if (lowScore === highScore) {
+            return highScore
+        }
+        return lowScore + "/" + highScore
+
+    }
 
    render() {
+       let score = this.scoreCards()
+       return (
+           <Badge className={""} badgeContent={score} color="primary">
 
-        return (
             <div className="row player">
                 <div className="col">
 
@@ -29,8 +60,7 @@ class PlayerHand extends Component {
                 {this.state.cards.map((card, index) => {
                     return (
 
-
-                        <PlayCard
+                         <PlayCard
                             key={index}
                            
                             counter={(this.state.round < 2) ?  (((index + 1) * ((parseInt(this.state.playerPosition) * 500) * parseInt(this.state.playerPosition)))) : (500)}
@@ -43,7 +73,7 @@ class PlayerHand extends Component {
                     )
                 })}
                     </div>
-           </div>
+           </div></Badge>
         );
     }
 
