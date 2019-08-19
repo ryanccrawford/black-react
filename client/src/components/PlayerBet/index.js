@@ -15,3 +15,16 @@ export default function PlayerBet(props) {
             </div>
         )
 }
+
+
+function getChipDenominatons(amount) {
+
+    //1255
+    let zeros = amount.length - 1
+    // 3
+    let divisor = parseInt(("1" + (zeros > 1 ? ("0".repeat(zeros-1)) : "")))
+    // 1000
+    
+
+
+}
