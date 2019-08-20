@@ -29,7 +29,7 @@ class player {
     }
 
     makeBet = (amount) => {
-        this.lastBet = amount 
+        this.lastBet = amount
         this.bankRoll -= amount
         this.bet += amount
         return this.bet
@@ -48,7 +48,7 @@ class player {
     givePlayerCard = (card) => {
         this.cards.push(card)
         setTimeout(this.doUpdate, 500)
-        
+
     }
 
     countCards = () => {
@@ -56,7 +56,7 @@ class player {
     }
 
     clearCards = (startRound = false) => {
-        this.cards = [] 
+        this.cards = []
         console.log("clearing cards")
         if (startRound) {
             return;
@@ -86,7 +86,7 @@ class GameTable extends Component {
 
     constructor(props) {
         super(props)
-      
+
         let dealerOptions = {
             name: "Dealer",
             type: "dealer",
@@ -111,13 +111,13 @@ class GameTable extends Component {
 
         let player0 = new player(dealerOptions)
         let player1 = new player(playerOptions)
-       // let player2 = new Player("Other", "player", 10000)
+        // let player2 = new Player("Other", "player", 10000)
         this.Players = []
         this.Players.push(player0)
         this.Players.push(player1)
         //options.Players.push(player2)
-       // this.GamePlay = new GamePlay(options)
-        this.Deck = new Deck({numberOfDecks: 6})
+        // this.GamePlay = new GamePlay(options)
+        this.Deck = new Deck({ numberOfDecks: 6 })
         console.log("created Deck")
         this.state = {
             cardsDelt: false,
@@ -133,23 +133,23 @@ class GameTable extends Component {
 
     }
 
-  
+
 
     componentDidMount() {
         console.log("Component Mounted")
-        
-      this.startRound();
-        
+
+        this.startRound();
+
 
     }
-   
+
 
     cardsDelt = () => {
 
 
         this.setState({ cardsDelt: true })
         //steps to check game outcome
-        this.GamePlay.checkNaturals(this.wasNaturalGame, this.continueGame, this.renderCardsCB)
+        this.checkNaturals(this.wasNaturalGame, this.continueGame, this.renderCardsCB)
         //if so check to see if dealer has 21 if so
         //close game and return all bets. IF not payout players with
         //21 2:1 and all players who don't house keeps there money
@@ -164,7 +164,7 @@ class GameTable extends Component {
     wasNaturalGame = () => {
 
         this.renderCardsCB()
-        
+
 
     }
 
@@ -183,42 +183,42 @@ class GameTable extends Component {
             console.log("Player is not the dealer and its first betting round and no bets have been made. ")
             this.GamePlay.Players[playerindex].canBet = true;
             console.log("we just set the player canBet to True")
-            this.setState({ playerTurnIndex: playerindex})
+            this.setState({ playerTurnIndex: playerindex })
 
         } else if (playerindex !== 0 && this.state.round === 1) {
             this.GamePlay.Players[playerindex].setIsTurn("play")
             this.GamePlay.Players[this.state.playerTurnIndex - 1].unsetIsTurn()
             this.setState({ playerTurnIndex: playerindex })
-            
+
         }
 
     }
-   
+
     actionClick = (event) => {
-        
+
         console.log(event)
         console.log(event.target)
         const name = event.target.getAttribute("data-name");
         console.log(name)
         const playerIndex = parseInt(event.target.getAttribute("data-player-index"));
-       
-        console.log(playerIndex)
-        if (name === "bet" && playerIndex) {
-          //  let target = document.getElementById("slider_" + playerIndex);
 
-            const amount = parseInt(event.target.getAttribute("data-amount"));
+        console.log(playerIndex)
+        if (name === "bet" && this.Players[playerIndex].bet <= 0) {
+            //  let target = document.getElementById("slider_" + playerIndex);
+
+            const amount = parseInt(document.getElementById("betAmount").innerHTML);
             console.log("Placing Bet")
-            
-            this.Players[playerIndex].makeBet(100)
+
+            this.Players[playerIndex].makeBet(amount)
 
             this.Players[playerIndex].clearActions()
-            this.setState({clickSound: true},)
-                      
+            this.setState({ clickSound: true }, this.dealOut)
+
             return
 
         }
         if (name === "hit" && playerIndex) {
-            
+
             this.hit(playerIndex, this.hitCallBack)
 
         }
@@ -232,13 +232,19 @@ class GameTable extends Component {
 
     }
 
-    hitCallBack = (playerIndex, score) => {
+    dealOut = () => {
 
-        console.log(score)
-        this.forceUpdate()
-        
+
+        this.dealOutCards(this.cardsDelt)
+
+
+
     }
-    
+
+
+
+
+
     scoreCards = (cards) => {
 
         let lowScore = 0;
@@ -261,7 +267,7 @@ class GameTable extends Component {
 
         })
 
-            return { low: lowScore, high: highScore };
+        return { low: lowScore, high: highScore };
 
     }
     hitCallBack = (playerIndex) => {
@@ -269,33 +275,8 @@ class GameTable extends Component {
         this.forceUpdate()
 
     }
-    betCallBack = (playerIndex, amount) => {
-        console.log("inside betCallBack")
-        let bankLeft = this.GamePlay.Players[playerIndex].bankRoll
-        let newPlayerBets = { playerIndex: playerIndex, amount: amount }
-        let nextPlayer = this.GamePlay.getNextPlayer()
-        console.log("Next Player")
-        console.log(nextPlayer)
-        if (nextPlayer > this.GamePlay.Players.length) {
-            nextPlayer = 0;
-        }
-        this.setPlayersTurn(nextPlayer);
-        if (nextPlayer === 0)
-            console.log(newPlayerBets);
 
-        this.setState({ playersBets: [...this.state.playersBets, newPlayerBets] },this.checkBets)
-        
-    }
 
-    checkBets = () => {
-        console.log("Inside checkBets")
-        console.log("Bets Length" + this.state.playersBets.length)
-        console.log("Number of Betting Players" + (this.GamePlay.Players.length - 1))
-        if (this.state.playersBets.length === this.GamePlay.Players.length - 1 && !this.state.cardsDelt) {
-            this.GamePlay.dealOutCards(this.cardsDelt)
-        }
-
-    }
 
     renderCardsCB = () => {
         this.setState({ cardsDelt: false }, this.setState({ cardsDelt: true }))
@@ -305,11 +286,11 @@ class GameTable extends Component {
 
 
     /******************************************************************
-     * 
-     * 
+     *
+     *
      * Game Logic
-     * 
-     * 
+     *
+     *
      * */
 
     startRound = () => {
@@ -319,7 +300,7 @@ class GameTable extends Component {
             return;
         }
 
-      
+
         for (let i = 0; i < this.Players.length; i++) {
             this.Players[i].clearCards(true)
         }
@@ -333,7 +314,7 @@ class GameTable extends Component {
         console.log(bets)
         this.Players[index].giveActions(bets)
 
-    
+
 
     }
 
@@ -351,12 +332,12 @@ class GameTable extends Component {
     }
 
     doneWithShuffle = () => {
-        this.setState({ shuffleDeckMessage: "" },this.startRound)
+        this.setState({ shuffleDeckMessage: "" }, this.startRound)
     }
 
     GotCardCallBack = (playerIndex) => {
         console.log("Player " + playerIndex + " Got Card")
-       this.forceUpdate()
+        this.forceUpdate()
     }
     ActionsChangedCallBack = (playerIndex) => {
         console.log("Player " + playerIndex + " Got Action")
@@ -370,7 +351,7 @@ class GameTable extends Component {
         this.forceUpdate();
     }
 
-    
+
     disabledbuttonClick = () => {
         console.log("Dummy button click")
     }
@@ -397,7 +378,7 @@ class GameTable extends Component {
     }
 
     dealOutCards = (sendCard) => {
-        
+
         for (let j = 0; j < 2; j++) {
             for (let i = 1; i < this.Players.length + 1; i++) {
                 let dealerPId = this.Players.length
@@ -423,7 +404,7 @@ class GameTable extends Component {
 
     //Check if anyone that is not a dealer has 21 and if so
     //Check to seee if the dealers first card (face up) is an ace or a 10 J Q K if it s check to see if the dealer
-    //has 21 but don't reveal the facedown card if 
+    //has 21 but don't reveal the facedown card if
     checkNaturals = (cbTrue, cbFalse, renderCardcb) => {
         this.renderCard = renderCardcb
         let playersWithNaturals = []
@@ -441,7 +422,7 @@ class GameTable extends Component {
 
 
             } else {
-                //check if dealerHas 21 if not then 
+                //check if dealerHas 21 if not then
                 if (!this.checkDealerisNatural) {
                     this.payOutNaturals(playersWithNaturals)
 
@@ -487,10 +468,10 @@ class GameTable extends Component {
 
     checkPlayerNatural = (index) => {
         if (this.Players[index].cards.length) {
-            let scoreH = this.Players[index].scoreHand()
+            let scoreH = this.scoreCards(this.Players[index].cards)
             console.log(scoreH)
 
-            if (scoreH.filter(score => (score.high === 21 || score.low === 21) ? true : false).length > 0) {
+            if (scoreH.high === 21) {
                 console.log("Player " + index + " Has 21")
                 return true
             }
@@ -553,7 +534,7 @@ class GameTable extends Component {
         const tableImage = "./images/tables/table.jpg"
         console.log("Started render")
         return (
-            
+
             <div className={"game-table"}>
                 <div className={(this.state.shuffleDeckMessage !== "" ? "show " : "hide ") + "message"}>
                     {this.state.shuffleDeckMessage !== "" ? (<Sound
@@ -569,8 +550,6 @@ class GameTable extends Component {
                             if (index === 0) {
                                 return (
                                     <Grid item xs={12}>
-                                      <h2 className="white">Dealer</h2>
-                                       
                                         <div className="hand">
                                             {player.cards.length > 0 ? (
                                                 <DealerHand
@@ -581,11 +560,11 @@ class GameTable extends Component {
                                                 />) : (null)
                                             }
 
-                                            </div>
+                                        </div>
 
-                                        </Grid>
+                                    </Grid>
                                 )
-                            }else{
+                            } else {
                                 return (
                                     <div>
                                         <BankDisplay
@@ -593,20 +572,19 @@ class GameTable extends Component {
                                             bank={player.bankRoll}
                                             bet={player.bet}
                                         />
-                                        <Grid key={"grid" + player.name} item xs={12}>
-                                     <h2 className="white">Player {player.name}</h2>
-                                            <div className="hand">
-                                                {player.cards.length > 0 ? (
-                                                    <PlayerHand
-                                                        key={player.name}
-                                                        round={this.state.round}
-                                                        playerPosition={player.playerIndex}
-                                                        cards={player.cards}
-                                                    />) : (null)}
+                                        {player.cards.length > 0 ? (
+                                            <div className={player.name + " playerhand-" + player.playerIndex}>
+                                                <PlayerHand
+                                                    key={player.name}
+                                                    round={this.state.round}
+                                                    playerPosition={player.playerIndex}
+                                                    cards={player.cards}
+                                                />
                                             </div>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                  
+                                        ) : (null)}
+
+                                        <Grid item xs={12}>
+
                                             {player.bet > 0 ? (
                                                 <div className="betbox">
                                                     <PlayerBet
@@ -615,10 +593,10 @@ class GameTable extends Component {
                                                         amount={player.bet}
                                                     />
                                                 </div>
-                                            ): (null)
+                                            ) : (null)
                                             }
                                             <div className="actionbox">
-                                                
+
                                                 <PlayerActions
                                                     key={"actions_" + player.playerIndex}
                                                     betbox={(this.state.gameSegment === "bet")}
@@ -634,8 +612,8 @@ class GameTable extends Component {
                                                     url="./sfx/click.mp3"
                                                     playStatus={"PLAYING"}
                                                 />) : (null)}
-                                         </div>
-                                    </Grid>
+                                            </div>
+                                        </Grid>
                                     </div>
 
                                 )

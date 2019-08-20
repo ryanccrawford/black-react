@@ -28,12 +28,12 @@ class BetSlider extends Component {
 
 
     render() {
-        const sliderStyle = { 
+        const sliderStyle = {
             position: 'relative',
             width: '162px',
             height: '90px',
-            
-            
+
+
         }
         const displayStyle = {
             position: 'relative',
@@ -45,8 +45,8 @@ class BetSlider extends Component {
             left: '33px',
             zIndex: '2'
         }
-   
-        
+
+
         const railStyle = {
             position: 'absolute',
             width: '250px',
@@ -56,13 +56,13 @@ class BetSlider extends Component {
             backgroundSize: "cover",
             backgroundImage: 'url("images/betslider/base.png")'
         }
-       
+
 
         return (
             <div className="betSlider">
-                <div style={displayStyle}>{formatCash(this.state.value)}</div>
+                <div style={displayStyle} className="amount" >$ {formatCash(this.state.value)}</div>
             <Slider
-                rootStyle={sliderStyle} 
+                rootStyle={sliderStyle}
                 domain={[this.state.min, this.state.max]}
                 step={5}
                     mode={2}
@@ -70,7 +70,7 @@ class BetSlider extends Component {
                 values={[this.state.value]}
             >
                     <Rail>
-                        {({ getRailProps }) => (  
+                        {({ getRailProps }) => (
                             <div style={railStyle} {...getRailProps()} />
                         )}
                     </Rail>
@@ -108,7 +108,7 @@ class BetSlider extends Component {
 }
 
 function formatCash(amount) {
-    return (<span className="amount">{"$ " + parseFloat(amount).toFixed(0)}</span>)
+    return (<span id="betAmount" className="amount">{parseFloat(amount).toFixed(0)}</span>)
 }
 
 

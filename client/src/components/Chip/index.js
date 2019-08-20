@@ -1,5 +1,4 @@
 import React from 'react';
-import SVG from 'react-inlinesvg';
 import './style.css';
 
 export default function Chip(props) {
@@ -16,9 +15,9 @@ export default function Chip(props) {
         "5000": "5000.png",
         "10000": "10000.png",
     }
-    const chipPath = path + chips[props.amount.toString()] 
+    const chipPath = path + chips[props.amount.toString()]
     return (
-        <div className={"player-" + props.playerIndex + " chip"}>
+        <div className={"player-" + props.playerIndex + " chip animate-chip"}>
             <img
                 className={"chip-image"}
                 src={chipPath}

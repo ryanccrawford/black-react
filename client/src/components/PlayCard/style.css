@@ -1,7 +1,7 @@
 .playing-card {
     display: inline-flex;
     background-color: transparent !important;
-    width: 4rem !important;
+    width: 8rem !important;
     cursor: pointer;
 }
 .display-card {

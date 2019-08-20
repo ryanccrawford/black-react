@@ -1,9 +1,9 @@
 .box {
-    
+
 }
 .table {
-    max-width: 100%;
-    left: 0;
+    width: 125%;
+    left: -12%;
     position: absolute;
     top: 62px;
     z-index: -4;
@@ -11,15 +11,14 @@
 
 
 .hand {
-
-    display:block;
-
-
+    position: relative;
+    top: 118%;
+    left: 39%;
 }
 
 .game-table{
     min-height: 400px;
- 
+
 }
 
 .white {
@@ -54,7 +53,12 @@
     top: 50%;
 }
 .betbox {
-    position: relative;
-    left: 600px;
-    top: 209px;
+    position: absolute;
+    left: 40%;
+    top: 64%;
+}
+.playerhand-1 {
+    position: absolute;
+    left: 42%;
+    top: 73%;
 }

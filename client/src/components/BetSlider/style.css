@@ -13,7 +13,7 @@
     background-image: url("images/betslider/display.png");
     background-size:contain;
 }
-  
+
 .amount {
     font-family: "arial","Helvetica", sans-serif;
     position: relative;
@@ -76,7 +76,6 @@
 .scale-mark {
     position: absolute;
     border: 0.5px solid lightgray;
-    ;
     height: 10px;
 }
 
@@ -90,7 +89,7 @@
 }
 
 .slot > .slider-thumb {
-    top: 3px
+    top: 3px;
 }
 
 .line {
@@ -107,3 +106,7 @@
 }
 
 
+.amount {
+    font-weight: 800 !important;
+    font-size: 2em !important;
+}
