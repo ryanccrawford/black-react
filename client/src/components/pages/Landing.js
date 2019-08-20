@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Switch, Route, Link, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route,  withRouter } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import MoneyIcon from '@material-ui/icons/Money';
 import Card from '@material-ui/core/Card';
+import Box from '@material-ui/core/Box';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -14,12 +14,19 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                              import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import ReactFontFace from 'react-font-face'
+import CasinoFont from '../Fonts/main.ttf'
+import VideoPlayer from 'react-background-video-player'
+import Signup from '../Signup'
+import Signin from '../Signin'
+
+import './welcome.css';                                                                                                                                                                                                                                                                                                                                                                                                                         import Link from '@material-ui/core/Link';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {'Copyright '}
       <Link color="inherit" href="/">
         React BackJack version 2019
       </Link>{' '}
@@ -32,12 +39,24 @@ function Copyright() {
   );
 }
 const useStyles = makeStyles(theme => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
+    icon: {
+        height: "64px",
+        margin: "8px 8px 8px 8px !important",
+        padding: "8px 8px 8px 8px !important",
+        float: "left",
+        filter: "drop-shadow(2px 2px 10px black)"
+    },
+    icon2: {
+        height: "64px",
+        margin: "8px 8px 8px 8px !important",
+        padding: "8px 8px 8px 8px !important",
+        float: "left",
+        filter: "drop-shadow(2px 2px 10px white)"
+    },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+      padding: theme.spacing(8, 0, 8),
+
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -59,93 +78,104 @@ const useStyles = makeStyles(theme => ({
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
+    padding: theme.spacing(0),
+    },
+    CasinoFont: {
+        margin: 15,
+        fontSize: 48,
+        lineHeight: 1.4,
+        fontFamily: 'Casino Queen',
+    }
 }));
 
 const cards = [1, 2, 3];
 
-export default function Welcome() {
-  const classes = useStyles();
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <MoneyIcon className={classes.icon} />
-          <Typography variant="h6" color="inherit" noWrap>
-            React BlackJack v2019 
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              React BlackJack v2019
+
+function Welcome(props){
+
+
+        const video = '/video/black.mp4'
+        const classes = useStyles();
+
+
+    return (
+             <React.Fragment>
+                 <CssBaseline />
+            <AppBar position="relative" >
+                <Toolbar className={classes.icon}>
+                    <img className={classes.icon2} src="/images/spade.png" />
+                         <h6 className={classes.CasinoFont}>
+                        React BlackJack v2019
+          </h6>
+                     </Toolbar>
+
+                 </AppBar>
+                 <main>
+                     {/* Hero unit */}
+                     <div className="welcome">
+                         <div className={classes.heroContent}>
+                             <Container maxWidth="sm">
+                                 <h1 className={classes.CasinoFont}>
+                                     React BlackJack v2019
+                                 </h1>
+                                 <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                                     Live Multiplayer BlackJack
             </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Live Multiplayer BlackJack 
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                                  <Button variant="contained" onClick={withRouter("/signin")} color="primary">
-                    Play Now!
+                                 <Box className={classes.heroButtons}>
+                                     <Grid container spacing={2} justify="center">
+                                        <Grid item>
+
+                                        <Button id="play" variant="contained" onClick={props.clickEventHandle} color="primary">
+                                                 Play Now!
                   </Button>
-                </Grid>
-                <Grid item>
-                                  <Button variant="outlined" onClick={withRouter("/signup")} color="primary">
-                    Create Account
+                                         </Grid>
+                                             <Grid item>
+                                        <Button id="create" variant="outlined" onClick={props.clickEventHandle} color="primary">
+                                                     Create Account
                   </Button>
-                </Grid>
-              </Grid>
-            </div>
-          </Container>
-        </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map(card => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="/images/blackjack2.png"
-                    title="Play Classic BlackJack"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Classic BlackJack
-                    </Typography>
-                    <Typography>
-                      Play online with real players. Meet new friends. Chat with another player privately, or group chat with everyone at once
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      Play Now!
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
+                                             </Grid>
+                                     </Grid>
+                               </Box>
+                             </Container>
+
+                         </div>
+
+                     </div>
+                {props.signin ? (<Signin />) : (null)}
+                     {props.signup ? (<Signup/>): (null)}
+                     <Container className={classes.cardGrid} maxWidth="md">
+                         {/* End hero unit */}
+
+                     </Container>
+                 </main>
+                 {/* Footer */}
+                 <footer className={classes.footer}>
+                     <Typography variant="h6" align="center" gutterBottom>
+
+                     </Typography>
+                     <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+                         Please read our terms of service and about how we protect your information
         </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Please read our terms of service and about how we protect your information
-        </Typography>
-        <Copyright />
-      </footer>
-      {/* End footer */}
-    </React.Fragment>
-  );
+                     <Copyright />
+                 </footer>
+                 {/* End footer */}
+             </React.Fragment>
+         );
+
 }
+
+
+let fontConfig = {
+    file: [
+        {
+            fontFamily: 'Casino Queen',
+            fontStyle: 'normal',
+            file: CasinoFont,
+            fontType: 'truetype',
+            fileLocal: 'Casino Queen Normal'
+        }
+    ]
+}
+
+export default ReactFontFace(Welcome, fontConfig)

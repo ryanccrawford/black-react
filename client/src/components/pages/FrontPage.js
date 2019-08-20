@@ -12,7 +12,9 @@ class FrontPage extends Component {
         this.state = {
             activePage: "",
             isLoggedIn: auth ? true : false,
-            auth: auth
+            auth: auth,
+            signin: false,
+            signup: false,
 
         }
 
@@ -20,7 +22,12 @@ class FrontPage extends Component {
 
     getLandingPage = () => {
         return (
-            <Welcome />
+            <Welcome
+                clickEventHandle={this.onClickEvent}
+                signin={this.state.signin}
+                signup={this.state.signup}
+                auth={this.state.auth}
+            />
         )
     }
 
@@ -29,11 +36,15 @@ class FrontPage extends Component {
 
     }
 
+     onClickEvent = (event) => {
+        let button = event.target.id
+        if (button === "play") {
+            this.setState({ signin: true, signup: false })
+        } else if (button === "create") {
 
-    buttonOnClickEvent = (event) => {
-        event.preventDefault();
-        let button = event.target
-        window.location.replace('/' + button.getAttribute('data-name'));
+            this.setState({ signin: false, signup: true })
+        }
+
     }
 
 

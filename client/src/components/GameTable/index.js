@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import PlayerActions from '../PlayerActions';
 import PlayerHand from '../PlayerHand';
 import DealerHand from '../DealerHand';
@@ -47,7 +49,7 @@ class player {
 
     givePlayerCard = (card) => {
         this.cards.push(card)
-        setTimeout(this.doUpdate, 500)
+        setTimeout(this.GotCardCallBack, 500)
 
     }
 
@@ -242,7 +244,11 @@ class GameTable extends Component {
     }
 
 
+    handleChange = (event) => {
 
+        console.log("Handle Change")
+
+    }
 
 
     scoreCards = (cards) => {
@@ -377,7 +383,7 @@ class GameTable extends Component {
 
     }
 
-    dealOutCards = (sendCard) => {
+    dealOutCards = () => {
 
         for (let j = 0; j < 2; j++) {
             for (let i = 1; i < this.Players.length + 1; i++) {
@@ -387,11 +393,11 @@ class GameTable extends Component {
                     ii = 0
                 }
                 if (ii === 0 && j === 1) {
-                    this.Players[ii].cards.push(this.Deck.deal(true))
-                    sendCard(this.Players[ii])
+                    this.Players[ii].givePlayerCard(this.Deck.deal(true))
+                    //sendCard(this.Players[ii])
                 } else {
-                    this.Players[ii].cards.push(this.Deck.deal(false))
-                    sendCard(this.Players[ii])
+                    this.Players[ii].givePlayerCard(this.Deck.deal(false))
+                   // sendCard(this.Players[ii])
                 }
 
 
@@ -613,6 +619,12 @@ class GameTable extends Component {
                                                     playStatus={"PLAYING"}
                                                 />) : (null)}
                                             </div>
+                                            <BottomNavigation value={"folder"} onChange={this.handleChange} >
+                                                <BottomNavigationAction label="Recents" value="recents"  />
+                                                <BottomNavigationAction label="Favorites" value="favorites"  />
+                                                <BottomNavigationAction label="Nearby" value="nearby"  />
+                                                <BottomNavigationAction label="Folder" value="folder"  />
+                                            </BottomNavigation>
                                         </Grid>
                                     </div>
 
