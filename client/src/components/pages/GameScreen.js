@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import GameTable from '../GameTable'
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,7 +14,7 @@ class GameScreen extends Component {
 
 
     render() {
-
+       
         return (
             <Container fixed>
                         <GameTable />

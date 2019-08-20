@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Home from './components/pages/Home'
-
+const auth = localStorage.getItem('jwtToken');
 
 class App extends Component {
 
