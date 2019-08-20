@@ -14,10 +14,20 @@ var PlayersSchema = new Schema({
         type: String,
         required: true
     },
-    money: {
+    bankRoll: {
         type: Number,
         required: true,
         default: 10000.00
+    },
+    cards: {
+        type: Array,
+        required: false,
+        default: []
+    },
+    table: {
+        type: Array,
+        required: false,
+        default: []
     },
     date: {
         type: Date,

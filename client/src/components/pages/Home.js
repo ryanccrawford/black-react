@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import TopBar from '../TopBar';
 import FrontPage from "./FrontPage";
 import GameScreen from "./GameScreen";
 import Signup from "../Signup";
 import Signin from "../Signin";
-
+const auth = localStorage.getItem('jwtToken');
 
 
 class Home extends Component {
@@ -17,12 +16,11 @@ class Home extends Component {
                 <div>
                     <CssBaseline />
                     <Container fixed>
-                        <TopBar>
-                        </TopBar>
                         <Route exact path="/" component={FrontPage} />
                         <Route exact path="/signup" component={Signup} />
                         <Route exact path="/signin" component={Signin} />
-                        <Route exact path="/gamescreen" component={GameScreen} />
+                        {auth ? (
+                            <Route exact path="/gamescreen" component={GameScreen} />) : (null)}
                     </Container>
                     
                       

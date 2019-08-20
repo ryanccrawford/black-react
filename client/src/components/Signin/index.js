@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions'; 
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+    
+
 const axios = require('axios');
 const apiserver = "http://localhost:3001";
+
+
 
 class Signin extends Component {
     constructor() {
@@ -57,33 +63,30 @@ class Signin extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <Container maxWidth="sm">
-                {errors.bad ? (<div>{errors.bad}</div>) : (null)}
-                    <Paper>
-                        <Link to="/" className="btn-flat waves-effect">
-                            <i className="material-icons left">keyboard_backspace</i> Back to
-                            home
-                        </Link>
-                            <Typography variant="h4" >
-                             Login
-                            </Typography>
-                            <Typography>
-                                Don't have an account? <Link to="/register">Register</Link>
-                            </Typography>
-                        <form noValidate onSubmit={this.onSubmit}>
-                        <FormControl>
+            <Dialog
+                open
+                onRequestClose={this.props.toggleLogin}
+                fullScreen={this.props.fullScreen}>
+                <DialogTitle>Sign In</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {errors.bad ? (<div>{errors.bad}</div>) : (null)}
+                    </DialogContentText>
+                    <form noValidate onSubmit={this.onSubmit}>
+                      
                             <TextField
-                                    onChange={this.onChange}
-                                    value={this.state.email}
-                                    error={errors.email}
-                                    id="email"
-                                    type="email"
-                                    label={"Email"}
-                                    variant={"outlined"}
-                                    required={true}
-                                />
-                        </FormControl>
-                        <FormControl>
+                                autoFocus
+                                onChange={this.onChange}
+                                value={this.state.email}
+                                error={errors.email}
+                                id="email"
+                                type="email"
+                                label={"Email"}
+                                margin="dense"
+                            required={true}
+                            fullWidth
+                            />
+                
                             <TextField
                                 onChange={this.onChange}
                                 value={this.state.password}
@@ -91,29 +94,51 @@ class Signin extends Component {
                                 id="password"
                                 type="password"
                                 label={"Password"}
-                                variant={"outlined"}
-                                required={true}
+                                margin="dense"
+                            required={true}
+                            fullWidth
                             />
-                        </FormControl>
-                        <FormControl>
-                            <Button
-                                variant="contained"
-                                style={{
-                                        width: "150px",
-                                        borderRadius: "3px",
-                                        letterSpacing: "1.5px",
-                                        marginTop: "1rem"
-                                    }}
-                                type="submit"
-                                color="primary"
-                                >Login
+                  
+                        
+                    </form>
+                    <DialogContentText>
+                        Don't have an account? <Link to="/signup">Sign Up</Link>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <FormControl>
+                        <Button
+                            variant="contained"
+                            style={{
+                                width: "150px",
+                                borderRadius: "3px",
+                                letterSpacing: "1.5px",
+                                marginTop: "1rem"
+                            }}
+                            color="primary"
+                            onClick={this.props.toggleLogin}
+                        >Cancel
+                        </Button>
+                    </FormControl>
+                    <FormControl>
+                        <Button
+                            variant="contained"
+                            style={{
+                                width: "150px",
+                                borderRadius: "3px",
+                                letterSpacing: "1.5px",
+                                marginTop: "1rem"
+                            }}
+                            type="submit"
+                            color="primary"
+                        >Sign In
                                 </Button>
-                        </FormControl>
-                        </form>
-                    </Paper>
-                
-            </Container>
+                    </FormControl>
+                   
+                </DialogActions>
+            </Dialog>
         );
     }
 }
+
 export default Signin;

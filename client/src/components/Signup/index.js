@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from "@material-ui/core/Divider"
 
 const axios = require('axios');
 const apiserver = "http://localhost:3001"
@@ -34,7 +40,7 @@ class Signup extends Component {
         axios({
             method: "POST",
             //url: "/api/register",
-          url: apiserver + "/api/register",
+            url: apiserver + "/api/register",
             data: newUser
         }).then(this.doSuccess).catch(this.doError)
 
@@ -65,81 +71,114 @@ class Signup extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <Container>
-                {errors.bad ? (<div>{errors.bad}</div>) :(null) }
-                <div className="row">
-                    <div className="col s8 offset-s2">
-                        <Link to="/" className="btn-flat waves-effect">
-                            <i className="material-icons left">keyboard_backspace</i> Back to
-                            home
-            </Link>
-                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                            <h4>
-                                <b>Register</b> below
-              </h4>
-                            <p className="grey-text text-darken-1">
-                                Already have an account? <Link to="/login">Log in</Link>
-                            </p>
-                        </div>
-                        <form noValidate onSubmit={this.onSubmit}>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.name}
-                                    error={errors.name}
-                                    id="name"
-                                    type="text"
-                                />
-                                <label htmlFor="name">Name</label>
-                            </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.email}
-                                    error={errors.email}
-                                    id="email"
-                                    type="email"
-                                />
-                                <label htmlFor="email">Email</label>
-                            </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password}
-                                    error={errors.password}
-                                    id="password"
-                                    type="password"
-                                />
-                                <label htmlFor="password">Password</label>
-                            </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password2}
-                                    error={errors.password2}
-                                    id="password2"
-                                    type="password"
-                                />
-                                <label htmlFor="password2">Confirm Password</label>
-                            </div>
-                            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                                <button
-                                    style={{
-                                        width: "150px",
-                                        borderRadius: "3px",
-                                        letterSpacing: "1.5px",
-                                        marginTop: "1rem"
-                                    }}
-                                    type="submit"
-                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                                >
-                                    Sign up
-                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </Container>
+            <Dialog
+                open
+                onRequestClose={this.props.toggleLogin}
+                fullScreen={this.props.fullScreen}>
+                <DialogTitle>Sign Up</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {errors.bad ? (<div>{errors.bad}</div>) : (null)}
+                    </DialogContentText>
+                    <DialogContentText>
+                        Already have an account? <Link to="/signin">Log in</Link>
+                    </DialogContentText>
+                    <form noValidate onSubmit={this.onSubmit}>
+
+                        <TextField
+                            autoFocus
+                            onChange={this.onChange}
+                            value={this.state.name}
+                            error={errors.password}
+                            id="name"
+                            type="text"
+                            label={"Name"}
+                            margin="dense"
+                            required={true}
+                            fullWidth
+                        />
+
+                        <TextField
+                            
+                            onChange={this.onChange}
+                            value={this.state.email}
+                            error={errors.email}
+                            id="email"
+                            type="email"
+                            label={"Email"}
+                            margin="dense"
+                            required={true}
+                            fullWidth
+                        />
+                       <Divider/>
+                        <TextField
+                            
+                            onChange={this.onChange}
+                            value={this.state.password}
+                            error={errors.password}
+                            id="password"
+                            type="password"
+                            label={"Password"}
+                            margin="dense"
+                            required={true}
+                            fullWidth
+                            />
+                          
+                        <TextField
+                            
+                            onChange={this.onChange}
+                            value={this.state.password2}
+                            error={errors.password2}
+                            id="password2"
+                            type="password"
+                            label={"Confirm Password"}
+                            margin="dense"
+                            required={true}
+                            fullWidth
+                        />
+                        
+
+                    </form>
+                   
+                </DialogContent>
+                <DialogActions>
+                    <FormControl>
+                        <Button
+                            variant="contained"
+                            style={{
+                                width: "150px",
+                                borderRadius: "3px",
+                                letterSpacing: "1.5px",
+                                marginTop: "1rem"
+                            }}
+                            color="primary"
+                            onClick={this.props.toggleLogin}
+                        >Cancel
+                        </Button>
+                    </FormControl>
+                    <FormControl>
+
+
+                        <Button
+                            variant="contained"
+                            style={{
+                                width: "150px",
+                                borderRadius: "3px",
+                                letterSpacing: "1.5px",
+                                marginTop: "1rem"
+                            }}
+                            type="submit"
+                            color="primary"
+                            className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                        >Sign up
+                            </Button>
+                    </FormControl>
+
+                </DialogActions>
+            </Dialog>
+
+
+
         );
     }
 }

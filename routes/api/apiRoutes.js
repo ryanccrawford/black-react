@@ -25,7 +25,10 @@ module.exports = function (app) {
                 const newPlayer = new db.Players({
                     name: req.body.name,
                     email: req.body.email,
-                    password: req.body.password
+                    password: req.body.password,
+                    bankRoll: 10000,
+                    cards: [],
+                    table: null
                 });
                 // Hash password before saving in database
                 bcrypt.genSalt(10, (err, salt) => {
@@ -64,7 +67,9 @@ module.exports = function (app) {
                     // Create JWT Payload
                     const payload = {
                         id: player.id,
-                        name: player.name
+                        name: player.name,
+                        bankRoll: player.bankRoll,
+                        cards: player.cards
                     };
                     // Sign token
                     jwt.sign(

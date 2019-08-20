@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Route, Redirect } from 'react-router'
+import Welcome from './Landing'
+const auth = localStorage.getItem('jwtToken');
 
 
 
@@ -8,36 +11,41 @@ class FrontPage extends Component {
         super(props)
         this.state = {
             activePage: "",
-            isLoggedIn: false,
-            token: ""
+            isLoggedIn: auth ? true : false,
+            auth: auth
 
         }
 
     }
 
+    getLandingPage = () => {
+        return (
+            <Welcome />
+        )
+    }
+
+    gotoGameScreen = () => {
+
+
+    }
+
+
     buttonOnClickEvent = (event) => {
         event.preventDefault();
         let button = event.target
         window.location.replace('/' + button.getAttribute('data-name'));
-
     }
 
+
     render() {
-    return(
+
+        return (
             <div>
-            <button
-                data-name={"signup"}
-                onClick={this.buttonOnClickEvent}
-            >Sign Up
-                </button>
-                <button
-                    data-name={"signin"}
-                    onClick={this.buttonOnClickEvent}
-                >Sign In</button>
+                {this.state.isLoggedIn ? this.gotoGameScreen() : this.getLandingPage()}
             </div>
-                )
-                }
-                }
 
+        )
+    }
 
+   }
 export default FrontPage;
