@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import PlayerActions from '../PlayerActions';
 import PlayerHand from '../PlayerHand';
 import DealerHand from '../DealerHand';
@@ -113,12 +111,9 @@ class GameTable extends Component {
 
         let player0 = new player(dealerOptions)
         let player1 = new player(playerOptions)
-        // let player2 = new Player("Other", "player", 10000)
         this.Players = []
         this.Players.push(player0)
         this.Players.push(player1)
-        //options.Players.push(player2)
-        // this.GamePlay = new GamePlay(options)
         this.Deck = new Deck({ numberOfDecks: 6 })
         console.log("created Deck")
         this.state = {
@@ -619,12 +614,7 @@ class GameTable extends Component {
                                                     playStatus={"PLAYING"}
                                                 />) : (null)}
                                             </div>
-                                            <BottomNavigation value={"folder"} onChange={this.handleChange} >
-                                                <BottomNavigationAction label="Recents" value="recents"  />
-                                                <BottomNavigationAction label="Favorites" value="favorites"  />
-                                                <BottomNavigationAction label="Nearby" value="nearby"  />
-                                                <BottomNavigationAction label="Folder" value="folder"  />
-                                            </BottomNavigation>
+                                           
                                         </Grid>
                                     </div>
 

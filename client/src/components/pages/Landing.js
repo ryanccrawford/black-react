@@ -88,15 +88,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const cards = [1, 2, 3];
-
-
-
 function Welcome(props){
 
 
-        const video = '/video/black.mp4'
-        const classes = useStyles();
+     const classes = useStyles();
 
 
     return (
@@ -104,7 +99,7 @@ function Welcome(props){
                  <CssBaseline />
             <AppBar position="relative" >
                 <Toolbar className={classes.icon}>
-                    <img className={classes.icon2} src="/images/spade.png" />
+                    <img className={classes.icon2} src="/images/spade.png" alt="..." />
                          <h6 className={classes.CasinoFont}>
                         React BlackJack v2019
           </h6>

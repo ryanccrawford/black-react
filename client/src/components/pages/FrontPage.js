@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router'
 import Welcome from './Landing'
+import GameScreen from './GameScreen'
 const auth = localStorage.getItem('jwtToken');
 
 
@@ -11,7 +12,7 @@ class FrontPage extends Component {
         super(props)
         this.state = {
             activePage: "",
-            isLoggedIn: auth ? true : false,
+            isLoggedIn: true,  //auth ? true : false,
             auth: auth,
             signin: false,
             signup: false,
@@ -32,7 +33,11 @@ class FrontPage extends Component {
     }
 
     gotoGameScreen = () => {
-
+        return (
+            <div>
+            <GameScreen />
+            </div>
+        )
 
     }
 
