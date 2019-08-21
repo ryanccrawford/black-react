@@ -49,9 +49,12 @@ class PlayerHand extends Component {
    render() {
        let score = this.scoreCards()
        return (
-           <Badge className={""} badgeContent={score} color="primary">
+           
+           <Badge className="score-count"
+               badgeContent={score}
+               color="white">
 
-            <div className="row player">
+           <div className="row player">
                 <div className="col">
 
                 {console.log("cards")}

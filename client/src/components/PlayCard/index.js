@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SVG from 'react-inlinesvg';
 import Card from '@material-ui/core/Card';
 import Delay from 'react-delay'
 import ReactCardFlip from 'react-card-flip';
@@ -70,7 +69,7 @@ class PlayCard extends Component {
             >
             <div className="slide-in-blurred-tr playing-card display-card ">
             <ReactCardFlip isFlipped={this.state.hidden} flipDirection="horizontal">
-                <Card
+                <div
                     key="front"
                     className="playing-card display-card"
                         data-rank={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.rank}
@@ -83,9 +82,9 @@ class PlayCard extends Component {
                             src={this.state.frontImage}
                             alt="playing card"
                          />
-                </Card>
+                </div>
 
-                <Card
+                <div
                     key="back"
                     className="playing-card"
                         data-rank={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.rank}
@@ -95,9 +94,10 @@ class PlayCard extends Component {
                 >
                     <img
                         className="playing-card"
-                        src={this.state.backImage}
+                                src={this.state.backImage}
+                                alt="..."
                     />
-                </Card>
+                </div>
                 </ReactCardFlip>
                 </div>
                 </Delay>

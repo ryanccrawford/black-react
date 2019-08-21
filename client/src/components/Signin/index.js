@@ -47,6 +47,7 @@ class Signin extends Component {
         console.log(response)
         if (response.status === 200) {
             console.log(response.data)
+
             window.location.replace('/gamescreen');
         }
         else if (response.status > 200 && response.status < 500) {

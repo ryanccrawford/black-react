@@ -7,6 +7,8 @@ import PlayerBet from '../PlayerBet';
 import BankDisplay from '../BankDispaly';
 import Deck from '../Deck';
 import Sound from 'react-sound';
+import Draggable from 'react-draggable'
+import GameResult from '../GameResult'
 import './style.css';
 
 class player {
@@ -124,13 +126,24 @@ class GameTable extends Component {
             gameSegment: "bet",
             //players: .Players,
             shuffleDeckMessage: "",
-            clickSound: false
+            clickSound: false,
+            hideActionBar: false
         }
 
 
     }
 
+    showGameResult = (type = "win") => {
 
+        return (
+            <GameResult
+                isOpen={true}
+                type={type}
+                title={type === "win" ? "Winner" : "Not Good"}
+                />
+            )
+
+    }
 
     componentDidMount() {
         console.log("Component Mounted")
@@ -165,6 +178,10 @@ class GameTable extends Component {
 
     }
 
+    doPlayer21 = () => {
+        this.payOut(this.PlayerTurn, 1.5)
+
+    }
     
 
     setPlayersTurn = (playerindex) => {
@@ -218,8 +235,8 @@ class GameTable extends Component {
 
         }
 
-        if (name === "stay" && playerIndex) {
-
+        if (name === "stay" && playerIndex > 0) {
+            console.log("stay")
             this.stay(playerIndex, this.stayCallback)
 
         }
@@ -231,43 +248,122 @@ class GameTable extends Component {
 
 
         this.dealOutCards(this.cardsDelt)
-        for (let o = 1; o < this.Players.length;o++)
-        this.doRound(o)
-
+        for (let o = 1; o < this.Players.length; o++) {
+            this.doRound(o)
+        }
 
     }
 
+    flipDealerCard = () => {
+        this.Players[0].cards[1].facedown = false;
+        this.forceUpdate()
+    }
+
     doRound = (playerIndex) => {
+        let varStatus = ""
 
         let score = this.scoreCards(this.Players[playerIndex].cards)
         if (score.low === 21 || score.high === 21) {
             console.log("YES 21")
-
+            varStatus = "21"
         }
-
+               varStatus = "hit"
         if (score.low >= 21 && score.high >= 21) {
             console.log("Busted")
-
+             varStatus = "busted"
         }
-        this.setState({ gameSegment: "hit"})
+        this.setState({ gameSegment: varStatus})
        
     }
+    /*
+     DRAGGABLE
+     */
+    getInitialState = () => {
+        return {
+            activeDrags: 0,
+            deltaPosition: {
+                x: 0, y: 0
+            },
+            controlledPosition: {
+                x: -400, y: 200
+            }
+        };
+    }
+
+    handleDrag = (e, ui) => {
+        const { x, y } = this.state.deltaPosition;
+        this.setState({
+            deltaPosition: {
+                x: x + ui.deltaX,
+                y: y + ui.deltaY,
+            }
+        });
+    }
+
+    onStart  = ()  => {
+        this.setState({ activeDrags: ++this.state.activeDrags });
+    }
+
+    onStop = () => {
+        this.setState({ activeDrags: --this.state.activeDrags });
+    }
+
+    // For controlled component
+    adjustXPos =(e)=> {
+        e.preventDefault();
+        e.stopPropagation();
+        const { x, y } = this.state.controlledPosition;
+        this.setState({ controlledPosition: { x: x - 10, y } });
+    }
+
+    adjustYPos = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const { controlledPosition } = this.state;
+        const { x, y } = controlledPosition;
+        this.setState({ controlledPosition: { x, y: y - 10 } });
+    }
+
+    onControlledDrag = (e, position) => {
+        const { x, y } = position;
+        this.setState({ controlledPosition: { x, y } });
+    }
+
+    onControlledDragStop = (e, position) => {
+        this.onControlledDrag(e, position);
+        this.onStop();
+    }
+    /******************************************************/
+
 
     componentWillUpdate() {
+
         if (this.state.gameSegment === "bet") {
             const bet = { bet: true }
-            this.Players[this.state.playerTurnIndex].giveActions(bet)
+           this.Players[this.state.playerTurnIndex].giveActions(bet)
+            
         }
         let score = this.scoreCards(this.Players[this.state.playerTurnIndex].cards)
+        if (score.low === 21 || score.high === 21) {
+            const win = {}
+            this.Players[this.state.playerTurnIndex].giveActions(win)
+            
+        }
         if (score.low < 21) {
             if (this.state.gameSegment === "hit") {
-                const hit = { hit: true }
-                this.Players[this.state.playerTurnIndex].giveActions(hit)
+                const hit = { hit: true, stay: true }
+               this.Players[this.state.playerTurnIndex].giveActions(hit)
+               
             }
         }
         if (score.low >= 22) {
             console.log("busted")
+
+            const busted = { }
+            this.Players[this.state.playerTurnIndex].giveActions(busted)
+            this.showGameResult("busted")
         }
+        
         
     }
 
@@ -315,14 +411,29 @@ class GameTable extends Component {
         this.forceUpdate()
 
     }
+    stayCallBack = (playerIndex) => {
+        let dealerNext = false
 
+        dealerNext = (this.state.playerTurnIndex === (this.Players.length - 1)) ?  true : false
+        let setThis = {}
+        if (dealerNext) {
+            setThis.next = 0
+        } else {
+            setThis.next = this.state.playerTurnIndex + 1
+        }
+        console.log("stayCallback")
 
-
-    renderCardsCB = () => {
-        this.setState({ cardsDelt: false }, this.setState({ cardsDelt: true }))
-
+        this.setState({playerTurnIndex: setThis.next, gameSegment: "hit" , hideActionBar: true})
+       
 
     }
+
+
+  //  renderCardsCB = () => {
+   //     this.setState({ cardsDelt: false }, this.setState({ cardsDelt: true }))
+
+
+   // }
 
 
     /******************************************************************
@@ -538,16 +649,16 @@ class GameTable extends Component {
     hit = (playerIndex, callback) => {
         this.Players[playerIndex].cards.push(this.Deck.deal(false))
         console.log("just did hit")
+        this.forceUpdate()
         
       
 
     }
 
-    stay = (playerIndex) => {
-        let card = this.Deck.deal(false)
-        this.Players[playerIndex].cards.push(card)
-        //TODO ADD VALID PLAYS AFTER HIT
-
+    stay = (playerIndex, callBack) => {
+        let actions = {}
+        this.Players[playerIndex].giveActions(actions)
+        this.stayCallBack(playerIndex)
     }
     double = (playerIndex) => {
         let card = this.Deck.deal(false)
@@ -565,6 +676,8 @@ class GameTable extends Component {
     render() {
         const tableImage = "./images/tables/table.jpg"
         console.log("Started render")
+        const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
+        const { deltaPosition, controlledPosition } = this.state;
         return (
 
             <div className={"game-table"}>
@@ -627,24 +740,26 @@ class GameTable extends Component {
                                                 </div>
                                             ) : (null)
                                             }
-                                            <div className="actionbox">
+                                            {!this.state.hideActionBar ? (
+                                                <Draggable {...dragHandlers}>
+                                                    <div className="actionbox">
 
-                                                <PlayerActions
-                                                    key={"actions_" + player.playerIndex}
-                                                    betbox={(this.state.gameSegment === "bet")}
-                                                    amount={player.lastBet}
-                                                    player={player}
-                                                    maxBet={player.bankRoll}
-                                                    playerIndex={player.playerIndex}
-                                                    actions={player.actions}
-                                                    actionClick={this.actionClick}
-                                                    actionDummyClick={this.disabledbuttonClick}
-                                                />
-                                                {this.state.clickSound ? (<Sound
-                                                    url="./sfx/click.mp3"
-                                                    playStatus={"PLAYING"}
-                                                />) : (null)}
-                                            </div>
+                                                        <PlayerActions
+                                                            key={"actions_" + player.playerIndex}
+                                                            betbox={(this.state.gameSegment === "bet")}
+                                                            amount={player.lastBet}
+                                                            player={player}
+                                                            maxBet={player.bankRoll}
+                                                            playerIndex={player.playerIndex}
+                                                            actions={player.actions}
+                                                            actionClick={this.actionClick}
+                                                            actionDummyClick={this.disabledbuttonClick}
+                                                        />
+                                                        {this.state.clickSound ? (<Sound
+                                                            url="./sfx/click.mp3"
+                                                            playStatus={"PLAYING"}
+                                                        />) : (null)}
+                                                    </div></Draggable>) : (null)}
                                            
                                         </Grid>
                                     </div>

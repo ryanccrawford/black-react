@@ -22,6 +22,7 @@
     "react-deck-o-cards": "^1.1.0",
     "react-delay": "^0.1.0",
     "react-dom": "^16.8.6",
+    "react-draggable": "^3.3.2",
     "react-font-face": "^0.2.1",
     "react-inlinesvg": "^1.1.4",
     "react-playing-card": "^0.2.5",
