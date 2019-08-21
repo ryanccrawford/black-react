@@ -165,9 +165,7 @@ class GameTable extends Component {
 
     }
 
-    componentDidUpdate() {
-        console.log("Component Did Updatde")
-    }
+    
 
     setPlayersTurn = (playerindex) => {
         console.log("Inside Set Player turn Player number " + playerindex)
@@ -233,11 +231,52 @@ class GameTable extends Component {
 
 
         this.dealOutCards(this.cardsDelt)
-
+        for (let o = 1; o < this.Players.length;o++)
+        this.doRound(o)
 
 
     }
 
+    doRound = (playerIndex) => {
+
+        let score = this.scoreCards(this.Players[playerIndex].cards)
+        if (score.low === 21 || score.high === 21) {
+            console.log("YES 21")
+
+        }
+
+        if (score.low >= 21 && score.high >= 21) {
+            console.log("Busted")
+
+        }
+        this.setState({ gameSegment: "hit"})
+       
+    }
+
+    componentWillUpdate() {
+        if (this.state.gameSegment === "bet") {
+            const bet = { bet: true }
+            this.Players[this.state.playerTurnIndex].giveActions(bet)
+        }
+        let score = this.scoreCards(this.Players[this.state.playerTurnIndex].cards)
+        if (score.low < 21) {
+            if (this.state.gameSegment === "hit") {
+                const hit = { hit: true }
+                this.Players[this.state.playerTurnIndex].giveActions(hit)
+            }
+        }
+        if (score.low >= 22) {
+            console.log("busted")
+        }
+        
+    }
+
+    checkScore = (score) => {
+
+
+
+
+    }
 
     handleChange = (event) => {
 
@@ -247,7 +286,7 @@ class GameTable extends Component {
 
 
     scoreCards = (cards) => {
-
+        console.log("inside cards")
         let lowScore = 0;
         let highScore = 0;
 
@@ -342,7 +381,7 @@ class GameTable extends Component {
     }
     ActionsChangedCallBack = (playerIndex) => {
         console.log("Player " + playerIndex + " Got Action")
-        this.forceUpdate()
+        //this.forceUpdate()
     }
     CardsCleardCallBack = (playerIndex) => {
         console.log("Player " + playerIndex + " is cleared")
@@ -499,9 +538,8 @@ class GameTable extends Component {
     hit = (playerIndex, callback) => {
         this.Players[playerIndex].cards.push(this.Deck.deal(false))
         console.log("just did hit")
-        let s = this.Players[playerIndex].scoreHand()[this.Players[playerIndex].handScore.length - 1]
-        console.log(s)
-        callback(playerIndex, s)
+        
+      
 
     }
 
@@ -522,13 +560,6 @@ class GameTable extends Component {
         this.Players[playerIndex].cards.push(card)
         //TODO ADD VALID PLAYS AFTER HIT
 
-    }
-
-
-
-
-    componentWillUpdate() {
-        console.log("Component about to update")
     }
 
     render() {

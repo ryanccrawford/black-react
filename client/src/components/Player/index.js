@@ -109,28 +109,17 @@ class Player extends Component {
                 }
 
             if (lowScore === 21 || highScore === 21) {
-                this.setState({ handScore: [...this.state.handScore, { low: 21, high: 21 }] })
+                lowScore = 21 
+                highScore = 21
 
-            } else
-                if (lowScore > 21 && highScore > 21) {
-                    this.setState({ handScore: [...this.state.handScore, { low: 0, high: 0 }] })
- 
-
-                } else
-                    if ((lowScore === 17 || highScore === 17) && this.state.type === "dealer") {
-                        
-                        this.setState({ handScore: [...this.state.handScore, { low: 17, high: 17 }] })
-
-                        
-
-
-                    } else {
-                        this.setState({ handScore: [...this.state.handScore, { low: lowScore, high: highScore }] })
-                       
-                    }
+            } 
         })
 
-        callBack({low:lowScore, high:highScore})
+        let setState = this.setState
+        callBack(this)
+    //{ handScore: [...this.state.handScore, { low: lowScore, high: highScore }] 
+       
+        
 
     }
 
