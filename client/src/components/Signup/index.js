@@ -21,8 +21,8 @@ const apiserver = process.env.PORT ? "" : "http://localhost:3001";
 
 
 class Signup extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             isLoading: true,
             token: '',
@@ -80,8 +80,8 @@ class Signup extends Component {
         console.log(response)
         if (response.status === 200) {
             console.log(response.data)
-            sessionStorage.setItem("user", JSON.stringify(response.data))
-            this.setState({ signedUp: true, token: response.data })
+
+            window.location.href(apiserver + "/signedup")
         }
         else if (response.status > 200 && response.status < 500) {
             this.setState({ errors: { bad: response.data }, password: "", isLoading: false })
@@ -120,16 +120,12 @@ class Signup extends Component {
 
         }
 
-        if (signedUp) {
-            return (
-                <Redirect to="/signedup" />
-            )
-        }
+
 
         return (
-           
+
                 <Dialog
-                    open
+                open={true}
                     onRequestClose={this.handleClose}
             >
                     <DialogTitle>Sign Up</DialogTitle>
@@ -228,7 +224,7 @@ class Signup extends Component {
                     </DialogActions>
 
                 </Dialog >
-           
+
         )
 
     }

@@ -27,21 +27,21 @@ export default function SignedUp(props) {
     };
 
     return (
-       
+
             <div>
                 <Dialog
                     open={handleOpen}
                     onClose={handleClose}
                 >
 
-                    <DialogTitle id="simple-modal-title">Thank You!</DialogTitle>
+                    <DialogTitle>Thank You!</DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="simple-modal-description">
+                        <DialogContentText>
                           Thank you for signing up. Your account has been created. To return to the login page click, OK and then on 'Play Now!'
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        
+
                             <Button
                             variant="contained"
                             style={{
@@ -54,11 +54,11 @@ export default function SignedUp(props) {
                             onClick={() => { return (<Redirect to="/"/>)}}
                             >OK
                         </Button>
-                        
+
                     </DialogActions>
                 </Dialog>
             </div>
-        ) 
+        )
 
 }
 

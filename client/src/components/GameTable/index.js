@@ -684,7 +684,22 @@ class GameTable extends Component {
 
     }
 
+    checkHand = () => {
 
+        let score = this.scoreCards(this.Players[this.state.playerTurnIndex].cards)
+        if (score.high === 21 || score.low === 21) {
+            this.showGameResult("win")
+            this.doUpdate()
+            return
+        }
+        if (score.high >= 21 || score.low >= 21) {
+            this.showGameResult("bust")
+            this.doUpdate()
+            return
+
+        }
+
+    }
 
     hit = (playerIndex, callback) => {
         this.Players[playerIndex].cards.push(this.Deck.deal(false))
