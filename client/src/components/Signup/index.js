@@ -122,17 +122,16 @@ class Signup extends Component {
 
         if (signedUp) {
             return (
-                <Redirect to="/signedUp" />
+                <Redirect to="/signedup" />
             )
         }
 
         return (
-            <form noValidate onSubmit={this.onSubmit}>
+           
                 <Dialog
                     open
-                    onRequestClose={this.handleClose
-                    }>
-
+                    onRequestClose={this.handleClose}
+            >
                     <DialogTitle>Sign Up</DialogTitle>
 
                     <DialogContent>
@@ -229,7 +228,7 @@ class Signup extends Component {
                     </DialogActions>
 
                 </Dialog >
-            </form>
+           
         )
 
     }

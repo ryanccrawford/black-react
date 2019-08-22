@@ -23,7 +23,7 @@ export default function GameScreen(props)  {
     return (
         <Container fixed>
             <GameTable
-                isloggedin={true}
+                isloggedin={user ? true:false}
               />
 
         </Container>

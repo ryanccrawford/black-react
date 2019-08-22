@@ -19,10 +19,7 @@ export default function Home()   {
                     <CssBaseline />
                     <Container fixed>
                         <Route exact path="/" component={FrontPage} />
-                        <Route exact path="/signup" component={Signup} />
-                        <Route exact path="/signin" component={Signin} />
                         <Route exact path="/gamescreen" component={GameScreen} />
-                        <Route exact path="/signedup" component={SignedUp} />
                     </Container>
 
 
