@@ -41,6 +41,12 @@ class player {
         return this.bet
     }
 
+    payBet = () => {
+        let tempBet = this.bet;
+        this.bet = 0
+        return tempBet
+    }
+
     giveWinnings = (amount) => {
         this.bankRoll += amount
         return
@@ -220,13 +226,13 @@ class GameTable extends Component {
     }
 
     dealerPlays = () => {
-
+        let newCards = []
         this.Players[0].cards.forEach((card, index) => {
 
             card.facedown = false;
-
+            newCards.push(card)
         })
-
+        this.Players[0].cards = newCards
         setTimeout(this.nextMove, 2000)
 
     }
@@ -266,6 +272,7 @@ class GameTable extends Component {
     }
 
     flipDealerCard = () => {
+        console.log("flipping dealers card")
         this.Players[0].cards[1].facedown = false;
         this.forceUpdate()
     }
@@ -346,15 +353,14 @@ class GameTable extends Component {
     }
     /******************************************************/
 
-
-    componentWillUpdate() {
+    componentDidUpdate() {
 
         if (this.state.gameSegment === "bet") {
             const bet = { bet: true }
            this.Players[this.state.playerTurnIndex].giveActions(bet)
 
         }
-        if (this.state.gameSegment === "hit") {
+        if (this.state.gameSegment === "hit" || this.state.gameSegment === "stay") {
             let score = this.scoreCards(this.Players[this.state.playerTurnIndex].cards)
             if (score.low === 21 || score.high === 21) {
                 const win = {}
@@ -363,7 +369,7 @@ class GameTable extends Component {
 
             }
             if (score.low < 21) {
-                if (this.state.gameSegment === "hit") {
+                if (this.state.gameSegment === "hit" || this.state.gameSegment === "stay") {
                     const hit = { hit: true, stay: true }
                     this.Players[this.state.playerTurnIndex].giveActions(hit)
 
@@ -374,11 +380,12 @@ class GameTable extends Component {
 
                 const busted = {}
                 this.Players[this.state.playerTurnIndex].giveActions(busted)
-
-                return;
+                this.Players[this.state.playerTurnIndex].payBet(this.forceUpdate)
+                
             }
 
         }
+        
     }
 
     checkScore = (score) => {
@@ -422,7 +429,7 @@ class GameTable extends Component {
     }
     hitCallBack = (playerIndex) => {
 
-        this.forceUpdate()
+        this.setState({ gameSegment: "hit"})
 
     }
     stayCallBack = (playerIndex) => {

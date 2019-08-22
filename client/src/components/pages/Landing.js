@@ -4,17 +4,12 @@ import { BrowserRouter as Router, Switch, Route,  withRouter } from "react-route
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
 import ReactFontFace from 'react-font-face'
 import CasinoFont from '../Fonts/main.ttf'
 import Signup from '../Signup'
@@ -39,14 +34,14 @@ function Copyright() {
 }
 const useStyles = makeStyles(theme => ({
     icon: {
-        height: "64px",
+        height: "32px",
         margin: "8px 8px 8px 8px !important",
         padding: "8px 8px 8px 8px !important",
         float: "left",
         filter: "drop-shadow(2px 2px 10px black)"
     },
     icon2: {
-        height: "64px",
+        height: "32px",
         margin: "8px 8px 8px 8px !important",
         padding: "8px 8px 8px 8px !important",
         float: "left",
@@ -81,7 +76,7 @@ const useStyles = makeStyles(theme => ({
     },
     CasinoFont: {
         margin: 15,
-        fontSize: 48,
+        fontSize: 20,
         lineHeight: 1.4,
         fontFamily: 'Casino Queen',
     }

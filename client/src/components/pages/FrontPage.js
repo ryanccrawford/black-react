@@ -42,13 +42,20 @@ class FrontPage extends Component {
 
     }
 
-     onClickEvent = (event) => {
-        let button = event.target.id
-        if (button === "play") {
-            this.setState({ signin: true, signup: false })
-        } else if (button === "create") {
-
-            this.setState({ signin: false, signup: true })
+    onClickEvent = (event) => {
+        let issignin = true
+        let issignup = false
+        let button = event.target
+        button.disabled = true
+        let bid = button.id
+        if (bid === "play") {
+            issignin = true
+            issignup = false
+        } this.setState({ signin: this.state.signin, signup: !this.state.signup }, () => button.disabled = false)
+        if (bid === "create") {
+            issignin = false
+            issignup = true
+            this.setState({ signin: !this.state.signin, signup: this.state.signup }, () => button.disabled = false)
         }
 
     }
