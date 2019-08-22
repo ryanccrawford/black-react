@@ -1,6 +1,8 @@
 .chip {
 
     display: inline-block;
+
+    bottom: 274px;
 }
 .chip-image{
     width:48px;

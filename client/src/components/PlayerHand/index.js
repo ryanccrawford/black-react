@@ -14,7 +14,7 @@ class PlayerHand extends Component {
         this.state.cards = props.cards
         this.state.playerPosition = props.playerPosition
         this.state.round = props.round
-        this.state.game = props.gamePlay
+
     }
 
     scoreCards = () => {
@@ -37,7 +37,7 @@ class PlayerHand extends Component {
                     highScore += intVal
                 }
 
-            
+
         })
         if (lowScore === highScore) {
             return highScore
@@ -49,10 +49,10 @@ class PlayerHand extends Component {
    render() {
        let score = this.scoreCards()
        return (
-           
+
            <Badge className="score-count"
                badgeContent={score}
-               color="white">
+           >
 
            <div className="row player">
                 <div className="col">
@@ -64,9 +64,9 @@ class PlayerHand extends Component {
                     return (
 
                          <PlayCard
-                            key={index}
-                           
-                            counter={(this.state.round < 2) ?  (((index + 1) * ((parseInt(this.state.playerPosition) * 500) * parseInt(this.state.playerPosition)))) : (500)}
+                            key={"playingCard"+index}
+
+                            counter={(index + 1) * ((parseInt(this.state.playerPosition)*2) * parseInt(this.state.playerPosition)) * 200}
                             owner={card.owner}
                             rank={card.value}
                             suit={card.suit}

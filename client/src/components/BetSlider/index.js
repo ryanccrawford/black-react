@@ -10,7 +10,7 @@ class BetSlider extends Component {
         this.state = {
             value: parseInt(props.amount),
             min: parseInt(props.min) || 5,
-            max: parseInt(props.max) || 500
+            max: 500
         }
 
     }
@@ -29,9 +29,9 @@ class BetSlider extends Component {
 
     render() {
         const sliderStyle = {
-            position: 'relative',
-            width: '162px',
-            height: '90px',
+            position: 'absolute',
+            width: '77px',
+            height: '45px',
 
 
         }
@@ -39,20 +39,16 @@ class BetSlider extends Component {
             position: 'relative',
             backgroundImage: 'url("images/betslider/display.png")',
             backgroundSize: 'cover',
-            width: '150px',
-            height: '50px',
-            top: '68px',
-            left: '33px',
             zIndex: '2'
         }
 
 
         const railStyle = {
             position: 'absolute',
-            width: '250px',
+            width: '133px',
             height: '100%',
-            right: '-65px',
-            marginTop: 35,
+            left: '-10px',
+            top: '0px',
             backgroundSize: "cover",
             backgroundImage: 'url("images/betslider/base.png")'
         }
@@ -60,7 +56,7 @@ class BetSlider extends Component {
 
         return (
             <div className="betSlider">
-                <div style={displayStyle} className="amount" >$ {formatCash(this.state.value)}</div>
+                <div style={displayStyle} className="amount" ><span className="amount">$</span> {formatCash(this.state.value)}</div>
             <Slider
                 rootStyle={sliderStyle}
                 domain={[this.state.min, this.state.max]}

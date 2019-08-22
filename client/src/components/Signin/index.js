@@ -1,17 +1,20 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import {
+    withRouter
+} from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions'; 
+import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-    
+
 
 const axios = require('axios');
-const apiserver = "http://localhost:3001";
+const apiserver ="" //"http://localhost:3001";
 
 
 
@@ -21,7 +24,10 @@ class Signin extends Component {
         this.state = {
             email: "",
             password: "",
-            errors: {}
+            errors: {},
+            isOpen: true,
+            isLoggedin: false,
+            userData: null
         };
     }
     onChange = e => {
@@ -42,13 +48,16 @@ class Signin extends Component {
 
     };
 
+    componentDidMount() {
+        this.setState({ isOpen: true})
+    }
+
     doSuccess = (response) => {
         console.log("Inside Success")
         console.log(response)
         if (response.status === 200) {
             console.log(response.data)
-
-            window.location.replace('/gamescreen');
+            this.setState({ isLoggedin: true, userData:response.data })
         }
         else if (response.status > 200 && response.status < 500) {
             this.setState({ errors: { bad: response.data }, password: ""})
@@ -61,20 +70,39 @@ class Signin extends Component {
 
     }
 
+    handleClose = () => {
+        this.setState({ isOpen: false });
+    }
+
     render() {
         const { errors } = this.state;
+
+
+
+        if (this.state.isLoggedin) {
+            return (
+                <Redirect to={"/gamescreen"} />
+            )
+        }
+        if (!this.state.isOpen) {
+                    return (
+                        <Redirect to="/" />
+                    )
+                }
+
         return (
+            <form noValidate onSubmit={this.onSubmit}>
             <Dialog
                 open
-                onRequestClose={this.props.toggleLogin}
-                fullScreen={this.props.fullScreen}>
+                onRequestClose={this.handleClose}
+                >
                 <DialogTitle>Sign In</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         {errors.bad ? (<div>{errors.bad}</div>) : (null)}
                     </DialogContentText>
-                    <form noValidate onSubmit={this.onSubmit}>
-                      
+
+
                             <TextField
                                 autoFocus
                                 onChange={this.onChange}
@@ -87,7 +115,7 @@ class Signin extends Component {
                             required={true}
                             fullWidth
                             />
-                
+
                             <TextField
                                 onChange={this.onChange}
                                 value={this.state.password}
@@ -99,9 +127,9 @@ class Signin extends Component {
                             required={true}
                             fullWidth
                             />
-                  
-                        
-                    </form>
+
+
+
                     <DialogContentText>
                         Don't have an account? <Link to="/signup">Sign Up</Link>
                     </DialogContentText>
@@ -117,7 +145,7 @@ class Signin extends Component {
                                 marginTop: "1rem"
                             }}
                             color="primary"
-                            onClick={this.props.toggleLogin}
+                            onClick={this.handleClose}
                         >Cancel
                         </Button>
                     </FormControl>
@@ -135,11 +163,12 @@ class Signin extends Component {
                         >Sign In
                                 </Button>
                     </FormControl>
-                   
+
                 </DialogActions>
-            </Dialog>
+                </Dialog>
+            </form>
         );
     }
 }
 
-export default Signin;
+export default withRouter(Signin);

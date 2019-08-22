@@ -2,18 +2,18 @@
 
 }
 .table {
-    width: 125%;
-    left: -12%;
-    position: absolute;
-    top: 62px;
+    width: 110%;
+    left: -90px;
+    position: fixed;
+    top: 0;
     z-index: -4;
 }
 
 
 .hand {
-    position: relative;
-    top: 118%;
-    left: 39%;
+    position: fixed;
+
+    left: 42%;
 }
 
 .game-table{
@@ -55,10 +55,10 @@
 .betbox {
     position: absolute;
     left: 40%;
-    top: 64%;
+    top: 35em;
 }
 .playerhand-1 {
-    position: absolute;
+    position: fixed;
     left: 42%;
-    top: 73%;
+    top: 68%;
 }

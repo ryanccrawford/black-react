@@ -12,7 +12,6 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "cd client && npm run build"
   },
-  "proxy": "http://localhost:3001",
   "author": "Ryan Crawford",
   "license": "ISC",
   "devDependencies": {

@@ -1,6 +1,6 @@
 .base {
     position: relative;
-    width: 359px;
+    width: 150px;
 }
 
 .button .slider{
@@ -10,7 +10,7 @@
     z-index: 4;
     left: 92px;
     top: -13px;
-    background-image: url("images/betslider/display.png");
+    background-image: url("/images/betslider/display.png");
     background-size:contain;
 }
 

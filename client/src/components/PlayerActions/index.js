@@ -37,7 +37,7 @@ import './style.css';
      return (
      <div>
              {betboxEnabled ? (
-                 <div className=""><h3 className="white">Bet Slider</h3>
+                 <div className="">
                      <BetSlider
                          id={"slider_" + playerIndex}
 

@@ -1,16 +1,17 @@
-.player {
-
-
+.playerhand-1 .playing-card {
+    transform: rotateZ(86deg) translateX(-12px) !important;
 }
 .score-count span {
     font-size: 16px;
-    color:white;
-    font-weight:600;
+    color: white;
+    font-weight: 600;
     padding-bottom: 18px;
     padding-top: 18px;
     border-radius: 100%;
     padding-left: 13px;
     padding-right: 13px;
     box-shadow: 1px 1px 10px black;
-    background-color:darkslateblue;
+    background-color: darkslateblue;
+    position: inherit;
+    left: 27px;
 }

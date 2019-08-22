@@ -8,14 +8,14 @@ export function Handle({ handle: { id, value, percent }, getHandleProps }) {
             style={{
                 left: `${percent}%`,
                 position: 'absolute',
-                marginLeft: 0,
-                marginTop: 72,
+                top: 19,
                 zIndex: 2,
-                width: 30,
-                height: 30,
-                border: 0,
+                width: 15,
+                height: 15,
                 textAlign: 'center',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                right: '39px',
+
             }}
             {...getHandleProps(id)}
                 src={slider} />
@@ -24,18 +24,18 @@ export function Handle({ handle: { id, value, percent }, getHandleProps }) {
 }
 
 
-export function Track({ source, target, getTrackProps }) { 
+export function Track({ source, target, getTrackProps }) {
         return (
             <div
                 style={{
                     position: 'absolute',
                     height: '3px',
                     zIndex: 1,
-                    marginTop: '86px',
                     backgroundColor: 'rgb(242, 255, 0)',
                     borderRadius: 5,
                     cursor: 'pointer',
-                    left: `10px`,
+                    top: '24px',
+                    left: '10px',
                     width: `${target.percent - source.percent}%`,
                     boxShadow: 'inset 1px 1px 2px 0px black'
                 }}
@@ -45,23 +45,23 @@ export function Track({ source, target, getTrackProps }) {
     }
 
 export function Tick(props) {
-  
+
     return (
         <span className={props.style || ""}>{props.tick || "|"}</span>
             )
-   
+
 
 }
 
 
 export function Display(props) {
-    
+
     return (
         < div className="display"
             style={{backgroundImage: "url('images/betslider/display.png')"
 }} >
-            <span className="amount">{formatCash(props.value)}</span>
-                </div >
+           <span className="amount">{formatCash(props.value)}</span>
+        </div >
         )
 }
 

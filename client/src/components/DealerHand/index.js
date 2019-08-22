@@ -13,11 +13,11 @@ class DealerHand extends Component {
         console.log(props.cards)
         this.state.cards = props.cards
         this.state.playerPosition = props.playerPosition
-        dealerCounter = (this.state.playerPosition * 1000)
+        this.dealerCounter = (this.state.playerPosition * 500)
     }
     resetCounter = () => {
         let temp = dealerCounter
-        dealerCounter = (this.state.playerPosition * 1000)
+        this.dealerCounter = (this.state.playerPosition * 500)
         return temp
     }
 
@@ -31,7 +31,7 @@ class DealerHand extends Component {
 
                 {this.state.cards.map((card, index) => {
 
-                    dealerCounter += 1000
+                    this.dealerCounter += 500
                     return (
 
 

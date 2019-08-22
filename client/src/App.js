@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import Home from './components/pages/Home'
+import Landing from './components/pages/Landing';
 const auth = localStorage.getItem('jwtToken');
 
 const theme = createMuiTheme({
@@ -19,7 +20,7 @@ class App extends Component {
 
         return (
             <ThemeProvider theme={theme}>
-                <Home/>
+                <Home />
             </ThemeProvider>
         );
     }

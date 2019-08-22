@@ -2,6 +2,7 @@
   "name": "black-react",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
     "@fortawesome/free-brands-svg-icons": "^5.10.1",
@@ -13,28 +14,21 @@
     "notistack": "^0.8.9",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-alert": "^5.5.0",
-    "react-alert-template-oldschool-dark": "^1.0.1",
     "react-awesome-button": "^6.1.2",
-    "react-background-video-player": "^1.1.6",
     "react-card-flip": "^0.8.1",
     "react-compound-slider": "^2.2.0",
-    "react-deck-o-cards": "^1.1.0",
     "react-delay": "^0.1.0",
     "react-dom": "^16.8.6",
     "react-draggable": "^3.3.2",
     "react-font-face": "^0.2.1",
     "react-inlinesvg": "^1.1.4",
     "react-playing-card": "^0.2.5",
-    "react-redux": "^7.1.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-sound": "^1.2.0",
     "react-toastify": "^5.3.2",
-    "react-transition-group": "^4.2.2",
-    "react-video-cover": "^1.2.2",
-    "redux": "^4.0.4"
+    "react-transition-group": "^4.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -57,7 +51,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "redux-devtools": "^3.5.0"
-  }
+  "devDependencies": {}
 }

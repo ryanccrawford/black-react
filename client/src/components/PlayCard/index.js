@@ -61,7 +61,9 @@ class PlayCard extends Component {
     handleClick = (event) => {
         this.setState(prevState => ({ hidden: !prevState.hidden }));
     }
-
+    dummyHandleClick = (event) => {
+        console.log("dummy clicked")
+    }
     render() {
         return (
             <Delay
@@ -75,7 +77,7 @@ class PlayCard extends Component {
                         data-rank={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.rank}
                         data-suit={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.suit}
                         data-hidden={this.state.hidden}
-                        onClick={this.state.owner === "dealer" ? "" : this.handleClick}
+                            onClick={this.state.owner === "dealer" ? this.dummyHandleClick : this.handleClick}
                 >
                         <img
                             className="playing-card"
@@ -90,7 +92,7 @@ class PlayCard extends Component {
                         data-rank={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.rank}
                         data-suit={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.suit}
                         data-hidden={this.state.hidden}
-                        onClick={this.state.owner === "dealer" ? "" : this.handleClick}
+                            onClick={this.state.owner === "dealer" ? this.dummyHandleClick : this.handleClick}
                 >
                     <img
                         className="playing-card"

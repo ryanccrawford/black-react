@@ -9,7 +9,11 @@ import Deck from '../Deck';
 import Sound from 'react-sound';
 import Draggable from 'react-draggable'
 import GameResult from '../GameResult'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './style.css';
+import { setTimeout } from 'timers';
+
+let showingmessage = false;
 
 class player {
 
@@ -127,7 +131,9 @@ class GameTable extends Component {
             //players: .Players,
             shuffleDeckMessage: "",
             clickSound: false,
-            hideActionBar: false
+            hideActionBar: false,
+            gameHasResult: false,
+            gameResult: ""
         }
 
 
@@ -135,13 +141,13 @@ class GameTable extends Component {
 
     showGameResult = (type = "win") => {
 
-        return (
-            <GameResult
-                isOpen={true}
-                type={type}
-                title={type === "win" ? "Winner" : "Not Good"}
-                />
-            )
+        this.setState({gameHasResult: true, gameResult: type})
+
+    }
+
+    closeGameResult = () => {
+
+        this.setState({ gameHasResult: false, gameResult: "" })
 
     }
 
@@ -153,18 +159,6 @@ class GameTable extends Component {
 
     }
 
-
-    cardsDelt = () => {
-
-
-        this.setState({ cardsDelt: true })
-        //steps to check game outcome
-        this.checkNaturals(this.wasNaturalGame, this.continueGame, this.renderCardsCB)
-        //if so check to see if dealer has 21 if so
-        //close game and return all bets. IF not payout players with
-        //21 2:1 and all players who don't house keeps there money
-
-    }
 
     continueGame = () => {
 
@@ -178,31 +172,8 @@ class GameTable extends Component {
 
     }
 
-    doPlayer21 = () => {
-        this.payOut(this.PlayerTurn, 1.5)
-
-    }
-    
-
-    setPlayersTurn = (playerindex) => {
-        console.log("Inside Set Player turn Player number " + playerindex)
-
-        if (playerindex === 0 && this.state.round === 0) {
-            this.setState({ round: this.state.round + 1 })
-            this.GamePlay.dealOutCards(this.cardsDelt)
-
-        } else if (playerindex !== 0 && this.state.round === 0 && this.GamePlay.Players[playerindex].bets.length < 1) {
-            console.log("Player is not the dealer and its first betting round and no bets have been made. ")
-            this.GamePlay.Players[playerindex].canBet = true;
-            console.log("we just set the player canBet to True")
-            this.setState({ playerTurnIndex: playerindex })
-
-        } else if (playerindex !== 0 && this.state.round === 1) {
-            this.GamePlay.Players[playerindex].setIsTurn("play")
-            this.GamePlay.Players[this.state.playerTurnIndex - 1].unsetIsTurn()
-            this.setState({ playerTurnIndex: playerindex })
-
-        }
+    doPlayer21 = (playerIndex) => {
+        this.payOut(playerIndex, 1.5)
 
     }
 
@@ -226,10 +197,10 @@ class GameTable extends Component {
             this.Players[playerIndex].clearActions()
             this.setState({ clickSound: true }, this.dealOut)
 
-            return
+
 
         }
-        if (name === "hit" && playerIndex) {
+        if (name === "hit" && playerIndex > 0) {
 
             this.hit(playerIndex, this.hitCallBack)
 
@@ -237,12 +208,50 @@ class GameTable extends Component {
 
         if (name === "stay" && playerIndex > 0) {
             console.log("stay")
-            this.stay(playerIndex, this.stayCallback)
+            this.Players[playerIndex].clearActions()
+            this.setState({ clickSound: true }, this.dealOut)
+            setTimeout(dealerPlays,2000)
 
         }
 
 
     }
+
+    dealerPlays = () => {
+
+        this.Players[0].cards.forEach((card, index) => {
+
+            card.facedown = false;
+
+        })
+
+        setTimeout(nextMove, 2000)
+
+    }
+
+    nextMove = () => {
+
+        let sc = this.scoreCards(this.Players[0].cards)
+        let winner = null
+        if (sc.high > 21) {
+            console.log("dealer bust")
+            this.Players.forEach((player, index) => {
+
+                let pls = this.scoreCards(player.cards)
+                if (pls <= 21) {
+                    winner = player.index
+                    console.log("you won")
+                }
+            })
+        }
+        if (sc.high < 17) {
+
+            console.log("Take another card")
+
+        }
+    }
+
+
 
     dealOut = () => {
 
@@ -273,7 +282,7 @@ class GameTable extends Component {
              varStatus = "busted"
         }
         this.setState({ gameSegment: varStatus})
-       
+
     }
     /*
      DRAGGABLE
@@ -301,11 +310,11 @@ class GameTable extends Component {
     }
 
     onStart  = ()  => {
-        this.setState({ activeDrags: ++this.state.activeDrags });
+        this.setState({ activeDrags: this.state.activeDrags + 1 });
     }
 
     onStop = () => {
-        this.setState({ activeDrags: --this.state.activeDrags });
+        this.setState({ activeDrags: this.state.activeDrags - 1 });
     }
 
     // For controlled component
@@ -341,30 +350,33 @@ class GameTable extends Component {
         if (this.state.gameSegment === "bet") {
             const bet = { bet: true }
            this.Players[this.state.playerTurnIndex].giveActions(bet)
-            
-        }
-        let score = this.scoreCards(this.Players[this.state.playerTurnIndex].cards)
-        if (score.low === 21 || score.high === 21) {
-            const win = {}
-            this.Players[this.state.playerTurnIndex].giveActions(win)
-            
-        }
-        if (score.low < 21) {
-            if (this.state.gameSegment === "hit") {
-                const hit = { hit: true, stay: true }
-               this.Players[this.state.playerTurnIndex].giveActions(hit)
-               
-            }
-        }
-        if (score.low >= 22) {
-            console.log("busted")
 
-            const busted = { }
-            this.Players[this.state.playerTurnIndex].giveActions(busted)
-            this.showGameResult("busted")
         }
-        
-        
+        if (this.state.gameSegment === "hit") {
+            let score = this.scoreCards(this.Players[this.state.playerTurnIndex].cards)
+            if (score.low === 21 || score.high === 21) {
+                const win = {}
+                this.Players[this.state.playerTurnIndex].giveActions(win)
+
+
+            }
+            if (score.low < 21) {
+                if (this.state.gameSegment === "hit") {
+                    const hit = { hit: true, stay: true }
+                    this.Players[this.state.playerTurnIndex].giveActions(hit)
+
+                }
+            }
+            if (score.low >= 22) {
+                console.log("busted")
+
+                const busted = {}
+                this.Players[this.state.playerTurnIndex].giveActions(busted)
+
+                return;
+            }
+
+        }
     }
 
     checkScore = (score) => {
@@ -424,7 +436,7 @@ class GameTable extends Component {
         console.log("stayCallback")
 
         this.setState({playerTurnIndex: setThis.next, gameSegment: "hit" , hideActionBar: true})
-       
+
 
     }
 
@@ -488,7 +500,7 @@ class GameTable extends Component {
 
     GotCardCallBack = (playerIndex) => {
         console.log("Player " + playerIndex + " Got Card")
-        this.forceUpdate()
+        this.doUpdate()
     }
     ActionsChangedCallBack = (playerIndex) => {
         console.log("Player " + playerIndex + " Got Action")
@@ -496,7 +508,7 @@ class GameTable extends Component {
     }
     CardsCleardCallBack = (playerIndex) => {
         console.log("Player " + playerIndex + " is cleared")
-        this.forceUpdate()
+        this.doUpdate()
     }
     doUpdate = () => {
         this.forceUpdate();
@@ -508,14 +520,15 @@ class GameTable extends Component {
     }
 
     getNextPlayer = () => {
-        console.log(this.PlayerTurn)
-        console.log(this.Players)
-        if ((this.PlayerTurn + 1) === (this.Players.length)) {
-            this.PlayerTurn = 0
+        console.log(this.state.playerTurnIndex)
+        let pt = this.state.playerTurnIndex
+        if ((this.state.playerTurnIndex + 1) === (this.Players.length)) {
+            pt = 0
         } else {
-            this.PlayerTurn++
+            pt++
         }
-        return this.PlayerTurn
+        this.setState({ playerTurnIndex: pt },() => this.state.playerTurnIndex)
+
     }
 
     placeBet = (playerIndex, amount, PlayerBetCallback) => {
@@ -632,26 +645,14 @@ class GameTable extends Component {
 
     }
 
-    getValidPlays = (playerIndex) => {
 
-
-
-
-    }
-
-    bet = (playerIndex) => {
-        let card = this.Deck.deal(false)
-        this.Players[playerIndex].cards.push(card)
-        //TODO ADD VALID PLAYS AFTER HIT
-
-    }
 
     hit = (playerIndex, callback) => {
         this.Players[playerIndex].cards.push(this.Deck.deal(false))
         console.log("just did hit")
         this.forceUpdate()
-        
-      
+
+
 
     }
 
@@ -679,8 +680,22 @@ class GameTable extends Component {
         const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
         const { deltaPosition, controlledPosition } = this.state;
         return (
-
+            <Sound
+                url="/sfx/music2.mp3"
+                playStatus={'PLAYING'}
+                onLoading={<div>
+                    <CircularProgress className={classes.progress} color="secondary" />
+                </div>}
+            >
             <div className={"game-table"}>
+                {this.state.gameHasResult ? (
+                    <GameResult
+                    isOpen={true}
+                    type={this.state.gameResult}
+                        title={this.state.gameResult === "win" ? "Your A Winner!" : "Oh No Better Luck Next Time!"}
+                />) : (null)}
+
+
                 <div className={(this.state.shuffleDeckMessage !== "" ? "show " : "hide ") + "message"}>
                     {this.state.shuffleDeckMessage !== "" ? (<Sound
                         url="./sfx/shuffling.mp3"
@@ -760,7 +775,7 @@ class GameTable extends Component {
                                                             playStatus={"PLAYING"}
                                                         />) : (null)}
                                                     </div></Draggable>) : (null)}
-                                           
+
                                         </Grid>
                                     </div>
 
@@ -775,7 +790,7 @@ class GameTable extends Component {
                 </div>
 
 
-            </div>
+                </div></Sound>
         );
     }
 

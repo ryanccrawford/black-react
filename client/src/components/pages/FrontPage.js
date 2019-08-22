@@ -12,7 +12,7 @@ class FrontPage extends Component {
         super(props)
         this.state = {
             activePage: "",
-            isLoggedIn: true,  //auth ? true : false,
+            isLoggedIn: false,  //auth ? true : false,
             auth: auth,
             signin: false,
             signup: false,

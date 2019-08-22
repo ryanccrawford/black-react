@@ -6,7 +6,8 @@ import FrontPage from "./FrontPage";
 import GameScreen from "./GameScreen";
 import Signup from "../Signup";
 import Signin from "../Signin";
-const auth = localStorage.getItem('jwtToken');
+import Landing from "./Landing";
+const auth = null;
 
 
 class Home extends Component {
@@ -19,11 +20,11 @@ class Home extends Component {
                         <Route exact path="/" component={FrontPage} />
                         <Route exact path="/signup" component={Signup} />
                         <Route exact path="/signin" component={Signin} />
-                        {auth ? (
+                        {auth === null ? (
                             <Route exact path="/gamescreen" component={GameScreen} />) : (null)}
                     </Container>
-                    
-                      
+
+
                 </div>
                 <div className="footer" style={{ backgroundColor: "black", height: "75px" }}></div>
 
