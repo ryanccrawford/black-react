@@ -14,7 +14,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 const axios = require('axios');
-const apiserver ="" //"http://localhost:3001";
+const apiserver = process.env.PORT ? "" : "http://localhost:3001";
 
 
 
@@ -57,6 +57,8 @@ class Signin extends Component {
         console.log(response)
         if (response.status === 200) {
             console.log(response.data)
+            sessionStorage.setItem("user", JSON.stringify(response.data))
+
             this.setState({ isLoggedin: true, userData:response.data })
         }
         else if (response.status > 200 && response.status < 500) {
@@ -158,7 +160,8 @@ class Signin extends Component {
                                 letterSpacing: "1.5px",
                                 marginTop: "1rem"
                             }}
-                            type="submit"
+                                type="submit"
+                                onClick={this.onSubmit}
                             color="primary"
                         >Sign In
                                 </Button>

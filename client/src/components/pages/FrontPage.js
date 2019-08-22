@@ -28,6 +28,7 @@ class FrontPage extends Component {
                 signin={this.state.signin}
                 signup={this.state.signup}
                 auth={this.state.auth}
+                isloggedin={this.state.isloggedin}
             />
         )
     }

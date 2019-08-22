@@ -15,7 +15,7 @@ import Divider from "@material-ui/core/Divider"
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 const axios = require('axios');
-const apiserver =  ""//"http://localhost:3001"
+const apiserver = process.env.PORT ? "" : "http://localhost:3001";
 
 
 
@@ -80,7 +80,7 @@ class Signup extends Component {
         console.log(response)
         if (response.status === 200) {
             console.log(response.data)
-
+            sessionStorage.setItem("user", JSON.stringify(response.data))
             this.setState({ signedUp: true, token: response.data })
         }
         else if (response.status > 200 && response.status < 500) {
@@ -219,6 +219,7 @@ class Signup extends Component {
                                     letterSpacing: "1.5px",
                                     marginTop: "1rem"
                                 }}
+                                onClick={this.onSubmit}
                                 type="submit"
                                 color="primary"
                                 className="btn btn-large waves-effect waves-light hoverable blue accent-3"

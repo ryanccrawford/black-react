@@ -103,6 +103,8 @@ class GameTable extends Component {
             CardsCleardCallBack: this.CardsCleardCallBack,
             doUpdate: this.doUpdate
         }
+        let tempUser = sessionStorage.getItem("user")
+        console.log(tempUser)
         let playerOptions = {
             name: "Ryan",
             type: "player",
@@ -210,7 +212,7 @@ class GameTable extends Component {
             console.log("stay")
             this.Players[playerIndex].clearActions()
             this.setState({ clickSound: true }, this.dealOut)
-            setTimeout(dealerPlays,2000)
+            setTimeout(this.dealerPlays,2000)
 
         }
 
@@ -225,7 +227,7 @@ class GameTable extends Component {
 
         })
 
-        setTimeout(nextMove, 2000)
+        setTimeout(this.nextMove, 2000)
 
     }
 
@@ -680,13 +682,17 @@ class GameTable extends Component {
         const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
         const { deltaPosition, controlledPosition } = this.state;
         return (
-            <Sound
-                url="/sfx/music2.mp3"
-                playStatus={'PLAYING'}
-                onLoading={<div>
-                    <CircularProgress className={classes.progress} color="secondary" />
-                </div>}
-            >
+            <div>
+                <Sound
+                    url="/sfx/music2.mp3"
+                    playStatus={'PLAYING'}
+                    onLoading={() => {
+                        return (<div>
+                            <CircularProgress color="secondary" />
+                        </div>)
+                    }}
+                    volume={3}
+                />
             <div className={"game-table"}>
                 {this.state.gameHasResult ? (
                     <GameResult
@@ -789,8 +795,8 @@ class GameTable extends Component {
 
                 </div>
 
-
-                </div></Sound>
+                    </div>
+                </div>
         );
     }
 

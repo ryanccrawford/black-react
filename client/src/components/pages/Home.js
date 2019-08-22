@@ -7,11 +7,12 @@ import GameScreen from "./GameScreen";
 import Signup from "../Signup";
 import Signin from "../Signin";
 import Landing from "./Landing";
+import SignedUp from "../SignedUp"
 const auth = null;
 
 
-class Home extends Component {
-    render() {
+export default function Home()   {
+
         return (
             <Router>
                 <div>
@@ -20,16 +21,16 @@ class Home extends Component {
                         <Route exact path="/" component={FrontPage} />
                         <Route exact path="/signup" component={Signup} />
                         <Route exact path="/signin" component={Signin} />
-                        {auth === null ? (
-                            <Route exact path="/gamescreen" component={GameScreen} />) : (null)}
+                        <Route exact path="/gamescreen" component={GameScreen} />
+                        <Route exact path="/signedup" component={SignedUp} />
                     </Container>
 
 
                 </div>
-                <div className="footer" style={{ backgroundColor: "black", height: "75px" }}></div>
+
 
             </Router>
         );
-    }
+
 }
-export default Home;
+

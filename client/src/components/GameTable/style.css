@@ -53,12 +53,13 @@
     top: 50%;
 }
 .betbox {
-    position: absolute;
-    left: 40%;
-    top: 35em;
+    position: fixed;
+    left: 25%;
+    top: 13em;
+    width: 13em;
 }
 .playerhand-1 {
-    position: fixed;
     left: 42%;
-    top: 68%;
+    position: fixed;
+    top: 28em;
 }
