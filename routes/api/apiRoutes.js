@@ -46,45 +46,25 @@ module.exports = function (app) {
     });
 
     app.post("/api/login", (req, res) => {
-        // Form validation
+
         const { errors, isValid } = validateLoginInput(req.body);
-        // Check validation
+
         if (!isValid) {
             return res.status(400).json(errors);
         }
         const email = req.body.email;
         const password = req.body.password;
-        // Find user by email
+
         db.Players.findOne({ email }).then(player => {
-            // Check if user exists
+
             if (!player) {
                 return res.status(404).json({ error: "Email or Password incorrect" });
             }
-            // Check password
+
             bcrypt.compare(password, player.password).then(isMatch => {
                 if (isMatch) {
-                    // User matched
-                    // Create JWT Payload
-                    const payload = {
-                        id: player.id,
-                        name: player.name,
-                        bankRoll: player.bankRoll,
-                        cards: player.cards
-                    };
-                    // Sign token
-                    jwt.sign(
-                        payload,
-                        process.env.SECERET_OR_KEY,
-                        {
-                            expiresIn: 31556926 // 1 year in seconds
-                        },
-                        (err, token) => {
-                            res.json({
-                                success: true,
-                                token: "Bearer " + token
-                            });
-                        }
-                    );
+                    return res.json({ id: player._id, name: player.name, email: player.email, bankRoll: player.bankRoll });
+
                 } else {
                     return res
                         .status(400)
@@ -94,24 +74,12 @@ module.exports = function (app) {
         });
     });
 
-    app.get("/api/players", function (req, res) {
+    app.post("/api/players", function (req, res) {
 
-        db.Players.find({}).then(function (data) {
-            res.json(data);
-        }).catch(function (err) {
-            res.json(err);
-        });
-
-    });
-
-    app.post("/api/player", function (req, res) {
-        //TODO get player
-        db.Players.find({}).then(function (data) {
-            res.json(data);
-        }).catch(function (err) {
-            res.json(err);
-        });
-
+        db.Players
+            .findOneAndUpdate({ _id: req.params.id }, req.body)
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
     });
 
     app.get("*", (req, res) => {

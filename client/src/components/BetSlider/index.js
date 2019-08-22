@@ -55,7 +55,7 @@ class BetSlider extends Component {
 
 
         return (
-            <div className="betSlider">
+            <div className="">
                 <div style={displayStyle} className="amount" ><span className="amount">$</span> {formatCash(this.state.value)}</div>
             <Slider
                 rootStyle={sliderStyle}

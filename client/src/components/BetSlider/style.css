@@ -16,6 +16,7 @@
 
 .amount {
     font-family: "arial","Helvetica", sans-serif;
+    color:black;
     position: relative;
     z-index: 12;
     font-weight: 800;

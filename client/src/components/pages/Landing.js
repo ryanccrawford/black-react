@@ -37,11 +37,12 @@ const useStyles = makeStyles(theme => ({
         height: "32px",
         margin: "8px 8px 8px 8px !important",
         padding: "8px 8px 8px 8px !important",
-        float: "left",
+        textAlign: "center",
         filter: "drop-shadow(2px 2px 10px black)"
     },
     icon2: {
-        height: "32px",
+        height: "64px",
+        width: "64px",
         margin: "8px 8px 8px 8px !important",
         padding: "8px 8px 8px 8px !important",
         float: "left",

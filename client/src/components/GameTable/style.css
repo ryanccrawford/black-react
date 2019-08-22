@@ -1,13 +1,7 @@
 .box {
 
 }
-.table {
-    width: 110%;
-    left: -90px;
-    position: fixed;
-    top: 0;
-    z-index: -4;
-}
+
 
 
 .hand {
@@ -16,10 +10,6 @@
     left: 42%;
 }
 
-.game-table{
-    min-height: 400px;
-
-}
 
 .white {
     color:white;
@@ -40,26 +30,36 @@
 .hide {
     display: none !important;
 }
-.message{
+.message {
+    word-break: break-word;
+    padding-right: 1em;
+    padding-left: 1em;
     position: absolute;
-    width: 300px;
+    width: 17em;
     height: 200px;
-    background-color: black;
+    background-color: rgba(22,22,22,0.8);
     color: white;
-    border:1px solid white;
+    border: 1px solid white;
     border-radius: 20px;
     text-align: center;
-    left: 50%;
-    top: 50%;
+    font-size: xx-large;
+    left: 33%;
+    top: 33%;
 }
 .betbox {
     position: fixed;
-    left: 25%;
-    top: 13em;
+    left: 30em;
+    top: -7em;
     width: 13em;
+    z-index: 1;
 }
 .playerhand-1 {
-    left: 42%;
+    left: 51em;
     position: fixed;
-    top: 28em;
+    top: 31em;
+}
+.chipbox {
+    position: fixed;
+    right: 70em;
+    top: 24em;
 }

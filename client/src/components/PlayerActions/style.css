@@ -72,9 +72,9 @@ span.amount {
     background-color: rgba(0,0,0,0.8);
     border-radius: 20px;
     border: 2px solid white;
-    left: 25em;
+    left:33em;
     right: auto;
     text-align: center;
-    top: 0;
+    bottom: -1em;
 
 }

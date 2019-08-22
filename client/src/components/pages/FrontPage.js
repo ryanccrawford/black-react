@@ -51,11 +51,11 @@ class FrontPage extends Component {
         if (bid === "play") {
             issignin = true
             issignup = false
-        } this.setState({ signin: this.state.signin, signup: !this.state.signup }, () => button.disabled = false)
+        } this.setState({ signin: !this.state.signin, signup: this.state.signup }, () => button.disabled = false)
         if (bid === "create") {
             issignin = false
             issignup = true
-            this.setState({ signin: !this.state.signin, signup: this.state.signup }, () => button.disabled = false)
+            this.setState({ signin: this.state.signin, signup: !this.state.signup }, () => button.disabled = false)
         }
 
     }

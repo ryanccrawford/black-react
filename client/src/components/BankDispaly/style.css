@@ -1,7 +1,7 @@
 .score-block {
     position: fixed;
-    right: 1em;
-    top: 91px;
+    right: 2em;
+    top: 1em;
 }
 .bank-display{
     position: relative;
@@ -10,7 +10,7 @@
 .name-plate {
     position: relative;
     width: 200px;
-    
+
 }
 .name-text {
     position: relative;
@@ -27,7 +27,7 @@
     position: absolute;
     z-index: 2;
     top: 30px;
-    left: 50px;
+    left: 20px;
     font-size: 24px !important;
 }
 .bet {

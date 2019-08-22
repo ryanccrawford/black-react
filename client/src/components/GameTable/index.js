@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from "react-router-dom";
+import {
+    withRouter
+} from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
 import PlayerActions from '../PlayerActions';
 import PlayerHand from '../PlayerHand';
@@ -12,7 +16,9 @@ import GameResult from '../GameResult'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './style.css';
 import { setTimeout } from 'timers';
-
+import { makeStyles } from '@material-ui/core/styles';
+import windowSize from 'react-window-size';
+import TopBar from '../TopBar'
 let showingmessage = false;
 
 class player {
@@ -93,12 +99,45 @@ class player {
 
 
 
+
 class GameTable extends Component {
 
 
     constructor(props) {
         super(props)
-
+        this.loggedIn = false
+        let playerOptions = null
+        let playerFromSession = sessionStorage.getItem("player")
+        let sessionPlayer = JSON.parse(playerFromSession)
+        console.log(sessionPlayer)
+        if (sessionPlayer) {
+            this.loggedIn = true
+            playerOptions = {
+                id: sessionPlayer.id,
+                name: sessionPlayer.name.toUpperCase(),
+                type: "player",
+                bankRoll: parseInt(sessionPlayer.bankRoll),
+                actions: {},
+                playerIndex: 1,
+                GotCardCallBack: this.GotCardCallBack,
+                ActionsChangedCallBack: this.ActionsChangedCallBack,
+                CardsCleardCallBack: this.CardsCleardCallBack,
+                doUpdate: this.doUpdate
+            }
+        } else {
+            this.loggedIn = true
+            playerOptions = {
+                name: "Guest",
+                type: "player",
+                bankRoll: 1000,
+                actions: {},
+                playerIndex: 1,
+                GotCardCallBack: this.GotCardCallBack,
+                ActionsChangedCallBack: this.ActionsChangedCallBack,
+                CardsCleardCallBack: this.CardsCleardCallBack,
+                doUpdate: this.doUpdate
+            }
+        }
         let dealerOptions = {
             name: "Dealer",
             type: "dealer",
@@ -109,34 +148,22 @@ class GameTable extends Component {
             CardsCleardCallBack: this.CardsCleardCallBack,
             doUpdate: this.doUpdate
         }
-        let tempUser = sessionStorage.getItem("user")
-        console.log(tempUser)
-        let playerOptions = {
-            name: "Ryan",
-            type: "player",
-            bankRoll: 10000,
-            actions: {},
-            playerIndex: 1,
-            GotCardCallBack: this.GotCardCallBack,
-            ActionsChangedCallBack: this.ActionsChangedCallBack,
-            CardsCleardCallBack: this.CardsCleardCallBack,
-            doUpdate: this.doUpdate
-        }
 
-        let player0 = new player(dealerOptions)
+
+        let dealer = new player(dealerOptions)
         let player1 = new player(playerOptions)
         this.Players = []
-        this.Players.push(player0)
+        this.Players.push(dealer)
         this.Players.push(player1)
         this.Deck = new Deck({ numberOfDecks: 6 })
-        console.log("created Deck")
+
+
         this.state = {
             cardsDelt: false,
             Bets: [],
             playerTurnIndex: 1,
             round: 0,
             gameSegment: "bet",
-            //players: .Players,
             shuffleDeckMessage: "",
             clickSound: false,
             hideActionBar: false,
@@ -166,6 +193,7 @@ class GameTable extends Component {
 
 
     }
+
 
 
     continueGame = () => {
@@ -204,36 +232,36 @@ class GameTable extends Component {
 
             this.Players[playerIndex].clearActions()
             this.setState({ clickSound: true }, this.dealOut)
-
+            return
 
 
         }
         if (name === "hit" && playerIndex > 0) {
 
             this.hit(playerIndex, this.hitCallBack)
-
+            return
         }
 
         if (name === "stay" && playerIndex > 0) {
             console.log("stay")
             this.Players[playerIndex].clearActions()
-            this.setState({ clickSound: true }, this.dealOut)
-            setTimeout(this.dealerPlays,2000)
-
+            this.setState({ playerTurnIndex: 0 }, this.dealerMove)
+            return
         }
 
+    }
+
+
+    dealerMove = () => {
+    setTimeout(this.dealerPlays, 2000)
 
     }
 
     dealerPlays = () => {
-        let newCards = []
         this.Players[0].cards.forEach((card, index) => {
-
             card.facedown = false;
-            newCards.push(card)
         })
-        this.Players[0].cards = newCards
-        setTimeout(this.nextMove, 2000)
+        this.forceUpdate(this.nextMove)
 
     }
 
@@ -355,6 +383,8 @@ class GameTable extends Component {
 
     componentDidUpdate() {
 
+
+
         if (this.state.gameSegment === "bet") {
             const bet = { bet: true }
            this.Players[this.state.playerTurnIndex].giveActions(bet)
@@ -381,11 +411,11 @@ class GameTable extends Component {
                 const busted = {}
                 this.Players[this.state.playerTurnIndex].giveActions(busted)
                 this.Players[this.state.playerTurnIndex].payBet(this.forceUpdate)
-                
+
             }
 
         }
-        
+
     }
 
     checkScore = (score) => {
@@ -495,7 +525,7 @@ class GameTable extends Component {
         this.Deck.reset()
         this.Deck.shuffle()
         console.log("Shuffling")
-        this.setState({ shuffleDeckMessage: "Shuffling Deck" }, this.shuffleTimer)
+        this.setState({ shuffleDeckMessage: "Hello, "+ this.Players[this.state.playerTurnIndex].name.toUpperCase() + " welcome back! Shuffling Deck" }, this.shuffleTimer)
 
     }
 
@@ -659,9 +689,8 @@ class GameTable extends Component {
     hit = (playerIndex, callback) => {
         this.Players[playerIndex].cards.push(this.Deck.deal(false))
         console.log("just did hit")
-        this.forceUpdate()
 
-
+        this.forceUpdate(this.checkHand)
 
     }
 
@@ -684,23 +713,36 @@ class GameTable extends Component {
     }
 
     render() {
-        const tableImage = "./images/tables/table.jpg"
+
         console.log("Started render")
         const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
         const { deltaPosition, controlledPosition } = this.state;
+        const width = this.props.windowWidth
+        const height = this.props.windowHeight
+        let classes = {
+            table: {
+                width: width,
+                maxWidth: width,
+                position: "fixed",
+                zIndex: "-4",
+                left: "0"
+
+            }
+        }
+
         return (
             <div>
+                {!this.loggedIn ? (<Redirect to="/"/>) : (null)}
                 <Sound
                     url="/sfx/music2.mp3"
                     playStatus={'PLAYING'}
-                    onLoading={() => {
-                        return (<div>
+                    onLoading={(<div>
                             <CircularProgress color="secondary" />
                         </div>)
-                    }}
+                    }
                     volume={3}
                 />
-            <div className={"game-table"}>
+
                 {this.state.gameHasResult ? (
                     <GameResult
                     isOpen={true}
@@ -716,8 +758,8 @@ class GameTable extends Component {
                     />) : (null)}
                     <p>{this.state.shuffleDeckMessage}</p>
                 </div>
-                <div className={"box"}>
-                    <img className={"table"} src={tableImage} alt="..." />
+                <img src={"/images/tables/table.jpg"} style={classes.table}/>
+                <div>
                     <Grid container spacing={2}>
                         {this.Players.map((player, index) => {
                             if (index === 0) {
@@ -759,7 +801,7 @@ class GameTable extends Component {
                                         <Grid item xs={12}>
 
                                             {player.bet > 0 ? (
-                                                <div className="betbox">
+                                                <div className="chipbox">
                                                     <PlayerBet
                                                         key={"bet_" + player.playerIndex}
                                                         playerIndex={player.playerIndex}
@@ -770,7 +812,7 @@ class GameTable extends Component {
                                             }
                                             {!this.state.hideActionBar ? (
                                                 <Draggable {...dragHandlers}>
-                                                    <div className="actionbox">
+                                                    <div className="actionbox" style={classes.table}>
 
                                                         <PlayerActions
                                                             key={"actions_" + player.playerIndex}
@@ -788,8 +830,9 @@ class GameTable extends Component {
                                                             playStatus={"PLAYING"}
                                                         />) : (null)}
                                                     </div></Draggable>) : (null)}
-
+                                            <TopBar></TopBar>
                                         </Grid>
+
                                     </div>
 
                                 )
@@ -801,11 +844,10 @@ class GameTable extends Component {
                     </Grid>
 
                 </div>
+            </div>
 
-                    </div>
-                </div>
         );
     }
 
 }
-export default GameTable
+export default windowSize(GameTable)

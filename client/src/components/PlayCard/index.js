@@ -50,10 +50,8 @@ class PlayCard extends Component {
         this.state.type = props.type || "";
         this.state.rank = props.rank;
         this.state.suit = props.suit;
-        console.log(cardRank[this.state.rank] + cardSuit[this.state.suit] + ".png")
         this.state.frontImage = "./images/bigcards/" + cardNumber[this.state.rank] + "_" + cardRank[this.state.rank] + "_" + cardSuit[this.state.suit] + ".png"
-        this.state.backImage = "./images/bigcards/BACK_2.png"
-        console.log(this.state.backImage)
+        this.state.backImage = "./images/bigcards/BACK_3.png"
         this.state.hidden = props.hidden || false;
         this.state.counter = props.counter
     }
@@ -74,8 +72,8 @@ class PlayCard extends Component {
                 <div
                     key="front"
                     className="playing-card display-card"
-                        data-rank={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.rank}
-                        data-suit={this.state.owner === "dealer" && this.state.hidden ? "" : this.state.suit}
+                        data-rank={this.state.rank}
+                        data-suit={this.state.suit}
                         data-hidden={this.state.hidden}
                             onClick={this.state.owner === "dealer" ? this.dummyHandleClick : this.handleClick}
                 >

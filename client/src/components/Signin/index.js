@@ -26,9 +26,10 @@ class Signin extends Component {
             password: "",
             errors: {},
             isOpen: true,
-            isLoggedin: false,
-            userData: null
+
+
         };
+        this.isLoggedin = false
     }
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
@@ -49,7 +50,7 @@ class Signin extends Component {
     };
 
     componentDidMount() {
-        this.setState({ isOpen: true})
+
     }
 
     doSuccess = (response) => {
@@ -57,9 +58,10 @@ class Signin extends Component {
         console.log(response)
         if (response.status === 200) {
             console.log(response.data)
-            sessionStorage.setItem("user", JSON.stringify(response.data))
+            sessionStorage.setItem("player", JSON.stringify(response.data))
 
-            this.setState({ isLoggedin: true, userData:response.data })
+            this.isLoggedin = true
+            window.location.href(apiserver + "/gamescreen")
         }
         else if (response.status > 200 && response.status < 500) {
             this.setState({ errors: { bad: response.data }, password: ""})
@@ -81,11 +83,6 @@ class Signin extends Component {
 
 
 
-        if (this.state.isLoggedin) {
-            return (
-                <Redirect to={"/gamescreen"} />
-            )
-        }
         if (!this.state.isOpen) {
                     return (
                         <Redirect to="/" />
@@ -93,7 +90,10 @@ class Signin extends Component {
                 }
 
         return (
-            <form noValidate onSubmit={this.onSubmit}>
+            <div>
+
+                {this.isLoggedin ? (<Redirect to={"/gamescreen"} />) : (null)}
+
             <Dialog
                 open
                 onRequestClose={this.handleClose}
@@ -160,7 +160,7 @@ class Signin extends Component {
                                 letterSpacing: "1.5px",
                                 marginTop: "1rem"
                             }}
-                                type="submit"
+
                                 onClick={this.onSubmit}
                             color="primary"
                         >Sign In
@@ -169,7 +169,8 @@ class Signin extends Component {
 
                 </DialogActions>
                 </Dialog>
-            </form>
+
+                </div>
         );
     }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import BetSlider from "../BetSlider";
 import Sound from 'react-sound';
+import windowSize from 'react-window-size';
 import './style.css';
 
 
@@ -9,7 +10,7 @@ import './style.css';
 
 
 
- export default function PlayerActions(props) {
+ function PlayerActions(props) {
 
 
      const hitButton = "./images/actionbuttons/HIT.png"
@@ -28,16 +29,18 @@ import './style.css';
      const betboxEnabled = props.actions.bet || false
      const playerIndex = props.playerIndex
      const amount = props.amount
-     const dataamount = props.amount
+
      const maxBet = props.maxBet
 
          console.log("doing actions, Bet is ")
-         console.log(amount)
+     console.log(amount)
+
+
 
      return (
      <div>
              {betboxEnabled ? (
-                 <div className="">
+                 <div className="betbox">
                      <BetSlider
                          id={"slider_" + playerIndex}
 
@@ -104,3 +107,4 @@ import './style.css';
 
 
 }
+export default windowSize(PlayerActions)
