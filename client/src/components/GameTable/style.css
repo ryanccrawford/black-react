@@ -1,0 +1,65 @@
+.box {
+
+}
+
+
+
+.hand {
+    position: fixed;
+
+    left: 42%;
+}
+
+
+.white {
+    color:white;
+}
+
+.col {
+    display: flex;
+}
+.footer {
+    position: relative;
+    bottom: -118px;
+    z-index: -5;
+    height: 282px !important;
+}
+.show{
+    display:block !important;
+}
+.hide {
+    display: none !important;
+}
+.message {
+    word-break: break-word;
+    padding-right: 1em;
+    padding-left: 1em;
+    position: absolute;
+    width: 17em;
+    height: 200px;
+    background-color: rgba(22,22,22,0.8);
+    color: white;
+    border: 1px solid white;
+    border-radius: 20px;
+    text-align: center;
+    font-size: xx-large;
+    left: 33%;
+    top: 33%;
+}
+.betbox {
+    position: fixed;
+    left: 30em;
+    top: -7em;
+    width: 13em;
+    z-index: 1;
+}
+.playerhand-1 {
+    left: 51em;
+    position: fixed;
+    top: 31em;
+}
+.chipbox {
+    position: fixed;
+    right: 70em;
+    top: 24em;
+}

@@ -1,0 +1,44 @@
+.score-block {
+    position: fixed;
+    right: 2em;
+    top: 1em;
+}
+.bank-display{
+    position: relative;
+
+}
+.name-plate {
+    position: relative;
+    width: 200px;
+
+}
+.name-text {
+    position: relative;
+    z-index: 2;
+    bottom: 40px;
+    text-align: center;
+    font-size: small;
+}
+.bank-plate {
+    position: relative;
+    width: 200px;
+}
+.money {
+    position: absolute;
+    z-index: 2;
+    top: 30px;
+    left: 20px;
+    font-size: 24px !important;
+}
+.bet {
+    position: absolute;
+    z-index: 2;
+    top: 67px;
+    left: 62px;
+    font-size: 20px !important;
+}
+.text-style{
+    font-family: Arial;
+    font-weight:400;
+    color:white;
+}

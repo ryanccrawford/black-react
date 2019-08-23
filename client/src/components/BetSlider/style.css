@@ -1,0 +1,113 @@
+.base {
+    position: relative;
+    width: 150px;
+}
+
+.button .slider{
+
+}
+.display {
+    z-index: 4;
+    left: 92px;
+    top: -13px;
+    background-image: url("/images/betslider/display.png");
+    background-size:contain;
+}
+
+.amount {
+    font-family: "arial","Helvetica", sans-serif;
+    color:black;
+    position: relative;
+    z-index: 12;
+    font-weight: 800;
+    font-size: 23px;
+    width: 100%;
+    text-align: center;
+    left: -132px;
+    top: -18px;
+}
+.min{
+
+}
+.max{
+
+}
+
+.slider-container {
+    position: relative;
+}
+
+.slider-selected-scale {
+}
+
+.slider {
+    position: relative;
+    user-select: none;
+    margin-top: 10px;
+}
+
+.slider-scale {
+}
+
+.slider-thumb {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    top: -8px;
+    touch-action: none;
+}
+
+.slider-thumb-min {
+    background-color: red;
+}
+
+.slider-thumb-max {
+    background-color: blue;
+}
+
+.slot {
+    text-align: center;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: none;
+}
+
+.scale-mark {
+    position: absolute;
+    border: 0.5px solid lightgray;
+    height: 10px;
+}
+
+.slot-scale {
+    text-align: center;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    color: lightgray;
+    user-select: none;
+}
+
+.slot > .slider-thumb {
+    top: 3px;
+}
+
+.line {
+    position: absolute;
+    background-color: lightgray;
+    height: 2px;
+    width: 20px;
+    top: 12px;
+}
+
+.line-selected {
+    height: 4px;
+    background-color: #191919;
+}
+
+
+.amount {
+    font-weight: 800 !important;
+    font-size: 2em !important;
+}

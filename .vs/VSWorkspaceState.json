@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\client\\public",
+    "\\client\\public\\images",
+    "\\client\\public\\images\\bigcards",
+    "\\client\\public\\images\\chips",
+    "\\client\\public\\images\\tables",
+    "\\client\\src",
+    "\\client\\src\\components",
+    "\\client\\src\\components\\Signin"
+  ],
+  "SelectedNode": "\\client\\public\\images\\bigcards\\BACK_6.png",
+  "PreviewInSolutionExplorer": false
+}
